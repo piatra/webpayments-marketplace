@@ -1,19 +1,9 @@
-define([], function () {
-
-	var login = document.querySelector('.js-handler--login');
+define(['message', 'event-login'], function (message, loginEv) {
 
 	var verify = {
 		assertion : function (assertion) {
-			console.log('verifying ', assertion);
-			$.post("/auth/verify", { assertion: assertion }, function (data) {
-				console.log('sent ', data);
-			}).success(function (response) {
-				if (response.status == 'okay') {
-					document.querySelector('.js-handler--login').innerHTML = response.email;
-				}
-			}).done(function (data) {
-				console.log('done', data);
-			}).fail(function (data) {
+			$.post("/auth/verify", { assertion: assertion })
+			.success(loginEv.handleLogin).fail(function (data) {
 				console.log('fail', data);
 			});
 		}
@@ -32,9 +22,9 @@ define([], function () {
 				loggedInUser: undefined
 			});
 
-			login.addEventListener('click', function () {
+			$('.js-handler--login').on('click', function () {
 				navigator.id.request();
-			}, false);
+			});
 
 		}
 	};

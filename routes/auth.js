@@ -27,12 +27,13 @@ auth = {
 			body:    'audience=http://localhost:3000&assertion=' + req.body.assertion
 			},
 			function(err, response, body){
-				console.log(err, response, body);
 				if (!err && response.statusCode == 200 ) {
 					body = JSON.parse(body);
 					if (body.status == 'okay') {
 						console.log('user status ok');
-						user.checkUser(body, function () {
+						user.checkUser(body, function (user) {
+							body.registered = user.registered;
+							body.publicKey = user.publicKey;
 							res.json(body);
 						});
 					} else {
@@ -44,24 +45,25 @@ auth = {
 
 	},
 
-	registerKey : function () {
+	registerKey : function (req, res) {
 		async.waterfall([
 			function(callback) {
 				payswarm.getWebKeysConfig('dev.payswarm.com', callback);
 			}, function(endpoints, callback) {
 				var registrationUrl = URL.parse(endpoints.publicKeyService, true, true);
-				registrationUrl.query['public-key'] = "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAy7RGr25M1RXOndi8Rkcl\neK0nNW+WMB5NE7HwJsWXbWAzRS8TvBUjHO08HzJ++X2HmPlhGARA4REqgVyx88Tn\nlwzzSC+RQ6A1RrJiT1PTlcYmfzwaCVCQrwyle9Ui30AjQ2Cz9juRlqBrF5sMBPPA\nL9wHBDMhATXUmShbvV7wHRF3j87K8K6m5zLV0zBZQw0skSwYjXoT7/95aUF9cl4b\n12VlmE0BGvxHIx4gRSMO1NN2XgoF37WvxgQqDiuu2rbHW4EkHUY2z3+rOIQrG7IQ\nuyKO5f37GfO/LKoI3h4Ik+CfCTMBh1Rt1RxP3bt/WwQjtLzta7GvSWdKwnFqtGTe\noQIDAQAB\n-----END PUBLIC KEY-----\n";
+				registrationUrl.query['public-key'] = req.body.publicKey;
 				registrationUrl.query['response-nonce'] = new Date().getTime().toString(16);
 				delete registrationUrl.search;
 				registrationUrl = URL.format(registrationUrl);
 				callback(null, registrationUrl)
 			},
 			function(registrationUrl, callback) {
-				console.log('Register your key here: ', registrationUrl);
+				res.end(registrationUrl);
 			}
 		], function (err, result) {
 			console.log(err);
 			console.log(result);
+			res.end();
 		});
 	}
 
