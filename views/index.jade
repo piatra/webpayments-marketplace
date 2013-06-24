@@ -2,37 +2,47 @@ extends layout
 
 block content
 	.container
-		h1= title
-		p Welcome to #{title}
-
-		ul.item-container
-			li
-				h4 Item name
-				p Item description
-			li
-				h4 Item name
-				p Item description
-			li
-				h4 Item name
-				p Item description
-			li
-				h4 Item name
-				p Item description
-			li
-				h4 Item name
-				p Item description
-			li
-				h4 Item name
-				p Item description
-			li
-				h4 Item name
-				p Item description
-			li
-				h4 Item name
-				p Item description
-			li
-				h4 Item name
-				p Item description
-			li
-				h4 Item name
-				p Item description
+		h1 Welcome to the WebPayments Marketplace
+		p
+			| This application is implemented using
+			ul
+				li Mozilla Persona
+				li WebPayments
+				li PaySwarm
+		p You should <a href="#">sign up</a> for an account and give it a try
+		.category
+			h4.category__title
+				| Popular
+				button.topcoat-button.pull-right.small See all
+			ul.item-container.container--popular
+				li
+					h4 Item name
+					p Item description
+					button.topcoat-button--cta Buy
+				li
+					h4 Item name
+					p Item description
+					button.topcoat-button--cta Buy
+				li
+					h4 Item name
+					p Item description
+					button.topcoat-button--cta Buy
+				li
+					h4 Item name
+					p Item description
+					button.topcoat-button--cta Buy
+		.category
+			h4.category__title Popular
+			ul.item-container.container--popular
+				li
+					h4 Item name
+					p Item description
+				li
+					h4 Item name
+					p Item description
+				li
+					h4 Item name
+					p Item description
+				li
+					h4 Item name
+					p Item description

@@ -10,6 +10,7 @@ var user = require('../lib/user.js');
 var payswarm = require('payswarm');
 var async = require('async');
 var URL = require('url');
+var keys = require('../lib/keys');
 
 auth = {
 
@@ -30,7 +31,6 @@ auth = {
 				if (!err && response.statusCode == 200 ) {
 					body = JSON.parse(body);
 					if (body.status == 'okay') {
-						console.log('user status ok');
 						user.checkUser(body, function (user) {
 							body.registered = user.registered;
 							body.publicKey = user.publicKey;
@@ -62,11 +62,51 @@ auth = {
 			}
 		], function (err, result) {
 			console.log(err);
-			console.log(result);
 			res.end();
+		});
+	},
+
+	complatePayswarmRegistration : function (req, res) {
+		try {
+			var paysw = JSON.parse(req.body.payswarm_response);
+		} catch (e) {
+			console.log(e);
+		}
+		keys.decode(paysw, req.body.email, function (err, message) {
+			if (err) {
+				showError(err, res);
+			} else {
+				var fields = {
+					publicKeyUrl : message.publicKey,
+					owner : message.owner,
+					destination : message.destination,
+					registered : true
+				}
+				user.updateFields(fields, {email : req.body.email}, function () {
+					status(err, res);
+				})
+			}
 		});
 	}
 
 };
+
+function showError (err, res) {
+	res.render('status', {
+		title : 'An error has ocurred',
+		message : err
+	});
+}
+
+function status (err, res) {
+	if (err) {
+		showError(err, res);
+	} else {
+		res.render('status', {
+			title : 'Done',
+			message : 'Action completed succesfully'
+		});
+	}
+}
 
 module.exports = auth;

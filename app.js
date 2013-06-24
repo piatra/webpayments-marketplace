@@ -32,6 +32,7 @@ app.get('/', routes.index);
 app.post('/auth/verify', auth.verify);
 app.get('/auth/createKeyPair', auth.createKeyPair);
 app.post('/payswarm/register', auth.registerKey);
+app.post('/payswarm/complete', auth.complatePayswarmRegistration);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log("Express server listening on port " + app.get('port'));

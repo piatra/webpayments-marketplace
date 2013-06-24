@@ -1,0 +1,11 @@
+{ type: 'IdentityPreferences',
+  owner: 'https://dev.payswarm.com/i/piatra',
+  destination: 'https://dev.payswarm.com/i/piatra/accounts/primary',
+  publicKey: 'https://dev.payswarm.com/i/piatra/keys/9',
+  '@context': 'https://w3id.org/payswarm/v1',
+  signature: 
+   { type: 'GraphSignature2012',
+     creator: 'https://dev.payswarm.com/i/authority/keys/1',
+     created: '2013-06-23T07:34:05Z',
+     signatureValue: 'dXBIKTcF0mZmuwO5V5WlUcBmXGGW35Y+AZEOjMfHf8+7S//s6X9VmOThSZq7+cFnKrtZ5UILN2j/q07Fm700i/Hfe0TnK1p8ZTwwH2VXZJqVlKloBtCAUbosP6/5ROVl606NeSPCYSXjQgS9wFlebLLxn15Udex4uUcBzw4vgXScQU38xbj3kMsBYrwelx4vfX+IxtLS5pyU9WvFfCTW5oHPpetzkFgsZt5wkxeQURRTHhfwqWv4biEjIv5lRCr5XNCGf+fS3KAh2TUVF6GzF9JiHjTQHYvXARDLEPLSjoWtkAr6qaAi6tFM6ljObX+Jvhj4lPJtpKFz1anVW45+Cg==',
+     nonce: '13f6ff422d6' } }

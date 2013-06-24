@@ -1,4 +1,4 @@
-define(['message', 'event-login'], function (message, loginEv) {
+define(['message', 'event-login', 'modal'], function (message, loginEv, modal) {
 
 	var verify = {
 		assertion : function (assertion) {
@@ -11,7 +11,6 @@ define(['message', 'event-login'], function (message, loginEv) {
 
 	var evHandler = {
 		init : function () {
-
 			navigator.id.watch({
 				onlogin: function(assertion) {
 					verify.assertion(assertion);

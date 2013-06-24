@@ -1,10 +1,16 @@
 {
-  "name": "application-name",
+  "name": "webpayments-marketplace",
   "version": "0.0.1",
+  "author": "@ndreio Andrei Oprea",
+  "description": "An implementation using the payswarm module"
   "private": true,
   "scripts": {
     "start": "node app"
   },
+  "keywords": [
+    "webpayments",
+    "persona"
+  ],
   "dependencies": {
     "express": "3.0.0",
     "jade": "*",
