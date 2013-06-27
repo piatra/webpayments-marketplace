@@ -1,0 +1,79 @@
+extends layout
+
+block content
+	.container
+		h1 Create a new asset
+		p make an asset and listing for a new good to sell
+		form
+			table
+				tr
+					td: label Title
+					td: input(class='topcoat-text-input', required)
+				tr
+					td: label Author
+					td: input.topcoat-text-input
+				tr
+					td Are you the creator/author ?
+					td: input(type='checkbox')
+				tr
+					td: label Link to content
+					td: input.topcoat-text-input
+			label(for='showmore') Show more options
+			input(type='checkbox', id='showmore')
+			table#advanced.hidden
+					tr
+						td: label Validity
+						td
+							input(type='date', class='topcoat-text-input')
+							input(type='date', class='topcoat-text-input')
+					tr
+						td: label Who should receive the money
+						td: input.topcoat-text-input
+					tr
+						td: label How much should they receive ?
+						td: input(type='range')
+					tr
+						td: label Or a minumum of
+						td:	input.topcoat-text-input
+					tr
+						td: label Currency
+						td: select
+								<option selected="selected" value="USD United States Dollars">
+								USD United States Dollars
+								</option>
+								<option>
+								EUR Euro
+								</option>
+								<option value="CAD Canada Dollars">
+								CAD Canada Dollars
+								</option>
+								<option>
+								GBP United Kingdom Pounds
+								</option>
+								<option>
+								DEM Germany Deutsche Marks
+								</option>
+								<option>
+								FRF France Francs
+								</option>
+								<option>
+								JPY Japan Yen
+								</option>
+					tr
+						td: label Allow reselling ?
+						td: input(type='checkbox', class='topcoat-input-checkbox')
+					tr
+						td Comments
+						td: textarea(class='topcoat-textarea', placeholder='Comments')
+			p
+				button(type='submit', class='topcoat-button--cta') Create asset
+
+
+
+
+
+
+
+
+
+
