@@ -4,69 +4,78 @@ block content
 	.container
 		h1 Create a new asset
 		p make an asset and listing for a new good to sell
-		form
-			table
+		form.half.pull-left(action='/newasset/process/', method='POST')
+			table.table-form
+				tr
+					td: input(type='hidden', value=user, name='email')
 				tr
 					td: label Title
-					td: input(class='topcoat-text-input', required)
+					td: input(class='topcoat-text-input', type='text', name='title', placeholder='Asset title', value='HTML5', required)
 				tr
 					td: label Author
-					td: input.topcoat-text-input
-				tr
-					td Are you the creator/author ?
-					td: input(type='checkbox')
+					td: input(class='topcoat-text-input', type='text', name='author', placeholder='Asset creator', value='Joe', required)
 				tr
 					td: label Link to content
-					td: input.topcoat-text-input
-			label(for='showmore') Show more options
+					td: input(class='topcoat-text-input', type='url', name='assetContent', value='http://payswarm.org',required)
+				tr
+					td: label Price
+					td
+						input.topcoat-text-input(type='number', step=0.01, name='payeeRate', value=2)
+						select.docNav(name='currency')
+							<option selected="selected" value="USD United States Dollars">
+							USD United States Dollars
+							</option>
+							<option>
+							EUR Euro
+							</option>
+							<option value="CAD Canada Dollars">
+							CAD Canada Dollars
+							</option>
+							<option>
+							GBP United Kingdom Pounds
+							</option>
+							<option>
+							DEM Germany Deutsche Marks
+							</option>
+							<option>
+							FRF France Francs
+							</option>
+							<option>
+							JPY Japan Yen
+							</option>
+				tr
+					td Comments
+					td: textarea(class='topcoat-textarea', placeholder='Comments', name='comment')
+				tr
+					td: label Validity
+					td
+						input(type='date', class='topcoat-text-input')
+						input(type='date', class='topcoat-text-input')
+			p
+				button(type='submit', class='topcoat-button--large--cta pull-right js-handler--create-asset') Create asset
+			label.see-more(for='showmore') Show more options
 			input(type='checkbox', id='showmore')
-			table#advanced.hidden
-					tr
-						td: label Validity
+			table.table-form#advanced.hidden
+					tr.warning
+						td Not implemented yet
 						td
-							input(type='date', class='topcoat-text-input')
-							input(type='date', class='topcoat-text-input')
 					tr
-						td: label Who should receive the money
+						td: label Beneficiary
 						td: input.topcoat-text-input
 					tr
-						td: label How much should they receive ?
-						td: input(type='range')
-					tr
-						td: label Or a minumum of
-						td:	input.topcoat-text-input
-					tr
-						td: label Currency
-						td: select
-								<option selected="selected" value="USD United States Dollars">
-								USD United States Dollars
-								</option>
-								<option>
-								EUR Euro
-								</option>
-								<option value="CAD Canada Dollars">
-								CAD Canada Dollars
-								</option>
-								<option>
-								GBP United Kingdom Pounds
-								</option>
-								<option>
-								DEM Germany Deutsche Marks
-								</option>
-								<option>
-								FRF France Francs
-								</option>
-								<option>
-								JPY Japan Yen
-								</option>
+						td: label Minimum
+						td
+							input(class='topcoat-text-input', type='number', step=0.01)
 					tr
 						td: label Allow reselling ?
 						td: input(type='checkbox', class='topcoat-input-checkbox')
-					tr
-						td Comments
-						td: textarea(class='topcoat-textarea', placeholder='Comments')
-			p
-				button(type='submit', class='topcoat-button--cta') Create asset
+		.half.pull-right
+			h2 About assets and listings
+			p An asset is a description of a product or service. Examples of assets include web pages, ebooks, groceries, concert tickets, dog walking services, donations, rights to transmit on a particular radio frequency band, and invoices for work performed. In general, anything of value can be modeled as an asset.
+			p A listing is a description of the specific terms under which an asset is offered for sale. These terms include: the exact asset being sold, the license that will be associated with the purchase, the list of people or organizations to be paid for the asset, and the validity period for the listing. Like an asset, a listing may include other application-specific properties.
+			p Source 
+				a(href='https://hacks.mozilla.org/2013/04/payswarm-part-2/') Web Payments with PaySwarm: Assets and Listings (part 2 of 3)
+
 
 
 

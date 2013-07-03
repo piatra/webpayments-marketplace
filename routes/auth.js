@@ -6,19 +6,15 @@
 
 var request = require('request');
 var mongoose = require('mongoose');
-var user = require('../lib/user.js');
+var user = require('../lib/user.js')();
 var payswarm = require('payswarm');
 var async = require('async');
 var URL = require('url');
-var keys = require('../lib/keys');
+var keys = require('../lib/keys')();
 
-auth = {
+var auth = {
 
 	verify : function (req, res) {
-		var data = {
-			assertion: req.body.assertion,
-			audience: 'http://localhost:3000'
-		};
 
 		request.post({
 			headers: {
@@ -31,10 +27,20 @@ auth = {
 				if (!err && response.statusCode == 200 ) {
 					body = JSON.parse(body);
 					if (body.status == 'okay') {
+						console.log(user);
 						user.checkUser(body, function (user) {
 							body.registered = user.registered;
-							body.publicKey = user.publicKey;
-							res.json(body);
+							keys.getKeyPair(function (err, keyPair) {
+								if (err) {
+									console.log(err);
+									res.json({message: 'An error has occured ' + err, error:true});
+								} else {
+									keyPair = JSON.parse(keyPair);
+									body.publicKey = keyPair.publicKey.publicKeyPem;
+									req.session.email = body.email;
+									res.json(body);
+								}
+							});
 						});
 					} else {
 						res.json(body);
@@ -72,7 +78,7 @@ auth = {
 		} catch (e) {
 			console.log(e);
 		}
-		keys.decode(paysw, req.body.email, function (err, message) {
+		keys.decode(paysw, function (err, message) {
 			if (err) {
 				showError(err, res);
 			} else {

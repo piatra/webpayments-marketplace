@@ -1,6 +1,7 @@
 define(['message', 'modal'], function (message, modal) {
 	var loginEv = {
 		handleLogin : function (response) {
+			console.log(response);
 			if (response.status == 'okay') {
 				$('.js-handler--login').text(response.email);
 				if (response.registered == 'false') {

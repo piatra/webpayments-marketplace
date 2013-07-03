@@ -1,4 +1,4 @@
-define(['message', 'event-login', 'modal'], function (message, loginEv, modal) {
+define(['message', 'event-login', 'modal', 'event-assets'], function (message, loginEv, modal, assetsEv) {
 
 	var verify = {
 		assertion : function (assertion) {
@@ -13,7 +13,10 @@ define(['message', 'event-login', 'modal'], function (message, loginEv, modal) {
 		init : function () {
 			navigator.id.watch({
 				onlogin: function(assertion) {
-					verify.assertion(assertion);
+					if ($('img', $('.js-handler--login')).length)
+						verify.assertion(assertion);
+					else
+						console.log('has session is logged in');
 				},
 				onlogout: function() {
 					console.log('logout');
@@ -24,6 +27,8 @@ define(['message', 'event-login', 'modal'], function (message, loginEv, modal) {
 			$('.js-handler--login').on('click', function () {
 				navigator.id.request();
 			});
+
+			$('.js-handler--create-asset').on('click', assetsEv.create);
 
 		}
 	};

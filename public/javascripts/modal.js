@@ -25,9 +25,9 @@ define([], function () {
 			})
 
 			if (data.form)
-				$modal.parent().appendTo('body');
+				return $modal.parent();
 			else
-				$modal.appendTo('body');
+				return $modal;
 		},
 		showOverlay : function () {
 			$('<div/>').addClass('modal-overlay')

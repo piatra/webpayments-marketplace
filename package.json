@@ -1,11 +1,11 @@
 {
   "name": "webpayments-marketplace",
-  "version": "0.0.1",
+  "version": "0.0.1-9",
   "author": "@ndreio Andrei Oprea",
-  "description": "An implementation using the payswarm module"
+  "description": "An implementation using the payswarm module",
   "private": true,
   "scripts": {
-    "start": "node app"
+    "start": "node app.js"
   },
   "keywords": [
     "webpayments",
@@ -18,6 +18,15 @@
     "request": "~2.21.0",
     "payswarm": "~0.10.3",
     "async": "~0.2.9",
-    "mongoose": "~3.6.11"
+    "mongoose": "~3.6.11",
+    "q": "~0.9.6",
+    "underscore": "~1.4.4"
+  },
+  "subdomain": "webpayments",
+  "engines": {
+    "node": "0.8.x"
+  },
+  "devDependencies": {
+    "requirejs": "~2.1.6"
   }
 }
