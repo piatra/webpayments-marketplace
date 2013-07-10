@@ -49,32 +49,23 @@ block content
 				tr
 					td: label Validity
 					td
-						input(type='date', class='topcoat-text-input')
-						input(type='date', class='topcoat-text-input')
+						input(type='date', class='topcoat-text-input', name='validFrom')
+						input(type='date', class='topcoat-text-input', name='validUntil')
+				tr
+					td: label License
+					td
+						select.docNav(name='license')
+							option(selected='selected', value='https://w3id.org/payswarm/licenses/personal-use') Personal use
 			p
 				button(type='submit', class='topcoat-button--large--cta pull-right js-handler--create-asset') Create asset
-			label.see-more(for='showmore') Show more options
-			input(type='checkbox', id='showmore')
-			table.table-form#advanced.hidden
-					tr.warning
-						td Not implemented yet
-						td
-					tr
-						td: label Beneficiary
-						td: input.topcoat-text-input
-					tr
-						td: label Minimum
-						td
-							input(class='topcoat-text-input', type='number', step=0.01)
-					tr
-						td: label Allow reselling ?
-						td: input(type='checkbox', class='topcoat-input-checkbox')
 		.half.pull-right
 			h2 About assets and listings
 			p An asset is a description of a product or service. Examples of assets include web pages, ebooks, groceries, concert tickets, dog walking services, donations, rights to transmit on a particular radio frequency band, and invoices for work performed. In general, anything of value can be modeled as an asset.
 			p A listing is a description of the specific terms under which an asset is offered for sale. These terms include: the exact asset being sold, the license that will be associated with the purchase, the list of people or organizations to be paid for the asset, and the validity period for the listing. Like an asset, a listing may include other application-specific properties.
 			p Source 
 				a(href='https://hacks.mozilla.org/2013/04/payswarm-part-2/') Web Payments with PaySwarm: Assets and Listings (part 2 of 3)
+			pre.container--json
+				code.js-handler--asset
 
 
 

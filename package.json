@@ -20,7 +20,8 @@
     "async": "~0.2.9",
     "mongoose": "~3.6.11",
     "q": "~0.9.6",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "highlight.js": "~7.3.0"
   },
   "subdomain": "webpayments",
   "engines": {

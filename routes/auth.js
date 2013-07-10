@@ -27,18 +27,17 @@ var auth = {
 				if (!err && response.statusCode == 200 ) {
 					body = JSON.parse(body);
 					if (body.status == 'okay') {
-						console.log(user);
 						user.checkUser(body, function (user) {
 							body.registered = user.registered;
 							keys.getKeyPair(function (err, keyPair) {
 								if (err) {
 									console.log(err);
-									res.json({message: 'An error has occured ' + err, error:true});
+									res.json({
+										message: 'An error has occured ' + err,
+										error: true
+									});
 								} else {
-									keyPair = JSON.parse(keyPair);
-									body.publicKey = keyPair.publicKey.publicKeyPem;
-									req.session.email = body.email;
-									res.json(body);
+									auth.returnKeys(req, res, body, keyPair);
 								}
 							});
 						});
@@ -49,6 +48,13 @@ var auth = {
 			}
 		);
 
+	},
+
+	returnKeys: function (req, res, body, keyPair) {
+		keyPair = JSON.parse(keyPair);
+		body.publicKey = keyPair.publicKey.publicKeyPem;
+		req.session.email = body.email;
+		res.json(body);
 	},
 
 	registerKey : function (req, res) {

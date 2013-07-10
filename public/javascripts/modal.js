@@ -1,8 +1,12 @@
 define([], function () {
 	var modal = {
-		show : function (data) {
+		show : function (data, options) {
 			modal.showOverlay();
 			$modal = $('<div/>').addClass('modal');
+
+			if (options) {
+				$modal.css(options);
+			}
 
 			if (data.form) {
 				$modal = modal.createForm(data.form, $modal);
@@ -19,10 +23,14 @@ define([], function () {
 				var $el = $('<'+ el.tag +'/>');
 				for (var i in el) {
 					if (i == 'tag') continue;
-					$el.attr(i, el[i]);
+					if (typeof $el[i] == 'function')
+						$el[i](el[i]);
+					else
+						$el.attr(i, el[i]);
 				}
 				$modal.append($el);
 			})
+
 
 			if (data.form)
 				return $modal.parent();

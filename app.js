@@ -40,6 +40,7 @@ app.post('/payswarm/complete', auth.complatePayswarmRegistration);
 
 app.get('/newasset', routes.newasset);
 app.post('/newasset/process/', assets.processAsset);
+app.post('/newasset/save', assets.saveAsset);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log("Express server listening on port " + app.get('port'));
