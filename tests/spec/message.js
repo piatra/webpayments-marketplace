@@ -15,8 +15,8 @@ define([
 				var msg = {
 					message : 'You need to register with a payswarm authority'
 				};
-				// a bit of a hack here
-				var $msg = $(message.show(msg).prevObject[0]).text();
+
+				var $msg = $(message.show(msg)).text();
 				expect($msg.slice(0,-1)).toEqual(msg.message);
 			});
 

@@ -3,10 +3,17 @@ define([], function () {
 		show : function (msgData) {
 			var close = $('<span/>').addClass('close-handler')
 						.html('&times;').on('click', message.remove);
-			var msg = $('<p/>').addClass('message').html(message.create(msgData))
+
+			var msg = $('<p></p>').addClass('message');
+
+			if (typeof msgData == 'string')
+				msg.html(msgData).append(close)
+					.appendTo(msgData.appendTo);
+			else
+				msg.html(message.create(msgData))
 					.append(close).appendTo(msgData.appendTo);
 
-			return msg;
+			return msg.length ? $(msg[0]) : $(msg);
 		},
 		create: function (msgData) {
 			var a = $('<a/>').attr('href', msgData.href)

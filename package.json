@@ -1,6 +1,6 @@
 {
   "name": "webpayments-marketplace",
-  "version": "0.0.1-9",
+  "version": "0.0.1-12",
   "author": "@ndreio Andrei Oprea",
   "description": "An implementation using the payswarm module",
   "private": true,
@@ -16,7 +16,7 @@
     "jade": "*",
     "stylus": "*",
     "request": "~2.21.0",
-    "payswarm": "~0.10.3",
+    "payswarm": "*",
     "async": "~0.2.9",
     "mongoose": "~3.6.11",
     "q": "~0.9.6",

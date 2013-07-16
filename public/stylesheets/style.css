@@ -198,3 +198,26 @@ table td {
   padding: 0.5rem;
   margin: 0.5rem;
 }
+.topcoat-notification {
+  display: inline-block;
+  text-align: center;
+  padding: 0.15em 0.5em 0.2em;
+  margin-left: 6px;
+  border-radius: 2px;
+  background-color: #ec514e;
+  color: #fff;
+  font: 0.875em "Source Sans", helvetica, arial, sans-serif;
+}
+.topcoat-icon-button {
+  margin-left: 5px;
+}
+.topcoat-list__container {
+  display: none;
+}
+.topcoat-icon-button:hover .topcoat-list__container {
+  display: block;
+}
+.list--medium {
+  max-height: 200px;
+  overflow: scroll;
+}

@@ -8,17 +8,20 @@ html
 		.topcoat-navigation-bar
 			.container
 				.topcoat-navigation-bar__item.left.quarter
-					a(class='topcoat-icon-button--quiet', href='/') Home
-					a(class='topcoat-icon-button--quiet', href='/newasset') Sell
-					a(class='topcoat-icon-button--quiet', href='/about') About
+					a(class='topcoat-icon-button', href='/') Home
+					a(class='topcoat-icon-button', href='/newasset') Sell
+					a(class='topcoat-icon-button', href='/about') About
 				.topcoat-navigation-bar__item.center.half
 					h1.topcoat-navigation-bar__title WebPayments Marketplace
-				.topcoat-navigation-bar__item.right.quarter
+				.topcoat-navigation-bar__item.right
 					a.topcoat-icon-button--quiet
 						- if (user)
-							a(class='js-handler--login', href='#')= user
+							a.right(class='topcoat-icon-button js-handler--login', href='#')= user
+								.topcoat-notification
+								.topcoat-list__container.list--medium
+									ul.topcoat-list.js-handler--asset-list
 						- else
-							a(class='js-handler--login', href='#'): img(src='/images/signin.png', title='Login')
+							a.right(class='js-handler--login', href='#'): img(src='/images/signin.png', title='Login')
 		.messages
 		block content
 	script(src='https://login.persona.org/include.js')

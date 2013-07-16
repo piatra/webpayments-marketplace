@@ -12,17 +12,25 @@ var async = require('async');
 var URL = require('url');
 var keys = require('../lib/keys')();
 
+
 var auth = {
 
 	verify : function (req, res) {
 
-		request.post({
+		var audience = 'audience=';
+		audience += process.env.NODE_ENV ? 'http://webpayments.jit.su' : 'http://localhost:3000';
+		audience += '&assertion=' + req.body.assertion;
+
+		var headers = {
 			headers: {
 				'content-type' : 'application/x-www-form-urlencoded'
 			},
-			url:     'https://verifier.login.persona.org/verify',
-			body:    'audience=http://localhost:3000&assertion=' + req.body.assertion
-			},
+			url: 'https://verifier.login.persona.org/verify',
+			body: audience
+		};
+
+		request.post(
+			headers,
 			function(err, response, body){
 				if (!err && response.statusCode == 200 ) {
 					body = JSON.parse(body);

@@ -1,4 +1,8 @@
-define(['message', 'event-login', 'modal', 'event-assets'], function (message, loginEv, modal, assetsEv) {
+define([
+	'message',
+	'event-login',
+	'event-assets'
+	], function (message, loginEv, assetsEv) {
 
 	var verify = {
 		assertion : function (assertion) {
@@ -11,24 +15,34 @@ define(['message', 'event-login', 'modal', 'event-assets'], function (message, l
 
 	var evHandler = {
 		init : function () {
+
+			var email = ($('img', $('.js-handler--login')).length)
+							? null
+							: $('.js-handler--login').text().trim()
+			;
+
+			console.log(email);
+
 			navigator.id.watch({
 				onlogin: function(assertion) {
 					if ($('img', $('.js-handler--login')).length)
 						verify.assertion(assertion);
 					else
-						console.log('has session is logged in');
+						assetsEv.count(email);
 				},
 				onlogout: function() {
 					console.log('logout');
 				},
-				loggedInUser: undefined
+				loggedInUser: email
 			});
 
 			$('.js-handler--login').on('click', function () {
 				navigator.id.request();
 			});
 
-			$('.js-handler--create-asset').on('click', assetsEv.create);
+			$('.js-handler--create-asset').on('submit', assetsEv.create);
+
+			assetsEv.loadLatest($('.container--newest'));
 
 		}
 	};

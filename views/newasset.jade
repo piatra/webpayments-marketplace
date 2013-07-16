@@ -4,7 +4,7 @@ block content
 	.container
 		h1 Create a new asset
 		p make an asset and listing for a new good to sell
-		form.half.pull-left(action='/newasset/process/', method='POST')
+		form.half.pull-left.js-handler--create-asset(action='/newasset/process/', method='POST')
 			table.table-form
 				tr
 					td: input(type='hidden', value=user, name='email')
@@ -16,7 +16,7 @@ block content
 					td: input(class='topcoat-text-input', type='text', name='author', placeholder='Asset creator', value='Joe', required)
 				tr
 					td: label Link to content
-					td: input(class='topcoat-text-input', type='url', name='assetContent', value='http://payswarm.org',required)
+					td: input(class='topcoat-text-input', type='file', name='assetContent',required)
 				tr
 					td: label Price
 					td
@@ -25,47 +25,28 @@ block content
 							<option selected="selected" value="USD United States Dollars">
 							USD United States Dollars
 							</option>
-							<option>
-							EUR Euro
-							</option>
-							<option value="CAD Canada Dollars">
-							CAD Canada Dollars
-							</option>
-							<option>
-							GBP United Kingdom Pounds
-							</option>
-							<option>
-							DEM Germany Deutsche Marks
-							</option>
-							<option>
-							FRF France Francs
-							</option>
-							<option>
-							JPY Japan Yen
-							</option>
 				tr
 					td Comments
 					td: textarea(class='topcoat-textarea', placeholder='Comments', name='comment')
 				tr
 					td: label Validity
 					td
-						input(type='date', class='topcoat-text-input', name='validFrom')
-						input(type='date', class='topcoat-text-input', name='validUntil')
+						- var today = new Date().toISOString().slice(0,10);
+						input(type='date', class='topcoat-text-input', name='validFrom', value=today, required)
+						input(type='date', class='topcoat-text-input', name='validUntil', required)
 				tr
 					td: label License
 					td
 						select.docNav(name='license')
 							option(selected='selected', value='https://w3id.org/payswarm/licenses/personal-use') Personal use
 			p
-				button(type='submit', class='topcoat-button--large--cta pull-right js-handler--create-asset') Create asset
+				button(type='submit', class='topcoat-button--large--cta pull-right') Create asset
 		.half.pull-right
 			h2 About assets and listings
 			p An asset is a description of a product or service. Examples of assets include web pages, ebooks, groceries, concert tickets, dog walking services, donations, rights to transmit on a particular radio frequency band, and invoices for work performed. In general, anything of value can be modeled as an asset.
 			p A listing is a description of the specific terms under which an asset is offered for sale. These terms include: the exact asset being sold, the license that will be associated with the purchase, the list of people or organizations to be paid for the asset, and the validity period for the listing. Like an asset, a listing may include other application-specific properties.
 			p Source 
 				a(href='https://hacks.mozilla.org/2013/04/payswarm-part-2/') Web Payments with PaySwarm: Assets and Listings (part 2 of 3)
-			pre.container--json
-				code.js-handler--asset
 
 
 

@@ -38,6 +38,23 @@ var assets = {
 				});
 			}
 		});
+	},
+
+	getUserAssets: function (req, res) {
+		var query = { email: req.session.email };
+		console.log('query', query, 'getUserAssets');
+		asset.getUserAssets(query, function (assets) {
+			console.log('got assets', assets);
+			res.json(assets);
+		});
+	},
+
+	getLatestAssets: function (req, res) {
+		console.log('limit', req.params.count);
+		asset.getUserAssets({}, function (assets) {
+			console.log('getlatestassets', assets);
+			res.json(assets);
+		});
 	}
 };
 

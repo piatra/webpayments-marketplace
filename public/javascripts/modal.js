@@ -6,6 +6,8 @@ define([], function () {
 
 			if (options) {
 				$modal.css(options);
+			} else {
+				$modal.css({width: '700px', 'margin-left':'-350px'});
 			}
 
 			if (data.form) {
@@ -41,9 +43,8 @@ define([], function () {
 			$('<div/>').addClass('modal-overlay')
 				.appendTo('body').fadeIn();
 		},
-		remove : function (e) {
-			e.preventDefault();
-			$(this).parents('.modal').fadeOut('fast');
+		remove : function () {
+			$('.modal').fadeOut('fast');
 			$('.modal-overlay').fadeOut('slow')
 		},
 		createForm : function (path, $modal) {

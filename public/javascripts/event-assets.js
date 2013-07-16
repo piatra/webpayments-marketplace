@@ -17,10 +17,13 @@ define(['modal', 'message'], function (modal, message) {
 				}
 			],
 			form: '/newasset/save'
-		}, {width: '700px', 'margin-left':'-350px'}).appendTo('body');
+		}).appendTo('body');
 
 		$('.js-handler--publish-asset').on('click', assets.publish);
+	}
 
+	function setAssetCount (count) {
+		$('.topcoat-notification').text(count);
 	}
 
 	function errorHandler (err) {
@@ -32,20 +35,25 @@ define(['modal', 'message'], function (modal, message) {
 	}
 
 	function assetPublished (asset) {
-		console.log('created');
-		message.show({
-			message: 'Asset has been created. Click here to see it',
-			href: asset.href
+		modal.remove();
+		var $msg = message.show('Your asset has been created. View your assets in the top right corner')
+		$msg.appendTo('.messages');
+	}
+
+	function setListAssets (docs) {
+		docs.forEach(function (d) {
+			if (!d.listing) return;
+			var title = d.asset.title + '<br><em><small>' + d.listing.payee[0].comment + '</small></em>';
+			$('<li></li>').addClass('topcoat-list__item')
+				.html(title).appendTo('.js-handler--asset-list');
 		});
 	}
 
 	var assets = {
 		create: function (e) {
-			console.log('create!!!');
 			e.preventDefault();
-			var $form = $('form');
 			var data = $('form').serialize();
-			$.post($form.attr('action'), data)
+			$.post($('form').attr('action'), data)
 				.done(assetCreated)
 				.fail(errorHandler)
 			;
@@ -57,6 +65,24 @@ define(['modal', 'message'], function (modal, message) {
 			console.log('sending data', json);
 			$.post('/newasset/save', json)
 				.done(assetPublished)
+				.fail(errorHandler)
+			;
+		},
+		count: function (email) {
+			$.get(location.origin + '/assets/created')
+				.done(function (resp) {
+					setAssetCount(resp.length);
+					setListAssets(resp);
+				})
+				.fail(errorHandler)
+			;
+		},
+		loadLatest: function () {
+			$.get(location.origin + '/assets/5')
+				.done(function (resp) {
+					setAssetCount(resp.length);
+					setListAssets(resp);
+				})
 				.fail(errorHandler)
 			;
 		}
