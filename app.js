@@ -8,6 +8,7 @@ var express = require('express')
 	, assets = require('./routes/assets')
 	, auth = require('./routes/auth')
 	, http = require('http')
+	, user = require('./routes/user')
 	, path = require('path');
 
 var app = express();
@@ -33,6 +34,9 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
+
+app.post('/user/set/username', user.setUsername);
+
 app.post('/auth/verify', auth.verify);
 app.get('/auth/createKeyPair', auth.createKeyPair);
 app.post('/payswarm/register', auth.registerKey);
@@ -44,6 +48,17 @@ app.post('/newasset/save', assets.saveAsset);
 
 app.get('/assets/created', assets.getUserAssets);
 app.get('/assets/:count', assets.getLatestAssets);
+
+app.get('/assets/asset/:id', assets.getAsset);
+app.get('/listings/listing/:id', assets.getListing);
+
+app.get('/asset/content/:id', function (req, res){
+	res.end('The content!');
+});
+
+app.get('/assets/:id/purchase', assets.purchase);
+
+app.get('/decrypt/:type/:id', assets.decrypt);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log("Express server listening on port " + app.get('port'));

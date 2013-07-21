@@ -1,33 +1,22 @@
 extends layout
 
 block content
+	.description
+		.container
+			h4 Welcome to the WebPayments Marketplace
+			p: small: em This application is implemented using: Mozilla Persona, Payswarm.js
+			- if (!user)
+				p You should <a href="/login">sign up</a> for an account and give it a try
 	.container
-		h1 Welcome to the WebPayments Marketplace
-		p
-			| This application is implemented using
-			ul
-				li Mozilla Persona
-				li WebPayments
-				li PaySwarm
-		p You should <a href="/login">sign up</a> for an account and give it a try
+		br
 		.category
 			h4.category__title
 				| Newest
-				button.topcoat-button.pull-right See all
+				a.topcoat-button.pull-right(href='/assets/all') See all
 			ul.item-container.container--newest
-				li
-					h4 Item name
-					p Item description
-					button.topcoat-button--cta Buy
-				li
-					h4 Item name
-					p Item description
-					button.topcoat-button--cta Buy
-				li
-					h4 Item name
-					p Item description
-					button.topcoat-button--cta Buy
-				li
-					h4 Item name
-					p Item description
-					button.topcoat-button--cta Buy
+				- assets.forEach(function (asset) {
+					li
+						h4= asset.asset.title
+						p comment
+						a.topcoat-button--cta(href='/assets/' + asset.asset['_id'] + '/purchase') Buy
+				- })

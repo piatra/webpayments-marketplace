@@ -1,0 +1,49 @@
+{
+  "assetId": "51e5bbb32accfe6525000002",
+  "@context": "https://w3id.org/payswarm/v1",
+  "id": "http://listings.dev.payswarm.com/mozhacks/html5-me-song#listing",
+  "userId": "51cb00e7b544338396000001",
+  "vendor": "https://dev.payswarm.com/i/the-webdevs",
+  "asset": "http://listings.dev.payswarm.com/mozhacks/demo#asset",
+  "assetHash": "urn:sha256:04a349226b8aa3342d1f793572e3a3049c539144d1762547862f92b44c084af9",
+  "license": "https://w3id.org/payswarm/licenses/personal-use",
+  "licenseHash": "urn:sha256:73ebeac3656bf37419a02a9d5041226dcc42722d5256895d324519a7b6d7d690",
+  "validFrom": "2013-07-16T00:00:00.000Z",
+  "validUntil": "2013-07-21T00:00:00.000Z",
+  "signature": {
+    "type": "GraphSignature2012",
+    "creator": "https://dev.payswarm.com/i/authority/keys/1",
+    "created": "2013-07-16T21:31:29Z",
+    "signatureValue": "kv/uWVEhEbzig5LmBxAWqvShDM6GOiCL/8pXVG58N34VPmv6TPO8sHU1CEyg2PtL7UGdrRzJlj3gsWC7puyRPMt6SptU6VvFkXO8nP0unDFGUKOn1RfAzxgrMG9oxas/o/K+r6selfpKTygfYmdF+4aNDjh78bn3WwhJO4Wees+jH/5PDEY88dDdSw+c/ECkg4FPiMGQMzyG4TZwIu+AO2tNKSbicm44DJRbLYij+VeITbCJ/1R+LZlrJukKLqFTA/Km+3l7Tay100/xXvyCCzNCYf/LHwDCeBL7oiey9dx4YZYrtt/wQLUvNHI8jEIabjwCydz5I5DYKIOfwAVqXA=="
+  },
+  "_id": "51e5bbb32accfe6525000001",
+  "__v": 0,
+  "payeeRule": [
+    {
+      "type": "PayeeRule",
+      "payeeGroupPrefix": [
+        "authority"
+      ],
+      "payeeRateType": "Percentage",
+      "maximumPayeeRate": "5",
+      "payeeApplyType": "ApplyInclusively"
+    }
+  ],
+  "payee": [
+    {
+      "type": "Payee",
+      "destination": "https://dev.payswarm.com/i/the-webdevs/accounts/royalties",
+      "payeeGroup": [
+        "vendor"
+      ],
+      "payeeRateType": "FlatAmount",
+      "payeeRate": "2",
+      "currency": "USD United States Dollars",
+      "payeeApplyType": "ApplyExclusively",
+      "comment": "this is a comment"
+    }
+  ],
+  "type": [
+    "Listing"
+  ]
+}

@@ -17,11 +17,9 @@ define([
 		init : function () {
 
 			var email = ($('img', $('.js-handler--login')).length)
-							? null
-							: $('.js-handler--login').text().trim()
+					? null
+					: $('.js-handler--login').text().trim()
 			;
-
-			console.log(email);
 
 			navigator.id.watch({
 				onlogin: function(assertion) {

@@ -8,15 +8,16 @@ html
 		.topcoat-navigation-bar
 			.container
 				.topcoat-navigation-bar__item.left.quarter
-					a(class='topcoat-icon-button', href='/') Home
-					a(class='topcoat-icon-button', href='/newasset') Sell
-					a(class='topcoat-icon-button', href='/about') About
+					a(class='topcoat-icon-button--quiet', href='/') Home
+					a(class='topcoat-icon-button--quiet', href='/newasset') Sell
+					a(class='topcoat-icon-button--quiet', href='/about') About
+					input(type='search', placeholder='search')
 				.topcoat-navigation-bar__item.center.half
-					h1.topcoat-navigation-bar__title WebPayments Marketplace
+					h1.topcoat-navigation-bar__title= title || 'WebPayments Marketplace'
 				.topcoat-navigation-bar__item.right
 					a.topcoat-icon-button--quiet
 						- if (user)
-							a.right(class='topcoat-icon-button js-handler--login', href='#')= user
+							button.right(class='topcoat-icon-button', data-id=id)= user
 								.topcoat-notification
 								.topcoat-list__container.list--medium
 									ul.topcoat-list.js-handler--asset-list

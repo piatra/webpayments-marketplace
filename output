@@ -1,0 +1,204 @@
+Express server listening on port 3000
+new asset undefined
+[90mGET /newasset [32m200 [90m475ms - 2.08kb[0m
+[90mGET /javascripts/libs/require.js [36m304 [90m60ms[0m
+[90mGET /images/signin.png [36m304 [90m30ms[0m
+[90mGET /stylesheets/topcoat-mobile-light.css [36m304 [90m28ms[0m
+[90mGET /stylesheets/style.css [32m200 [90m129ms - 4.21kb[0m
+serving index
+[90mGET / [32m200 [90m67ms - 1.81kb[0m
+[90mGET /javascripts/libs/require.js [36m304 [90m6ms[0m
+[90mGET /images/signin.png [36m304 [90m6ms[0m
+[90mGET /stylesheets/topcoat-mobile-light.css [36m304 [90m7ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m4ms[0m
+new asset undefined
+[90mGET /newasset [36m304 [90m100ms[0m
+[90mGET /javascripts/libs/require.js [36m304 [90m6ms[0m
+[90mGET /images/signin.png [36m304 [90m6ms[0m
+[90mGET /stylesheets/topcoat-mobile-light.css [36m304 [90m5ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m5ms[0m
+[90mGET /javascripts/main.js [36m304 [90m10ms[0m
+[90mGET /javascripts/main.js [36m304 [90m2ms[0m
+[90mGET /javascripts/app.js [36m304 [90m4ms[0m
+[90mGET /javascripts/event-handlers.js [36m304 [90m2ms[0m
+[90mGET /javascripts/app.js [36m304 [90m4ms[0m
+[90mGET /javascripts/message.js [36m304 [90m2ms[0m
+[90mGET /javascripts/event-assets.js [36m304 [90m2ms[0m
+[90mGET /javascripts/event-login.js [36m304 [90m1ms[0m
+[90mGET /javascripts/event-handlers.js [36m304 [90m1ms[0m
+[90mGET /javascripts/modal.js [36m304 [90m1ms[0m
+[90mGET /javascripts/message.js [36m304 [90m3ms[0m
+[90mGET /javascripts/event-assets.js [36m304 [90m2ms[0m
+[90mGET /javascripts/event-login.js [36m304 [90m1ms[0m
+[90mGET /javascripts/modal.js [36m304 [90m1ms[0m
+new asset undefined
+[90mGET /newasset [32m200 [90m85ms - 2.08kb[0m
+[90mGET /javascripts/libs/require.js [32m200 [90m26ms - 14.65kb[0m
+[90mGET /images/signin.png [32m200 [90m25ms - 1.95kb[0m
+[90mGET /stylesheets/topcoat-mobile-light.css [32m200 [90m25ms - 25.94kb[0m
+[90mGET /stylesheets/style.css [32m200 [90m25ms - 4.21kb[0m
+[90mGET /javascripts/main.js [32m200 [90m2ms - 50[0m
+[90mGET /javascripts/app.js [32m200 [90m1ms - 133[0m
+[90mGET /javascripts/event-handlers.js [32m200 [90m1ms - 991[0m
+[90mGET /javascripts/message.js [32m200 [90m2ms - 773[0m
+[90mGET /javascripts/event-login.js [32m200 [90m4ms - 1.29kb[0m
+[90mGET /javascripts/event-assets.js [32m200 [90m4ms - 2.1kb[0m
+[90mGET /javascripts/modal.js [32m200 [90m13ms - 1.21kb[0m
+new asset undefined
+[90mGET /newasset [36m304 [90m83ms[0m
+new asset undefined
+[90mGET /newasset [32m200 [90m118ms - 2.08kb[0m
+[90mGET /javascripts/libs/require.js [36m304 [90m26ms[0m
+[90mGET /images/signin.png [36m304 [90m26ms[0m
+[90mGET /stylesheets/topcoat-mobile-light.css [36m304 [90m26ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m59ms[0m
+[90mGET /javascripts/libs/require.js [32m200 [90m7ms - 14.65kb[0m
+[90mGET /images/signin.png [32m200 [90m7ms - 1.95kb[0m
+[90mGET /stylesheets/topcoat-mobile-light.css [32m200 [90m7ms - 25.94kb[0m
+[90mGET /stylesheets/style.css [32m200 [90m8ms - 4.21kb[0m
+new asset undefined
+[90mGET /newasset [32m200 [90m81ms - 2.08kb[0m
+[90mGET /stylesheets/topcoat-mobile-light.css [32m200 [90m1ms - 25.94kb[0m
+[90mGET /javascripts/libs/require.js [32m200 [90m8ms - 14.65kb[0m
+[90mGET /images/signin.png [32m200 [90m8ms - 1.95kb[0m
+[90mGET /stylesheets/style.css [32m200 [90m11ms - 4.21kb[0m
+[90mGET /javascripts/main.js [36m304 [90m2ms[0m
+[90mGET /javascripts/app.js [36m304 [90m2ms[0m
+[90mGET /javascripts/event-handlers.js [36m304 [90m1ms[0m
+[90mGET /javascripts/message.js [36m304 [90m1ms[0m
+[90mGET /javascripts/event-assets.js [36m304 [90m2ms[0m
+[90mGET /javascripts/event-login.js [36m304 [90m2ms[0m
+[90mGET /javascripts/modal.js [36m304 [90m5ms[0m
+[90mGET /assets/5 [32m200 [90m10ms - 2[0m
+[90mGET /javascripts/main.js [32m200 [90m16ms - 50[0m
+[90mGET /javascripts/app.js [32m200 [90m1ms - 133[0m
+[90mGET /javascripts/event-handlers.js [32m200 [90m1ms - 991[0m
+[90mGET /javascripts/message.js [32m200 [90m1ms - 773[0m
+[90mGET /javascripts/event-login.js [32m200 [90m4ms - 1.29kb[0m
+[90mGET /javascripts/event-assets.js [32m200 [90m1ms - 2.1kb[0m
+[90mGET /javascripts/modal.js [32m200 [90m1ms - 1.21kb[0m
+[90mGET /assets/5 [32m200 [90m2ms - 2[0m
+keys { '@context': 'https://w3id.org/payswarm/v1',
+  publicKey: 
+   { id: 'https://dev.payswarm.com/i/authority/keys/1',
+     privateKeyPem: '-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEAtwAuVHB6gddoZUT4WdGqXAdr2YnnKIzxyYxPQubeQ2+y7ZLG\njov9xYVhM/avm4NTRPili1NK5tyo8MQSAXbWNQMu7vYMuc5+CCpFpm1LrnQ4sWsR\nvaWSWNkFBZ8FGvcW7Yte/mefT+du1JBeB/eoafaK5qBQNj7qmNytvyDzOtxEtHUj\nJt9xfS2Jbox9j3MLHifEUMeoD5YErNjqOlVH98OT8x0cUCmbO6ujwD0Hd2RPh1If\nb+Q6Fp6XbLdu/36RL9SCSgRssCyVyvbcyTBemNHeRu/9J/G14qXW/SpyxnP7zmGP\nNX7ksnxG7gBj15zD03kzxrbaU5LObgI3bdDFXwIDAQABAoIBAC5/cUYrPjV3kiMJ\nH0FTMMIpcJHZpE59YYIgkJMjLh5cZ05OGP1nPJfPiB838u7Es4e21flMtJ9sOdDT\nQO/2Tf8yS96Tzi/387YHZ6Md6jjtduo9lkhlpYXFvqzq9tUfK0g4PW7OzX/0Agko\nlXvYxYYHCswGt9rQqbMlf1AtAyBVIXFklGTRFhfoveJ6smJABIabEgBIcz4jZxxd\nclSYjD2rEkPG60zWvfrjWhmN+NHINi/TrhruX40L74vJOjKAGtbQt+DHZ/8fDXe3\nNFVMFGIKyP1mw072g+797mfe1dJ7okk2Qgu/ea6FfiikDajdo3zpcO13Gyg4Pg2O\nbawGy4ECgYEA2ayQMTXqkA+fhlLmCMsAy0JUX1A6adkKJrRbP5EKUJKOIFxM7Bv1\n/FchyeTaL0XayWQ7rVN+8oBbo0FMpN23Hciw9wduNf+N7/QmGAy3JBl84EpXkbJb\nxxjax7f7VZPmeiR12d67fZ5i1mKeu4pssmbYN05Uv5htIq3DV2i4Vg8CgYEA1zjA\nRGIk/FjZYFhWAjB0W+vSCEdqsMxd6WmCLP9XIR2j5V71WE1ChTmAvBRzmI0GS8dP\nTFA6UY7UId0vS1XUSE/mn5d1q9vdXN1S0+rlL7QLlUJlH20SSnPrMxf3f1JiYyZQ\nobEDZWMxiOzBD5j1lOvIzl3RNvea573XBfxLa7ECgYEAjFNTrXXNnkuEEqsUgqyj\n+WTsUXm9/oido6/3dzZAiQrBtxjpufiYjrF5Jddz1K/ayKPmWOmP2DNpYAhzqYEJ\nUJkVhFr08LirvvoNKMnhstL/jvQ+Gb36rpJWUBRKYbP0C9+/XdHZ2rSlkQGIxOwL\nAMOONbE4rz9Lc+TDHnFzDH8CgYBtKnILvaR5AzAveF8X+S/sOC9u15q8Vs0Dyeqn\nnFS7jWdGvuW/hmDJZqNvwwfnRxD8evo0ATWzjLj4/FIy6jQlAbI/HPoo0/ryUajj\nqO/bRH3jlavpRs/SR/3zCqMVR9pz5Eld2oWYdbn4c+5xVOqsQPS4CEpIkUtXZKme\ndZxj4QKBgC6kn+elzr/if37W+eZbTyo7WhrRJqGttAs72isE5mL9ewijqFNjXC2y\nJHTKaBpBKv3RfOMCTCx/w5F+ONIY3VkePWEnEbcAI2Iy72DKP3imU8O0Sr5bVkDC\nPkvLiFTrq+kK7I6xuJfbYO/SIRIfN7PQsaAaymX10YQnuUYatTea\n-----END RSA PRIVATE KEY-----\n',
+     publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtwAuVHB6gddoZUT4WdGq\nXAdr2YnnKIzxyYxPQubeQ2+y7ZLGjov9xYVhM/avm4NTRPili1NK5tyo8MQSAXbW\nNQMu7vYMuc5+CCpFpm1LrnQ4sWsRvaWSWNkFBZ8FGvcW7Yte/mefT+du1JBeB/eo\nafaK5qBQNj7qmNytvyDzOtxEtHUjJt9xfS2Jbox9j3MLHifEUMeoD5YErNjqOlVH\n98OT8x0cUCmbO6ujwD0Hd2RPh1Ifb+Q6Fp6XbLdu/36RL9SCSgRssCyVyvbcyTBe\nmNHeRu/9J/G14qXW/SpyxnP7zmGPNX7ksnxG7gBj15zD03kzxrbaU5LObgI3bdDF\nXwIDAQAB\n-----END PUBLIC KEY-----\n' } }
+auth doc { _id: 51e96cc8a0e24c65b0000001,
+  owner: 'https://dev.payswarm.com/i/piatra',
+  username: 'piatra' }
+body { audience: 'http://localhost:3000',
+  expires: 1374255511620,
+  issuer: 'login.persona.org',
+  email: 'andrei.br92@gmail.com',
+  status: 'okay',
+  registered: 'true',
+  publicKey: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtwAuVHB6gddoZUT4WdGq\nXAdr2YnnKIzxyYxPQubeQ2+y7ZLGjov9xYVhM/avm4NTRPili1NK5tyo8MQSAXbW\nNQMu7vYMuc5+CCpFpm1LrnQ4sWsRvaWSWNkFBZ8FGvcW7Yte/mefT+du1JBeB/eo\nafaK5qBQNj7qmNytvyDzOtxEtHUjJt9xfS2Jbox9j3MLHifEUMeoD5YErNjqOlVH\n98OT8x0cUCmbO6ujwD0Hd2RPh1Ifb+Q6Fp6XbLdu/36RL9SCSgRssCyVyvbcyTBe\nmNHeRu/9J/G14qXW/SpyxnP7zmGPNX7ksnxG7gBj15zD03kzxrbaU5LObgI3bdDF\nXwIDAQAB\n-----END PUBLIC KEY-----\n' }
+doc { _id: 51e96cc8a0e24c65b0000001,
+  owner: 'https://dev.payswarm.com/i/piatra',
+  username: 'piatra' }
+[90mPOST /auth/verify [32m200 [90m4389ms - 661[0m
+serving index
+[90mGET / [32m200 [90m69ms - 1.96kb[0m
+[90mGET /stylesheets/topcoat-mobile-light.css [36m304 [90m4ms[0m
+[90mGET /stylesheets/style.css [36m304 [90m7ms[0m
+[90mGET /javascripts/libs/require.js [36m304 [90m4ms[0m
+[90mGET /javascripts/main.js [36m304 [90m1ms[0m
+keys { '@context': 'https://w3id.org/payswarm/v1',
+  publicKey: 
+   { id: 'https://dev.payswarm.com/i/authority/keys/1',
+     privateKeyPem: '-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEAtwAuVHB6gddoZUT4WdGqXAdr2YnnKIzxyYxPQubeQ2+y7ZLG\njov9xYVhM/avm4NTRPili1NK5tyo8MQSAXbWNQMu7vYMuc5+CCpFpm1LrnQ4sWsR\nvaWSWNkFBZ8FGvcW7Yte/mefT+du1JBeB/eoafaK5qBQNj7qmNytvyDzOtxEtHUj\nJt9xfS2Jbox9j3MLHifEUMeoD5YErNjqOlVH98OT8x0cUCmbO6ujwD0Hd2RPh1If\nb+Q6Fp6XbLdu/36RL9SCSgRssCyVyvbcyTBemNHeRu/9J/G14qXW/SpyxnP7zmGP\nNX7ksnxG7gBj15zD03kzxrbaU5LObgI3bdDFXwIDAQABAoIBAC5/cUYrPjV3kiMJ\nH0FTMMIpcJHZpE59YYIgkJMjLh5cZ05OGP1nPJfPiB838u7Es4e21flMtJ9sOdDT\nQO/2Tf8yS96Tzi/387YHZ6Md6jjtduo9lkhlpYXFvqzq9tUfK0g4PW7OzX/0Agko\nlXvYxYYHCswGt9rQqbMlf1AtAyBVIXFklGTRFhfoveJ6smJABIabEgBIcz4jZxxd\nclSYjD2rEkPG60zWvfrjWhmN+NHINi/TrhruX40L74vJOjKAGtbQt+DHZ/8fDXe3\nNFVMFGIKyP1mw072g+797mfe1dJ7okk2Qgu/ea6FfiikDajdo3zpcO13Gyg4Pg2O\nbawGy4ECgYEA2ayQMTXqkA+fhlLmCMsAy0JUX1A6adkKJrRbP5EKUJKOIFxM7Bv1\n/FchyeTaL0XayWQ7rVN+8oBbo0FMpN23Hciw9wduNf+N7/QmGAy3JBl84EpXkbJb\nxxjax7f7VZPmeiR12d67fZ5i1mKeu4pssmbYN05Uv5htIq3DV2i4Vg8CgYEA1zjA\nRGIk/FjZYFhWAjB0W+vSCEdqsMxd6WmCLP9XIR2j5V71WE1ChTmAvBRzmI0GS8dP\nTFA6UY7UId0vS1XUSE/mn5d1q9vdXN1S0+rlL7QLlUJlH20SSnPrMxf3f1JiYyZQ\nobEDZWMxiOzBD5j1lOvIzl3RNvea573XBfxLa7ECgYEAjFNTrXXNnkuEEqsUgqyj\n+WTsUXm9/oido6/3dzZAiQrBtxjpufiYjrF5Jddz1K/ayKPmWOmP2DNpYAhzqYEJ\nUJkVhFr08LirvvoNKMnhstL/jvQ+Gb36rpJWUBRKYbP0C9+/XdHZ2rSlkQGIxOwL\nAMOONbE4rz9Lc+TDHnFzDH8CgYBtKnILvaR5AzAveF8X+S/sOC9u15q8Vs0Dyeqn\nnFS7jWdGvuW/hmDJZqNvwwfnRxD8evo0ATWzjLj4/FIy6jQlAbI/HPoo0/ryUajj\nqO/bRH3jlavpRs/SR/3zCqMVR9pz5Eld2oWYdbn4c+5xVOqsQPS4CEpIkUtXZKme\ndZxj4QKBgC6kn+elzr/if37W+eZbTyo7WhrRJqGttAs72isE5mL9ewijqFNjXC2y\nJHTKaBpBKv3RfOMCTCx/w5F+ONIY3VkePWEnEbcAI2Iy72DKP3imU8O0Sr5bVkDC\nPkvLiFTrq+kK7I6xuJfbYO/SIRIfN7PQsaAaymX10YQnuUYatTea\n-----END RSA PRIVATE KEY-----\n',
+     publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtwAuVHB6gddoZUT4WdGq\nXAdr2YnnKIzxyYxPQubeQ2+y7ZLGjov9xYVhM/avm4NTRPili1NK5tyo8MQSAXbW\nNQMu7vYMuc5+CCpFpm1LrnQ4sWsRvaWSWNkFBZ8FGvcW7Yte/mefT+du1JBeB/eo\nafaK5qBQNj7qmNytvyDzOtxEtHUjJt9xfS2Jbox9j3MLHifEUMeoD5YErNjqOlVH\n98OT8x0cUCmbO6ujwD0Hd2RPh1Ifb+Q6Fp6XbLdu/36RL9SCSgRssCyVyvbcyTBe\nmNHeRu/9J/G14qXW/SpyxnP7zmGPNX7ksnxG7gBj15zD03kzxrbaU5LObgI3bdDF\nXwIDAQAB\n-----END PUBLIC KEY-----\n' } }
+auth doc { _id: 51e96cc8a0e24c65b0000001,
+  owner: 'https://dev.payswarm.com/i/piatra',
+  username: 'piatra' }
+body { audience: 'http://localhost:3000',
+  expires: 1374255516952,
+  issuer: 'login.persona.org',
+  email: 'andrei.br92@gmail.com',
+  status: 'okay',
+  registered: 'true',
+  publicKey: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtwAuVHB6gddoZUT4WdGq\nXAdr2YnnKIzxyYxPQubeQ2+y7ZLGjov9xYVhM/avm4NTRPili1NK5tyo8MQSAXbW\nNQMu7vYMuc5+CCpFpm1LrnQ4sWsRvaWSWNkFBZ8FGvcW7Yte/mefT+du1JBeB/eo\nafaK5qBQNj7qmNytvyDzOtxEtHUjJt9xfS2Jbox9j3MLHifEUMeoD5YErNjqOlVH\n98OT8x0cUCmbO6ujwD0Hd2RPh1Ifb+Q6Fp6XbLdu/36RL9SCSgRssCyVyvbcyTBe\nmNHeRu/9J/G14qXW/SpyxnP7zmGPNX7ksnxG7gBj15zD03kzxrbaU5LObgI3bdDF\nXwIDAQAB\n-----END PUBLIC KEY-----\n' }
+doc { _id: 51e96cc8a0e24c65b0000001,
+  owner: 'https://dev.payswarm.com/i/piatra',
+  username: 'piatra' }
+[90mPOST /auth/verify [32m200 [90m3520ms - 661[0m
+[90mGET /javascripts/app.js [36m304 [90m1ms[0m
+[90mGET /javascripts/event-handlers.js [36m304 [90m1ms[0m
+[90mGET /javascripts/event-login.js [36m304 [90m2ms[0m
+[90mGET /javascripts/message.js [36m304 [90m1ms[0m
+[90mGET /javascripts/event-assets.js [36m304 [90m2ms[0m
+[90mGET /javascripts/modal.js [36m304 [90m0ms[0m
+[90mGET /assets/5 [32m200 [90m6ms - 2[0m
+[90mGET /font/SourceSansPro-Regular.otf [33m404 [90m5ms[0m
+[90mGET /font/SourceSansPro-Semibold.otf [33m404 [90m4ms[0m
+[90mGET /font/SourceSansPro-Light.otf [33m404 [90m3ms[0m
+[90mGET /assets/created [32m200 [90m2ms - 2[0m
+[90mGET /assets/created [32m200 [90m9ms - 2[0m
+new asset piatra
+[90mGET /newasset [32m200 [90m113ms - 5.37kb[0m
+[90mGET /stylesheets/topcoat-mobile-light.css [32m200 [90m6ms - 25.94kb[0m
+[90mGET /stylesheets/style.css [32m200 [90m7ms - 4.21kb[0m
+[90mGET /javascripts/libs/require.js [32m200 [90m3ms - 14.65kb[0m
+[90mGET /javascripts/main.js [32m200 [90m19ms - 50[0m
+[90mGET /javascripts/app.js [32m200 [90m1ms - 133[0m
+[90mGET /javascripts/event-handlers.js [32m200 [90m1ms - 991[0m
+[90mGET /javascripts/event-assets.js [32m200 [90m7ms - 2.1kb[0m
+[90mGET /javascripts/event-login.js [32m200 [90m7ms - 1.29kb[0m
+[90mGET /javascripts/message.js [32m200 [90m6ms - 773[0m
+[90mGET /javascripts/modal.js [32m200 [90m1ms - 1.21kb[0m
+[90mGET /assets/5 [32m200 [90m3ms - 2[0m
+[90mGET /font/SourceSansPro-Regular.otf [33m404 [90m1ms[0m
+[90mGET /font/SourceSansPro-Semibold.otf [33m404 [90m1ms[0m
+[90mGET /font/SourceSansPro-Light.otf [33m404 [90m1ms[0m
+createListing
+createAsset
+[90mPOST /newasset/process/ [32m200 [90m30ms - 2.86kb[0m
+{ '@context': 'https://w3id.org/payswarm/v1',
+  id: 'http://listings.dev.payswarm.com/mozhacks/html5-me-song#listing',
+  userId: '51e96cc8a0e24c65b0000001',
+  vendor: 'https://dev.payswarm.com/i/webpayments',
+  asset: 'http://listings.dev.payswarm.com/mozhacks/demo#asset',
+  assetHash: 'urn:sha256:a20f1c33367f5281e21bac61ea9a00e871b9b42761eabae00ff502f6507fc1c7',
+  license: 'https://w3id.org/payswarm/licenses/personal-use',
+  licenseHash: 'urn:sha256:a5917c762b776903d082b9f8390f6dd9e632b372f220a25713a0cdfa38729b94',
+  validFrom: Fri Jul 19 2013 03:00:00 GMT+0300 (EEST),
+  validUntil: Sat Jul 20 2013 03:00:00 GMT+0300 (EEST),
+  signature: 
+   { signatureValue: 'SfvoKKV4jP2936c0g9hTPUKcjeIsVf/uMS5x3/KNZ9VULLc3emoaVxYMcSk7/v5pPDtBRaqCHc2ym5FZVsWDmfD4oIqmTf9yk/WcxwuAdhp+U32aX2ZR15oBQJ9h5UoI6Lc3xJ900jp6WggbQWw1knxSzbWOkCW337/wmNiVrURpxW+8wrdAES4+8yefnAEAXN3c4I5Hz3YPhzTWTWK/kD3ItYqOR+nJDTw4nLUBW6qIMRBhyLNV467h1eLlRtt0ZeONjXVsXf342ZP3Xpio/65qiNvWP3mZRWUDsTNX8QWxpVqkwr7cwpr52iCQXx2ccC+w/l0AbbicPg+E2rR+MQ==',
+     created: '2013-07-19T17:37:12Z',
+     creator: 'https://dev.payswarm.com/i/authority/keys/1',
+     type: 'GraphSignature2012' },
+  _id: 51e9794ae404e772b6000001,
+  payeeRule: 
+   [ { payeeApplyType: 'ApplyInclusively',
+       maximumPayeeRate: '5',
+       payeeRateType: 'Percentage',
+       payeeGroupPrefix: [Object],
+       type: 'PayeeRule' } ],
+  payee: 
+   [ { comment: '123321',
+       payeeApplyType: 'ApplyExclusively',
+       currency: 'USD',
+       payeeRate: '2',
+       payeeRateType: 'FlatAmount',
+       payeeGroup: [Object],
+       destination: 'https://dev.payswarm.com/i/webpayments/accounts/primary',
+       type: 'Payee' } ],
+  type: [ 'Listing' ] }
+{ '@context': 'https://w3id.org/payswarm/v1',
+  id: 'http://listings.dev.payswarm.com/mozhacks/demo#asset',
+  userId: '51e96cc8a0e24c65b0000001',
+  title: 'tren',
+  assetContent: 'http://listings.dev.payswarm.com/mozhacks/demo#asset',
+  assetProvider: 'https://dev.payswarm.com/i/piatra',
+  signature: 
+   { signatureValue: 'fX3airvoC/+/huh5oxF3LGt3RWmEdIjT306d6PAuuWCXedZs9WmagIb0hWAlOlV85UIAja8ep3v19Mm483PJdQbZAD89JDp9YD7wisg3gk+pTZgQLekiZ+mcFfqhhRg1bJyesJyZkgYPQ9+gcZMhBvFjUyvvbW3fC1WrW4iqIDM3LNbDrHB1XBuSNrzTWNScNmNzStuIf9yqVAlbseOF6Yc4BQuhaGUR8MxSKmiah6feGMYfwdtEn7L2SS6YhzL8+2WEkgAjvVsN1XG8j+FieE04QbI17x/dglh+Ip61aU7ip0m5syewvO4cIc37T9o8hmTCI5GSnn3NmYGA0MA1oQ==',
+     created: '2013-07-19T17:37:12Z',
+     creator: 'https://dev.payswarm.com/i/authority/keys/1',
+     type: 'GraphSignature2012' },
+  _id: 51e9794ae404e772b6000002,
+  creator: { fullName: 'Joe' },
+  type: [ 'Asset' ] }
+51e96cc8a0e24c65b0000001
+[90mPOST /newasset/save [31m500 [90m9ms[0m
+[90mGET /assets/created [32m200 [90m2ms - 2[0m

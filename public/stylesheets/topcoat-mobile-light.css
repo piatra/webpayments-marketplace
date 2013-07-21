@@ -687,7 +687,7 @@ Navigation Bar
   background: transparent;
   border: none;
   cursor: default;
-  height: 2.6rem;
+  height: 5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   background: #e5e9e8;
@@ -712,7 +712,7 @@ Navigation Bar
   background: transparent;
   border: none;
   margin: var-margin;
-  line-height: 2.6rem;
+  line-height: 5rem;
   vertical-align: top;
 }
 .topcoat-navigation-bar__title {
@@ -936,11 +936,11 @@ limitations under the License.
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 0 1.25rem;
+  padding: 0 1rem;
   -webkit-border-radius: 6px;
   border-radius: 6px;
   margin: 5px;
-  height: 3rem;
+  height: 2rem;
   font: inherit;
   font-weight: 200;
   outline: none;
@@ -1043,7 +1043,7 @@ Topcoat Large Textarea
 
 */
 .topcoat-textarea--large {
-  font: var-font--large;
+  font-size: 1.3rem;
   font-weight: 200;
   line-height: 2.6rem;
 }

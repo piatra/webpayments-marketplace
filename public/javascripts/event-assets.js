@@ -42,7 +42,7 @@ define(['modal', 'message'], function (modal, message) {
 
 	function setListAssets (docs) {
 		docs.forEach(function (d) {
-			if (!d.listing) return;
+			if (!d.listing.payee[0]) return;
 			var title = d.asset.title + '<br><em><small>' + d.listing.payee[0].comment + '</small></em>';
 			$('<li></li>').addClass('topcoat-list__item')
 				.html(title).appendTo('.js-handler--asset-list');

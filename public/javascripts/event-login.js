@@ -35,7 +35,7 @@ define(['message', 'modal'], function (message, modal) {
 						{tag: 'input', type:'submit', value: 'Register', 'class' : 'button--main'}
 					],
 					form: '/payswarm/complete'
-				})
+				}).appendTo('body');
 			});
 		}
 	}
