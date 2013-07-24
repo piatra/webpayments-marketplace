@@ -15,15 +15,16 @@ define(['message', 'modal'], function (message, modal) {
 		showPayswarmRegistration : function (response) {
 			$.post('/payswarm/register/', {
 				publicKey : response.publicKey
-			}).success(function (href) {
-				var msg = message.show({
-					message : 'You need to register with a payswarm authority',
-					href : href,
-					appendTo : '.messages',
-					newTab : true
-				});
-				loginEv.completePayswarmRegistration(msg);
+			}).success(loginEv.displayPayswarmMsg);
+		},
+		displayPayswarmMsg: function (href) {
+			var msg = message.show({
+				message : 'You need to register with a payswarm authority',
+				href : href,
+				appendTo : '.messages',
+				newTab : true
 			});
+			loginEv.completePayswarmRegistration(msg);
 		},
 		completePayswarmRegistration : function (msg) {
 			$('a', msg).on('click', function () {
@@ -31,7 +32,7 @@ define(['message', 'modal'], function (message, modal) {
 					title: 'Complete Payswarm registration',
 					components : [
 						{tag: 'textarea', placeholder: 'Paste the content here', name: 'payswarm_response'},
-						{tag: 'input', type: 'hidden', name: 'email', value: $('.js-handler--login').text()},
+						{tag: 'input', type: 'hidden', name: 'email', value: $('.js-handler--email').text()},
 						{tag: 'input', type:'submit', value: 'Register', 'class' : 'button--main'}
 					],
 					form: '/payswarm/complete'

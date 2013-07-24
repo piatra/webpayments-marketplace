@@ -16,6 +16,8 @@ exports.index = function(req, res) {
     	user: (req.session.email) ? req.session.email : null,
       id: (req.session.userid) ? req.session.userid : null,
       identity: (req.session.identity) ? req.session.identity: null,
+      registered: (req.session.registered) ? req.session.registered : null,
+      publicKey: (req.session.publicKey) ? req.session.publicKey : null,
       assets: assets.slice(0,4)
     });
   });
@@ -35,6 +37,8 @@ exports.newasset = function(req, res) {
   	user : (req.session.email) ? req.session.email : null,
     identity: (req.session.identity) ? req.session.identity: null,
     id : (req.session.userid) ? req.session.userid : null,
-    username: (req.session.username) ? req.session.username : null
+    username: (req.session.username) ? req.session.username : null,
+    registered: (req.session.registered) ? req.session.registered : null,
+    publicKey: (req.session.publicKey) ? req.session.publicKey : null
   });
 };

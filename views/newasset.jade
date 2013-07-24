@@ -9,17 +9,21 @@ block content
 			- else
 				h4 Complete the asset description
 				p: small: em You need to complete all of the fields below to create the asset and listing
+			- if (registered=='false')
+				h4 You are not registered yet
+				p: small: em You need to register with the payswarm authority
+				p.hidden(class='js-handler--show-payswarm-verify')= publicKey
 	.container
 		- if (!username)
-			form.half.pull-left(action='/user/set/username', method='POST')
+			form.half.pull-left.js-handler--change-username(action='/user/set/username', method='POST')
 				table.table-form
 					tr
 						td: label Username
 						td: input.topcoat-text-input(type='text', name='username', required)
 					tr
 						td: input(type='hidden', name='email', value=user)
-						td: button(type='submit', class='topcoat-button--large--cta') Create asset
-		- else
+						td: button(type='submit', class='topcoat-button--large--cta') Set username
+		- if (username && registered != 'false')
 			form.half.pull-left.js-handler--create-asset(action='/newasset/process/', method='POST')
 				table.table-form
 					tr

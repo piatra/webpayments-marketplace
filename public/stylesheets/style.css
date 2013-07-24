@@ -173,6 +173,9 @@ table td {
 .full-width {
   width: 100%;
 }
+.inline {
+  display: inline-block;
+}
 .margin-top {
   margin-top: 1rem;
 }

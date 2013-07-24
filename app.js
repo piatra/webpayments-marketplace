@@ -38,6 +38,8 @@ app.get('/', routes.index);
 app.post('/user/set/username', user.setUsername);
 
 app.post('/auth/verify', auth.verify);
+app.post('/user/payswarm', auth.payswarmVerify);
+
 app.get('/auth/createKeyPair', auth.createKeyPair);
 app.post('/payswarm/register', auth.registerKey);
 app.post('/payswarm/complete', auth.complatePayswarmRegistration);

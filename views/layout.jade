@@ -17,12 +17,13 @@ html
 				.topcoat-navigation-bar__item.right
 					a.topcoat-icon-button--quiet
 						- if (user)
-							button.right(class='topcoat-icon-button', data-id=id)= user
+							button.right(class='topcoat-icon-button', data-id=id)
+								.js-handler--email.inline= user
 								.topcoat-notification
 								.topcoat-list__container.list--medium
 									ul.topcoat-list.js-handler--asset-list
 						- else
-							a.right(class='js-handler--login', href='#'): img(src='/images/signin.png', title='Login')
+							a.right(class='js-handler--email js-handler--login', href='#'): img(src='/images/signin.png', title='Login')
 		.messages
 		block content
 	script(src='https://login.persona.org/include.js')

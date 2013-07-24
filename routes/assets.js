@@ -4,13 +4,12 @@ var payswarm = require('payswarm');
 var fs = require('fs');
 var async = require('async');
 var _ = require('underscore');
-var host = 'webpayments.fwd.wf';
+var HOST = 'https://webpayments.fwd.wf';
 
 var assets = {
 
 	createAssetAndListing: function (req, res) {
 		var assetId = new Date().getTime().toString(16);
-		var url = 'http://localhost:3000/newasset/save';
 		var k;
 		async.waterfall([
 		    function(callback) {
@@ -27,7 +26,7 @@ var assets = {
 		    function(keysPair, callback) {
 		      // Step #1: Create the asset and digitally sign it
 		      console.log("Generating asset...");
-		      var assetUrl = 'https://webpayments.fwd.wf/assets/asset/' + assetId;
+		      var assetUrl = HOST + '/assets/asset/' + assetId;
 		      var asset = {
 		        '@context': payswarm.CONTEXT_URL,
 		        id: assetUrl,
@@ -85,8 +84,8 @@ var assets = {
 		    function(signedAsset, assetHash, callback) {
 		      // Step #2: Create and digitally sign the listing
 		      console.log('Generating and signing listing...');
-		      var listingUrl = 'https://webpayments.fwd.wf/listings/listing/' + assetId;
-		      var assetUrl = 'https://webpayments.fwd.wf/assets/asset/' + assetId;
+		      var listingUrl = HOST + '/listings/listing/' + assetId;
+		      var assetUrl = HOST + '/assets/asset/' + assetId;
 
 		      var listing = {
 		        '@context': payswarm.CONTEXT_URL,
@@ -168,6 +167,11 @@ var assets = {
 		    if(err) {
 		      console.log('Failed to register signed asset and listing:',
 		        err.toString());
+		    } else {
+		    	res.json({
+		    		'error' : null,
+		    		'message': 'Asset and listing created successfully'
+		    	});
 		    }
 		  });
 	},

@@ -3,6 +3,7 @@ var user = require('../lib/user')();
 module.exports = {
 	setUsername: function (req, res) {
 		console.log(user);
+		req.session.username = req.body.username;
 		user.updateFields({
 			username: req.body.username
 		},

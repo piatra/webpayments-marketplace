@@ -1,0 +1,114 @@
+{
+  "@context": "https://w3id.org/payswarm/v1",
+  "@graph": [
+    {
+      "@context": "https://w3id.org/payswarm/v1",
+      "id": "https://webpayments.fwd.wf/assets/asset/140106f1b0a",
+      "listingId": "140106f1b0a",
+      "type": [
+        "Asset",
+        "pto:WebPage"
+      ],
+      "creator": {
+        "fullName": "andrei.br92@gmail.com",
+        "userId": "51e96cc8a0e24c65b0000001"
+      },
+      "title": "HTML5",
+      "assetContent": "https://webpayments.fwd.wf/assets/asset/140106f1b0a",
+      "assetProvider": "https://dev.payswarm.com/i/piatra",
+      "listingRestrictions": {
+        "validFrom": "2013-07-24T00:00:00Z",
+        "validUntil": "2013-07-31T00:00:00Z",
+        "payee": [
+          {
+            "id": "https://webpayments.fwd.wf/assets/asset/140106f1b0a/payee",
+            "type": "Payee",
+            "destination": "https://dev.payswarm.com/i/webpayments/accounts/incoming-payments",
+            "currency": "USD",
+            "payeeGroup": [
+              "assetProvider"
+            ],
+            "payeeRate": "80",
+            "payeeRateType": "Percentage",
+            "payeeApplyType": "ApplyInclusively",
+            "payeeApplyGroup": [
+              "vendor"
+            ],
+            "minimumAmount": "0.01",
+            "comment": "Asset Provider Royalty"
+          }
+        ],
+        "payeeRule": [
+          {
+            "type": "PayeeRule",
+            "payeeGroupPrefix": [
+              "authority"
+            ]
+          },
+          {
+            "type": "PayeeRule",
+            "payeeGroup": [
+              "vendor"
+            ],
+            "payeeRateType": "FlatAmount",
+            "payeeApplyType": "ApplyExclusively"
+          }
+        ]
+      },
+      "signature": {
+        "type": "GraphSignature2012",
+        "creator": "https://dev.payswarm.com/i/webpayments/keys/3",
+        "created": "2013-07-24T11:27:31Z",
+        "signatureValue": "cSdCUMZRucxpgJv6C2rRTv7hd9K9MaoXILLBQiD0JWIVFSDTaaFdAO+ytq7fnt0+JqvreNiXhwLGAKuF57U2cEWBCmUgLqp6SkcoM8r0zDul9wOIoQLkeScebyhY3K7D8D7GsiXk07cc2yjNS1THUzufEPb/4lsbbYQ03Gc8G8lv+ZU2CiYgtJ5EYnjq2tHi2R7FW8JUv+NasKb7rD2Jk+ctjRrKL8E8cL1venBSNwJVS+G9qcjGu3yXNTstq/6LpF6HdgcnFp1eLmrGpyt9oyccz0DTTW9WXDkawD8KUR2MJaA4ZI8VVqLJxUo2wPBa1tuncUiNmdbYWw5aNR+NCA=="
+      }
+    },
+    {
+      "@context": "https://w3id.org/payswarm/v1",
+      "id": "https://webpayments.fwd.wf/listings/listing/140106f1b0a",
+      "assetId": "140106f1b0a",
+      "type": [
+        "Listing",
+        "gr:Offering"
+      ],
+      "vendor": "https://dev.payswarm.com/i/piatra",
+      "payee": [
+        {
+          "id": "https://webpayments.fwd.wf/listings/listing/140106f1b0a/payee",
+          "type": "Payee",
+          "destination": "https://dev.payswarm.com/i/webpayments/accounts/incoming-payments",
+          "currency": "USD",
+          "payeeGroup": [
+            "vendor"
+          ],
+          "payeeRate": "2",
+          "payeeRateType": "FlatAmount",
+          "payeeApplyType": "ApplyExclusively",
+          "comment": "123321 [140106f1b0a]."
+        }
+      ],
+      "payeeRule": [
+        {
+          "type": "PayeeRule",
+          "payeeGroupPrefix": [
+            "authority"
+          ],
+          "maximumPayeeRate": "10",
+          "payeeRateType": "Percentage",
+          "payeeApplyType": "ApplyInclusively"
+        }
+      ],
+      "asset": "https://webpayments.fwd.wf/assets/asset/140106f1b0a",
+      "assetHash": "urn:sha256:c1ced7e5a94049e259f8eaae3c0bdede9ce276bb72653971bad615ae05197828",
+      "license": "https://w3id.org/payswarm/licenses/blogging",
+      "licenseHash": "urn:sha256:d9dcfb7b3ba057df52b99f777747e8fe0fc598a3bb364e3d3eb529f90d58e1b9",
+      "validFrom": "2013-07-24T00:00:00Z",
+      "validUntil": "2013-07-31T00:00:00Z",
+      "signature": {
+        "type": "GraphSignature2012",
+        "creator": "https://dev.payswarm.com/i/webpayments/keys/3",
+        "created": "2013-07-24T11:27:31Z",
+        "signatureValue": "GlU1V0ArZMjM4vOnM5/7HB0C/umWS+D04mD5+qVY8AX8AsPKQouZudgNNmCVExH21xX1VY45nNfAfbK9Gxkx9t4biLh0rEoxG6uZgKCpbIUytg27ZOTEuGcLf96rJRuaXMjakwUTXC/0gFagNO4cPW9et8qtfBGVcBZ4/9F5hPOEH2ow2ttRdmI69N9VL8Y5X+0ZbBX04Ez/Yw4PcMoxh5tZpC3gXCp0ln5AN48YXEOe3Vzh9EkRzMq5ozuRfIRnjznRumbpSTWXKLYixLD4/GC0fUIfFyALlPIC8k3nITfyr08x29szYqYhqAR8OxKoW3Kb+RSyfcKY7XGe2jdAag=="
+      }
+    }
+  ]
+}

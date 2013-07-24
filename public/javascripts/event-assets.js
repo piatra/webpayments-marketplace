@@ -4,22 +4,29 @@ define(['modal', 'message'], function (modal, message) {
 		console.log('asset created');
 		modal.show({
 			title: 'Asset and listing',
-			components : [
-				{
-					tag: 'pre',
-					class: 'container--json',
-					html: JSON.stringify(response, null, 4)
-				},
-				{
-					tag: 'input', type:'submit',
-					value: 'Publish',
-					class: 'topcoat-button--large--cta pull-right js-handler--publish-asset',
-				}
-			],
-			form: '/newasset/save'
+			components : [{
+				tag: 'p',
+				text: 'You asset and listing have been created and publised',
+			}]
 		}).appendTo('body');
 
-		$('.js-handler--publish-asset').on('click', assets.publish);
+		$('.close-handler').on('click', function () {
+			location.href = '/';
+		});
+	}
+
+	function usernameChanged (response) {
+		modal.show({
+			title: 'Your username has been set',
+			components : [{
+				tag: 'p',
+				text: 'Congrats you now have a username!',
+			}]
+		}).appendTo('body');
+
+		$('.close-handler').on('click', function () {
+			location.href = '/newasset';
+		});
 	}
 
 	function setAssetCount (count) {
@@ -50,14 +57,18 @@ define(['modal', 'message'], function (modal, message) {
 	}
 
 	var assets = {
-		create: function (e) {
-			e.preventDefault();
-			var data = $('form').serialize();
-			$.post($('form').attr('action'), data)
-				.done(assetCreated)
-				.fail(errorHandler)
-			;
-
+		// handler: .js-handler--create-asset
+		// on 	  : submit
+		// action : /newasset/process/
+		create: function (cb) {
+			return function (e) {
+				e.preventDefault();
+				var data = $('form').serialize();
+				$.post($('form').attr('action'), data)
+					.done(cb)
+					.fail(errorHandler)
+				;
+			}
 		},
 		publish: function (e) {
 			var json = JSON.parse($('.container--json').text());
@@ -85,7 +96,9 @@ define(['modal', 'message'], function (modal, message) {
 				})
 				.fail(errorHandler)
 			;
-		}
+		},
+		usernameChanged: usernameChanged,
+		assetCreated: assetCreated
 	}
 
 	return assets;

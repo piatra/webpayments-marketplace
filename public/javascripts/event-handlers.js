@@ -7,9 +7,11 @@ define([
 	var verify = {
 		assertion : function (assertion) {
 			$.post("/auth/verify", { assertion: assertion })
-			.success(loginEv.handleLogin).fail(function (data) {
-				console.log('fail', data);
-			});
+				.success(loginEv.handleLogin)
+				.fail(function (data) {
+					console.log('fail', data);
+				})
+			;
 		}
 	};
 
@@ -38,7 +40,16 @@ define([
 				navigator.id.request();
 			});
 
-			$('.js-handler--create-asset').on('submit', assetsEv.create);
+			$('.js-handler--create-asset').on('submit', assetsEv.create(assetsEv.assetCreated));
+
+			$('.js-handler--change-username').on('submit', assetsEv.create(assetsEv.usernameChanged));
+
+			// FIXME
+			if ($('.js-handler--show-payswarm-verify').length) {
+				$.post('/payswarm/register/', {
+					publicKey: $('.js-handler--show-payswarm-verify').text()
+				}).success(loginEv.displayPayswarmMsg);
+			}
 
 			assetsEv.loadLatest($('.container--newest'));
 
