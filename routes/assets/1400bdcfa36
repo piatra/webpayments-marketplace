@@ -1,14 +1,10 @@
-Generating asset...
-Signing asset...
-Generating and signing listing...
-Register signed asset and listing...
 {
   "@context": "https://w3id.org/payswarm/v1",
   "@graph": [
     {
       "@context": "https://w3id.org/payswarm/v1",
-      "id": "https://webpayments.fwd.wf/assets/asset/1400b472708",
-      "listingId": "1400b472708",
+      "id": "https://webpayments.fwd.wf/assets/asset/1400bdcfa36",
+      "listingId": "1400bdcfa36",
       "type": [
         "Asset",
         "pto:WebPage"
@@ -18,14 +14,14 @@ Register signed asset and listing...
         "userId": "51e96cc8a0e24c65b0000001"
       },
       "title": "keon",
-      "assetContent": "https://webpayments.fwd.wf/assets/asset/1400b472708",
+      "assetContent": "https://webpayments.fwd.wf/assets/asset/1400bdcfa36",
       "assetProvider": "https://dev.payswarm.com/i/piatra",
       "listingRestrictions": {
         "validFrom": "2013-07-23T00:00:00Z",
         "validUntil": "2013-07-31T00:00:00Z",
         "payee": [
           {
-            "id": "https://webpayments.fwd.wf/assets/asset/1400b472708/payee",
+            "id": "https://webpayments.fwd.wf/assets/asset/1400bdcfa36/payee",
             "type": "Payee",
             "destination": "https://dev.payswarm.com/i/webpayments/accounts/incoming-payments",
             "currency": "USD",
@@ -62,14 +58,14 @@ Register signed asset and listing...
       "signature": {
         "type": "GraphSignature2012",
         "creator": "https://dev.payswarm.com/i/webpayments/keys/3",
-        "created": "2013-07-23T11:25:47Z",
-        "signatureValue": "MRwAkVIBlIbJPNnGd/+Mv6Ov5ywguRtATVEcMk71tsWPP62bQXT/EnpcDlOZPvVdRlFoXCCVKtJ+o6t5BE2zA4ko8De1CmwdE6bFidSVWpiPOIL+CEcOFCS9DbqO/zScLdHyu/KZZ4+PMm/2aaKK9Ucm4Tn0peAqVgIufHOwyPdVRqz1f+jrTmRKDYfLjYa8ZlfLIOXNRmu8z23/fClqOUM77L8CKDYnHDBe/vGulQ8fsykkW+CCD/7EkoS9MOL/z5EaFUAiVcfVFKRfpxcAJ/PmuxwLksbeW9WweHA1g3aGcEZSYJDMXbHmvILtgIu0GG5EwlNYfExSfCrUNjwW9Q=="
+        "created": "2013-07-23T14:09:26Z",
+        "signatureValue": "b43ZDG2J9C9VRwCR9JCKUTeczxh3tAVHka10gLc6Sz7PK18PjZUezIKVrh6dMha209Ctq/iiMJyVzXcQHQseePOlDT2DJe8LdXd34EARXvttNC+o3uynBlDFCnwYFxFuM3JSRGH1hfhrVc0VAdSsj8W8962oQuNbPTw7xoxthU6z9q1R5Iu1inlCP44XUugsozTF5SquZg8xidfJTD/35zdBNf7nWo9yqpWc926sp+H7eyVpJJq5gBy10j0+N4DVSozOgaPy9i7UX245tfwV5fUKdUosqSC7QE8JvwjQVZWAWM+Vg2Qe8t7l7Px8qGzxS/VHP5/8+sRJiXlBDPcgZQ=="
       }
     },
     {
       "@context": "https://w3id.org/payswarm/v1",
-      "id": "https://webpayments.fwd.wf/listings/listing/1400b472708",
-      "assetId": "1400b472708",
+      "id": "https://webpayments.fwd.wf/listings/listing/1400bdcfa36",
+      "assetId": "1400bdcfa36",
       "type": [
         "Listing",
         "gr:Offering"
@@ -77,7 +73,7 @@ Register signed asset and listing...
       "vendor": "https://dev.payswarm.com/i/piatra",
       "payee": [
         {
-          "id": "https://webpayments.fwd.wf/listings/listing/1400b472708/payee",
+          "id": "https://webpayments.fwd.wf/listings/listing/1400bdcfa36/payee",
           "type": "Payee",
           "destination": "https://dev.payswarm.com/i/webpayments/accounts/incoming-payments",
           "currency": "USD",
@@ -87,7 +83,7 @@ Register signed asset and listing...
           "payeeRate": "2",
           "payeeRateType": "FlatAmount",
           "payeeApplyType": "ApplyExclusively",
-          "comment": "keon [1400b472708]."
+          "comment": "keon [1400bdcfa36]."
         }
       ],
       "payeeRule": [
@@ -101,8 +97,8 @@ Register signed asset and listing...
           "payeeApplyType": "ApplyInclusively"
         }
       ],
-      "asset": "https://webpayments.fwd.wf/assets/asset/1400b472708",
-      "assetHash": "urn:sha256:51331ea635cb74fc926da88cabede966c3705c7b62c7a4be25e2237bd9d5344e",
+      "asset": "https://webpayments.fwd.wf/assets/asset/1400bdcfa36",
+      "assetHash": "urn:sha256:9e4b373e9faa551fedf732345965692c0895be49a96dd0e09c53d74f1ab05910",
       "license": "https://w3id.org/payswarm/licenses/blogging",
       "licenseHash": "urn:sha256:d9dcfb7b3ba057df52b99f777747e8fe0fc598a3bb364e3d3eb529f90d58e1b9",
       "validFrom": "2013-07-23T00:00:00Z",
@@ -110,20 +106,9 @@ Register signed asset and listing...
       "signature": {
         "type": "GraphSignature2012",
         "creator": "https://dev.payswarm.com/i/webpayments/keys/3",
-        "created": "2013-07-23T11:25:47Z",
-        "signatureValue": "P3YSr1mHxMBaUDpy4VxzqZKeeT+DJd5PPzv1JFAOpHxwfa4QkjFjv73KriDrTkFvsTtNInxlMi1p2TDNXl79w4hz5sufuqSmC11gMVn65VFcRBdCogW94a7LYIPif3EEXMmSeGkvsOSUqmN/ia5DzfoFB6AfQApqa0xyNr6wQCswqi6DctVrLkox5HcpzT+kwrlEgXzWWI22QeFtcP0jsE8Mr8+8x2HfitRdsnKxQ+3jZe6ECF6L5x+IdCYVqRXgoBM01sFq6yimkIRl5nmF+cWEV8eIAjyAMz1xJ44nvznn9/ajUp9JKqfC4yso0GpRQiTImiJ4qNBgRHGg61FO5A=="
+        "created": "2013-07-23T14:09:26Z",
+        "signatureValue": "mdMldVm9nIgSVpJVgLCKIDeXXf2A29K/0RHEIYx8lbHjJD/jdw877bJztwPiU48nZLtJ2yj03ehoyfiPANqG2vpxVug5cGmRNrvdrP0lKZtdMd/aeOxqShLb8YWwubcCeARuix9LY04+JemMlG2QM+MUY0a1QJFOMskL2gX7xDeaQJ16eACgTOTtG68KIGW82qyG8C5Iq7g3XD+CtUns2cCXD8+ECsOdWtkrCAyLwC/URiVdNBApAPbRfeOAcwzB5AadiqTXed2lkchaIF4he4+/yxdmJA0erceAlU4phl03qLvSj5TyQ0TIt54GLyzUwMFsSG5Cw1wCcKD/LeDJ9w=="
       }
     }
   ]
 }
-{ '0': 
-   { '@context': 'https://w3id.org/payswarm/v1',
-     '@graph': [ [Object], [Object] ] },
-  '1': [Function] }
-asset err null
-listing err null
-Registered signed asset:
-    https://webpayments.fwd.wf/assets/asset/1400b472708
-Registered signed listing:
-    https://webpayments.fwd.wf/listings/listing/1400b472708
-23 Jul 14:25:49 - [nodemon] exiting

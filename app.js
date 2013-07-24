@@ -43,11 +43,13 @@ app.post('/payswarm/register', auth.registerKey);
 app.post('/payswarm/complete', auth.complatePayswarmRegistration);
 
 app.get('/newasset', routes.newasset);
-app.post('/newasset/process/', assets.processAsset);
+app.post('/newasset/process/', assets.createAssetAndListing);
 app.post('/newasset/save', assets.saveAsset);
 
 app.get('/assets/created', assets.getUserAssets);
 app.get('/assets/:count', assets.getLatestAssets);
+
+app.get('/resign/listing/:id', assets.resignListing);
 
 app.get('/assets/asset/:id', assets.getAsset);
 app.get('/listings/listing/:id', assets.getListing);

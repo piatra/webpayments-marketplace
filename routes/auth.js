@@ -63,7 +63,6 @@ var auth = {
 
 	returnKeys: function (req, res, body, keyPair) {
 		keyPair = JSON.parse(keyPair);
-		console.log('keys', keyPair);
 		body.publicKey = keyPair.publicKey.publicKeyPem;
 		req.session.email = body.email;
 		user.get({owner: 1, username: 1}, {email: body.email}, function (err, doc) {
@@ -74,8 +73,6 @@ var auth = {
 				req.session.userid = doc['_id'];
 				req.session.identity = doc.owner;
 				req.session.username = doc.username;
-				console.log('body', body);
-				console.log('doc', doc);
 				res.json(body);
 			}
 		})

@@ -8,8 +8,9 @@ var assets = require('../lib/asset.js')();
 
 exports.index = function(req, res) {
   console.log('serving index');
+  console.log('getting all assets');
   assets.getUserAssets({}, function (assets) {
-    
+    console.log(assets);
     res.render('index', {
     	title: title,
     	user: (req.session.email) ? req.session.email : null,
