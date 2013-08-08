@@ -1,22 +1,29 @@
 extends layout
 
 block content
-	.description
-		.container
+	.container
+		.well.padding5
 			h4 Welcome to the WebPayments Marketplace
 			p: small: em This application is implemented using: Mozilla Persona, Payswarm.js
 			- if (!user)
 				p You should <a href="/login">sign up</a> for an account and give it a try
+			- else
+				p.bubble--info: small: em Unless you have an account set up with us all purchases will be made through the payswarm authority
 	.container
-		br
+		hr
 		.category
-			h4.category__title
-				| Newest
-				a.topcoat-button.pull-right(href='/assets/all') See all
+			ul.tab-bar
+				li.topcoat-button Newest
+				li.topcoat-button Popular
 			ul.item-container.container--newest
-				- assets.forEach(function (asset) {
+				- assets.forEach(function (asset, i) {
+					- url = '/assets/asset/' + asset.asset.listingId + '/purchase';
 					li
 						h4= asset.asset.title
-						p comment
-						a.topcoat-button--cta(href='/assets/' + asset.asset.listingId + '/purchase') Buy
+						- asset.asset.assetPreview.forEach(function (f) {
+							img(src='/uploads/' + asset.asset.listingId + '_' + f)
+						- })
+						p= asset.listing.payee[0].comment
+						p= asset.listing.payee[0].payeeRate + ' ' + asset.listing.payee[0].currency
+						a.topcoat-button--cta.buy--cta(href=url) Buy
 				- })

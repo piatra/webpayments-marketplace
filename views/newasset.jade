@@ -1,8 +1,8 @@
 extends layout
 
 block content
-	.description
-		.container
+	.container
+		.well.padding5
 			- if (!username)
 				h4 Choose a username
 				p: small: em This is used to show who is selling the asset without showing your real email address.
@@ -24,7 +24,7 @@ block content
 						td: input(type='hidden', name='email', value=user)
 						td: button(type='submit', class='topcoat-button--large--cta') Set username
 		- if (username && registered != 'false')
-			form.half.pull-left.js-handler--create-asset(action='/newasset/process/', method='POST')
+			form.half.pull-left(class='js-handler--create-asset', action='/newasset/process/', method='POST', enctype='multipart/form-data')
 				table.table-form
 					tr
 						td: input(type='hidden', value=user, name='email')
@@ -38,8 +38,12 @@ block content
 						td Description
 						td: textarea(class='topcoat-textarea full-width', placeholder='Comments', name='description')
 					tr
-						td: label Link to content
-						td: input(class='topcoat-text-input', type='file', name='assetContent',required)
+						td
+						td
+							p: em: small Select images and add them as content
+							p: em: small Add the assets you want to sell
+							input(class='topcoat-text-input', type='file', name='files', required, multiple)
+							p: em: small.js-handler--filesAttached
 					tr
 						td: label Price
 						td
@@ -65,8 +69,8 @@ block content
 				p
 					input(type='hidden', name='userId', value=id)
 					input(type='hidden', name='owner', value=identity)
-					button(type='submit', class='topcoat-button--large--cta pull-right') Create asset
-			.half.pull-right.description.margin-top
+					input.buy--cta(type='submit', class='topcoat-button--large--cta') Create asset
+			.half.pull-right.padding5#preview
 				h2 About assets and listings
 				p An asset is a description of a product or service. Examples of assets include web pages, ebooks, groceries, concert tickets, dog walking services, donations, rights to transmit on a particular radio frequency band, and invoices for work performed. In general, anything of value can be modeled as an asset.
 				p A listing is a description of the specific terms under which an asset is offered for sale. These terms include: the exact asset being sold, the license that will be associated with the purchase, the list of people or organizations to be paid for the asset, and the validity period for the listing. Like an asset, a listing may include other application-specific properties.

@@ -690,7 +690,6 @@ Navigation Bar
   height: 5rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  background: #e5e9e8;
   color: #000;
   -webkit-box-shadow: inset 0 -1 #b9bcbc, 0 1px rgba(0,0,0,0.95);
   box-shadow: inset 0 -1 #b9bcbc, 0 1px rgba(0,0,0,0.95);
@@ -826,33 +825,18 @@ limitations under the License.
  */
 .topcoat-search-input,
 .topcoat-search-input--large {
-  vertical-align: top;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 0 1.25rem;
-  -webkit-border-radius: 6px;
+  padding: 0 1.8rem;
   border-radius: 6px;
-  margin: 5px;
-  height: 3rem;
-  font: inherit;
   font-weight: 200;
   outline: none;
   border: 1px solid #a5a8a8;
   background-color: #e5e9e8;
-  -webkit-box-shadow: inset 0 1px rgba(0,0,0,0.12);
   box-shadow: inset 0 1px rgba(0,0,0,0.12);
   color: #454545;
-  -webkit-appearance: none;
-  padding: 0 0 0 2.7em;
-  -webkit-border-radius: 15px;
+  font-size: 1rem;
   border-radius: 15px;
-  background-image: url("../img/search.svg");
-  background-position: 1em center;
-  background-repeat: no-repeat;
-  -webkit-background-size: 12px;
-  -moz-background-size: 12px;
-  background-size: 12px;
+  margin-top: 1.5rem;
+  height: 2rem;
 }
 .topcoat-search-input:focus,
 .topcoat-search-input--large:focus {
@@ -1046,4 +1030,22 @@ Topcoat Large Textarea
   font-size: 1.3rem;
   font-weight: 200;
   line-height: 2.6rem;
+}
+
+progress {
+  margin: 14px 5px;
+  width: 99%;
+}
+
+.thumb {
+  max-width: 200px;
+  border:3px solid #fff;
+  box-shadow: 0 0 3px rgba(0,0,0,.1);
+}
+
+.preview-check {
+  width:200px;
+  height:200;
+  overflow:hidden;
+  position:relative;
 }

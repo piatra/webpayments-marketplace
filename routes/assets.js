@@ -1,9 +1,11 @@
 var asset = require('../lib/asset')();
 var keys = require('../lib/keys')();
 var payswarm = require('payswarm');
+var request = require('request');
 var fs = require('fs');
 var async = require('async');
 var _ = require('underscore');
+var user = require('../lib/user')();
 var HOST = 'https://webpayments.fwd.wf';
 
 var assets = {
@@ -12,6 +14,29 @@ var assets = {
 		var assetId = new Date().getTime().toString(16);
 		var k;
 		async.waterfall([
+			function (callback) {
+				console.log('getting & writing files');
+				var l = req.files.files.length;
+				if (!_.isArray(req.files.files)) {
+					req.files.files = [req.files.files];
+					l = 1;
+				}
+				req.files.files.forEach(function (file) {
+					fs.readFile(file.path, function (err, data) {
+						var newPath = __dirname + "/../public/uploads/" + assetId + '_' + file.name;
+						fs.writeFile(newPath, data, function (err) {
+							console.log('done writing', err);
+							if (err) {
+								console.log('an error occured');
+								callback(err);
+							} else {
+								if (--l == 0)
+									callback(null);
+							}
+						});
+					});
+				});
+			},
 		    function(callback) {
 		      // read the config file from disk
 		      keys.getKeyPair(function(err, keysPair) {
@@ -37,8 +62,9 @@ var assets = {
 		          userId: req.body.userId
 		        },
 		        title: req.body.title,
-		        assetContent: assetUrl,
-		        assetProvider: req.body.owner,
+		        assetContent: assetUrl + '/content',
+		        assetFiles: req.files.files.map(function (f) { return f.name }),
+		        assetProvider: 'https://dev.payswarm.com/i/webpay',
 		        listingRestrictions: {
 		          validFrom: payswarm.w3cDate(new Date(req.body.validFrom)),
 		          validUntil: payswarm.w3cDate(new Date(req.body.validUntil)),
@@ -48,7 +74,7 @@ var assets = {
 		            destination: req.body.source,
 		            currency: 'USD',
 		            payeeGroup: ['assetProvider'],
-		            destination: 'https://dev.payswarm.com/i/webpayments/accounts/incoming-payments',
+		            destination: 'https://dev.payswarm.com/i/webpay/accounts/primary',
 		            payeeRate: '80',
 		            payeeRateType: 'Percentage',
 		            payeeApplyType: 'ApplyInclusively',
@@ -92,17 +118,17 @@ var assets = {
 		        id: listingUrl,
 		        assetId: assetId,
 		        type: ['Listing', 'gr:Offering'],
-		        vendor: req.body.owner,
+		        vendor: 'https://dev.payswarm.com/i/webpay',
 		        payee: [{
 		          id: listingUrl + '/payee',
 		          type: 'Payee',
-		          destination: 'https://dev.payswarm.com/i/webpayments/accounts/incoming-payments',
+		          destination: 'https://dev.payswarm.com/i/webpay/accounts/primary',
 		          currency: 'USD',
 		          payeeGroup: ['vendor'],
 		          payeeRate: req.body.price,
 		          payeeRateType: 'FlatAmount',
 		          payeeApplyType: 'ApplyExclusively',
-		          comment: req.body.comment + ' [' + assetId + '].'
+		          comment: req.body.comment
 		        }],
 		        payeeRule : [{
 		          type: 'PayeeRule',
@@ -138,15 +164,9 @@ var assets = {
 
 		      console.log(JSON.stringify(assetAndListing, null, 2));
 
-		      fs.writeFile(__dirname + '/assets/' + assetId, JSON.stringify(assetAndListing, null, 2), function (err) {
-		      	if (err) {
-		      		console.log(err);
-		      	} else {
-			      asset.save(assetAndListing, function(err, result) {
-			        callback(err, assetAndListing);
-			      });
-		      	}
-		      })
+		      asset.save(assetAndListing, function(err, result) {
+		        callback(err, assetAndListing);
+		      });
 		    },
 		    function(assetAndListing, callback) {
 		      // display registration details
@@ -168,9 +188,10 @@ var assets = {
 		      console.log('Failed to register signed asset and listing:',
 		        err.toString());
 		    } else {
-		    	res.json({
-		    		'error' : null,
-		    		'message': 'Asset and listing created successfully'
+		    	res.render('preview-selection.jade', {
+		    		'title': 'WebPayments Marketplace',
+		    		'files': req.files.files,
+		    		'id': assetId
 		    	});
 		    }
 		  });
@@ -217,40 +238,69 @@ var assets = {
 
 	purchase: function (req, res) {
 		// this is a big FIXME
-		if (!req.session.identity) res.end('not logged in ');
-		else {
-			keys.getKeyPair(function(err, k) {
-				k = JSON.parse(k);
-				fs.readFile(__dirname + '/assets/' + req.params.id, function (err, data) {
-					json = JSON.parse(data);
-					payswarm.purchase(json['@graph'][1], {
-						transactionService: 'https://dev.payswarm.com/transactions',
-						customer: req.session.identity,
-						source: req.session.identity,
-						privateKeyPem: k.publicKey.privateKeyPem,
-						publicKey: 'https://dev.payswarm.com/i/webpayments/keys/3',
-						verbose: true
-					}, function(err, receipt) {
-						if (err) {
-							console.log(JSON.stringify(err, null,2));
-						} else {
-							console.log('Receipt:', receipt);
-							console.log('Transaction ID:', receipt.contract.id);
-						}
-					});
+		var id = req.params.id;
+		var authority = 'https://dev.payswarm.com/';
+		// if user purchased asset
+		user.get({purchases:1,preferences:1}, {owner:req.session.identity || 'https://dev.payswarm.com/i/piatra'}, function (err, docs) {
+			console.log(docs, 'for', {owner:req.session.identity});
+			if (err) {
+				console.log(err);
+				res.end('Error!');
+			} else {
+				// show the asset page
+				if (~docs.purchases.indexOf(id)) {
+					res.render('asset-purchase', {
+						message: 'You have purchased this asset before'
+					})
+				// else redirect
+				} else {
+					if (docs.preferences.hasBudget) {
+						// get the money from the budget he has set up
+						request.get({url : HOST + '/listings/listing/' + id, json: true}, function (err, resp, listing) {
+							keys.getKeyPair(function (err, data) {
+								if (err) {
+									cb(err);
+								} else {
+									data = JSON.parse(data);
+									payswarm.purchase(listing, {
+										transactionService: authority + 'transactions',
+										customer: req.session.identity,
+										publicKey: data.publicKey.id,
+										privateKeyPem: data.publicKey.privateKeyPem,
+										verbose: true
+									}, function (err, receipt){
+										console.log(err, receipt);
+									});
+								}
+							});
+						})
+					} else {
+						// take him to the payswarm website
+						assets._purchaseRedirect (req, function (url) {
+							res.redirect(url);
+						});
+					}
+				}
+			}
+		})
+	},
 
-				})
+	_purchaseRedirect: function (req, cb) {
+		var id = req.params.id;
+		var href = (process.env.NODE_ENV) ? 'http://webpayments.jit.su' : 'https://webpayments.fwd.wf';
+		request.get({url: href+'/listings/listing/' + id, json: true}, function (err, response, body){
+			payswarm.hash(body, function (err, hash) {
+				var url = 'https://dev.payswarm.com/profile/login?ref=/transactions?form=pay';
+				url += encodeURIComponent('&listing=' + href + '/listings/listing/' + id);
+				url += encodeURIComponent('&listing-hash=' + hash);
+				url += encodeURIComponent('&callback=' + href + '/assets/asset/' + id + '/purchased?id=' + req.session.id);
+				url += encodeURIComponent('&response-nonce=12345678');
+				cb(url);
 			})
-
-		}
-
+		});
 	},
 
 	getListing: function (req, res) {
-		// fs.readFile(__dirname + '/assets/' + req.params.id, function (err, data) {
-		// 	data = JSON.parse(data);
-		// 	res.json(data['@graph'][1]);
-		// });
 		var query = {'assetId': req.params.id};
 		asset.getListing(query, function (doc) {
 			res.json(doc);
@@ -258,10 +308,6 @@ var assets = {
 	},
 
 	getAsset: function (req, res) {
-		// fs.readFile(__dirname + '/assets/' + req.params.id, function (err, data) {
-		// 	data = JSON.parse(data);
-		// 	res.json(data['@graph'][0]);
-		// });
 		var query = {'listingId': req.params.id};
 		asset.getAsset(query, function (doc) {
 			res.json(doc);
@@ -331,12 +377,75 @@ var assets = {
 		});
 	},
 
+	purchased: function (req, res) {
+		req.body = JSON.stringify(req.body, null, 2);
+		body = JSON.parse(req.body);
+		body = JSON.parse(body['encrypted-message']);
+		var url_parts = url.parse(req.url, true);
+		var query = url_parts.query;
+
+		keys.decode(body, function (err, resp){
+			if (err) {
+				console.log(err);
+				res.end('Error!');
+			} else {
+				if (~resp.preferences.indexOf('PreAuthorization')) {
+					user.get({preferences:1}, {_id: query.id }, function (err, doc) {
+						console.log(doc);
+						if (err) {
+							console.log(err);
+							res.end('Error!');
+						} else {
+							// res.json(resp);
+							doc.preferences.hasBudget = true;
+							doc.save(function(err){
+								if (err) {
+									console.log(err);
+									res.end();
+								} else {
+									res.json(resp);
+								}
+							})
+						}
+					});
+				} else {
+					var arr = resp.contract.asset.split('/');
+					user.addPurchase(arr[arr.length-1], {'owner':'https://dev.payswarm.com/i/piatra'}, function (err) {
+						if (err) {
+							console.log('an error occured', err);
+							res.end('Error');
+						} else {
+							res.json(resp);
+						}
+					});
+				}
+			}
+		})
+	},
+
 	getUserAssets: function (req, res) {
 		var query = { email: req.session.email };
 		console.log(query);
 		asset.getUserAssets(query, function (assets) {
 			res.json(assets);
 		});
+	},
+
+	preview: function (req, res) {
+		asset.getAsset({listingId: req.params.id}, function (doc) {
+			if (doc.error)
+				res.end('Asset not found');
+			else {
+				doc.assetPreview = req.body.preview;
+				doc.save(function (err) {
+					if (err) {
+						res.end('An error has occured');
+					} else {
+						res.redirect('/');
+					}
+				})
+			}
+		})
 	},
 
 	getLatestAssets: function (req, res) {

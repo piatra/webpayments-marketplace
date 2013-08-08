@@ -33,7 +33,18 @@ app.configure('development', function(){
 	app.use(express.errorHandler());
 });
 
+function requireLogin(req, res, next) {
+	if (req.session.email) {
+		next(); // allow the next route to run
+	} else {
+		// require the user to log in
+		res.redirect("/login"); // or render a form, etc.
+	}
+}
+
 app.get('/', routes.index);
+
+app.get('/login', routes.login);
 
 app.post('/user/set/username', user.setUsername);
 
@@ -44,7 +55,11 @@ app.get('/auth/createKeyPair', auth.createKeyPair);
 app.post('/payswarm/register', auth.registerKey);
 app.post('/payswarm/complete', auth.complatePayswarmRegistration);
 
-app.get('/newasset', routes.newasset);
+
+/*
+	New asset
+*/
+app.get('/newasset', requireLogin, routes.newasset);
 app.post('/newasset/process/', assets.createAssetAndListing);
 app.post('/newasset/save', assets.saveAsset);
 
@@ -54,15 +69,28 @@ app.get('/assets/:count', assets.getLatestAssets);
 app.get('/resign/listing/:id', assets.resignListing);
 
 app.get('/assets/asset/:id', assets.getAsset);
+
+app.get('/assets/asset/:id/purchase', assets.purchase);
+app.post('/assets/asset/:id/purchased', assets.purchased);
+app.post('/assets/asset/:id/preview', assets.preview);
+app.get('/assets/asset/:id/preview', assets.preview);
+
 app.get('/listings/listing/:id', assets.getListing);
 
-app.get('/asset/content/:id', function (req, res){
+app.get('/assets/asset/:id/content', function (req, res){
 	res.end('The content!');
 });
 
-app.get('/assets/:id/purchase', assets.purchase);
-
 app.get('/decrypt/:type/:id', assets.decrypt);
+
+app.get('/test', function (req, res){
+	res.render('test');
+});
+
+app.post('/upload', function (req, res) {
+	console.log(req.files);
+	res.json(req.files);
+});
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log("Express server listening on port " + app.get('port'));

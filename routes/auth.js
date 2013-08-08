@@ -78,10 +78,12 @@ var auth = {
 				console.log(err);
 			} else {
 				console.log('auth doc', doc);
+				// a lot of functionality depends on those names
 				req.session.identity = doc.owner;
 				req.session.username = doc.username;
 				req.session.registered = doc.registered;
 				req.session.publicKey = body.publicKey;
+				req.session.email = body.email;
 				res.json(body);
 			}
 		})

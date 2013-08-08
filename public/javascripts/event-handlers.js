@@ -1,8 +1,10 @@
 define([
 	'message',
 	'event-login',
-	'event-assets'
-	], function (message, loginEv, assetsEv) {
+	'event-assets',
+	'modal',
+	'upload'
+	], function (message, loginEv, assetsEv, modal, upload) {
 
 	var verify = {
 		assertion : function (assertion) {
@@ -40,7 +42,7 @@ define([
 				navigator.id.request();
 			});
 
-			$('.js-handler--create-asset').on('submit', assetsEv.create(assetsEv.assetCreated));
+			// $('.js-handler--create-asset').on('submit', assetsEv.create(assetsEv.assetCreated));
 
 			$('.js-handler--change-username').on('submit', assetsEv.create(assetsEv.usernameChanged));
 
@@ -50,6 +52,8 @@ define([
 					publicKey: $('.js-handler--show-payswarm-verify').text()
 				}).success(loginEv.displayPayswarmMsg);
 			}
+
+			//$('input[type=file]').on('change', upload.sendFile);
 
 			assetsEv.loadLatest($('.container--newest'));
 

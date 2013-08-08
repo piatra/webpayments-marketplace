@@ -1,4 +1,4 @@
-warningBg = #FFFFBF
+@import mixins
 
 body
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
@@ -13,6 +13,7 @@ body
 	-webkit-justify-content center
 	justify-content center
 	color #333
+	background url(../images/bg-gradient-sand.png) repeat-x 0 0,url(../images/bg-sand.png) repeat 0 0,#f5f1e8
 
 a
 	color #00B7FF
@@ -30,30 +31,39 @@ a
 	-webkit-flex-wrap: wrap;
 	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
-	padding 0
+	padding 0;
 	li
-		background #fff
-		margin 0 1rem 0 0
+		-webkit-box-sizing border-box
+		-moz-box-sizing border-box
+		box-sizing border-box
+		margin 3rem 0
 		padding 1rem
 		height 150px
-		max-width 20%
+		width 25%
 		list-style none
-		-webkit-flex: auto
-		flex: 1 1 auto;
-		-webkit-transition-duration .3s
-		border-bottom 2px solid rgba(0,0,0,.2)
+		display inline-block
+		border-right 1px dotted rgba(0,0,0,.4);
+		img
+			max-width 50px
+			border 2px solid #fff
+			box-shadow 0 0 3px rgba(0,0,0,.2)
+			margin 0 .2rem
+		h4
+			font-size 1.5rem
+			margin-bottom 0
+			color var-item__title-color
+			text-shadow 0 1px 0 rgba(255,255,255,0.75)
 
-.item-container
-	li
-		.topcoat-button--cta
-			display none
-	li:hover
-		.topcoat-button--cta
-			display block
+// .item-container
+// 	li
+// 		.topcoat-button--cta
+// 			display none
+// 	li:hover
+// 		.topcoat-button--cta
+// 			display block
 
 
 .category__title
-	background #fff
 	padding 1rem
 	margin 0
 
@@ -125,6 +135,16 @@ a
 .pull-left
 	float left
 
+.padding5
+	padding .5rem
+	box-sizing border-box
+
+.buy--cta
+	background #288edf url(../images/payswarm.png) no-repeat
+	background-position 80% center
+	width 50%
+	cursor pointer
+
 .small
 	height auto
 	line-height .6rem
@@ -160,7 +180,9 @@ table th, table td
 	td:nth-child(2)
 		text-align left
 	tr:nth-child(even)
-		background #ddd
+		background rgba(0,0,0,.02)
+		border-top 1px solid rgba(0,0,0,.04)
+		border-bottom 1px solid rgba(0,0,0,.04)
 
 .see-more
 	opacity .5
@@ -174,6 +196,12 @@ table th, table td
 
 .inline
 	display inline-block
+
+.well
+	background rgba(0,0,0,.02)
+	box-shadow inset 0 0 5px rgba(0,0,0,.2)
+	border-bottom 1px solid rgba(255,255,255,.7)
+	border-radius 3px
 
 .margin-top
 	margin-top 1rem
@@ -235,3 +263,41 @@ table th, table td
 .list--medium
 	max-height 200px
 	overflow scroll
+
+.tab-bar
+	metrics-reset()
+	display inline-block
+
+.max-width--200
+	max-width 200px
+
+.inline-block
+	display inline-block
+	width 30%
+
+hr
+	margin 2rem 0
+	background none
+	border none
+	border-top 1px solid rgba(0,0,0,.1)
+	border-bottom 1px solid rgba(255,255,255,.3)
+
+.bubble:before
+	content ''
+	display inline-block
+	min-width 1rem
+	min-height 1rem
+	border-radius 50%
+	text-align center
+	font-weight 200
+	line-height 1rem
+	color white
+	margin 0 .1rem
+
+.bubble--info:before
+	@extends .bubble:before;
+	content '!';
+	background #2B9ED0;
+
+.tab-bar li
+	display inline-block

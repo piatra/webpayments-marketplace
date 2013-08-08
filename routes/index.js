@@ -5,40 +5,37 @@
 
 var title = 'WebPayments Marketplace';
 var assets = require('../lib/asset.js')();
+var _ = require('underscore');
+
+function options (req) {
+  var obj = {
+    title: title,
+    user: (req.session.email) ? req.session.email : null,
+    id: (req.session.userid) ? req.session.userid : null,
+    identity: (req.session.identity) ? req.session.identity: null,
+    registered: (req.session.registered) ? req.session.registered : null,
+    publicKey: (req.session.publicKey) ? req.session.publicKey : null,
+    email: (req.session.email) ? req.session.email : null,
+    username: (req.session.username) ? req.session.username : null,
+    env: process.env.NODE_ENV
+  };
+  _.forEach(_.rest(_.toArray(arguments)), function (el) {
+    obj[el[0]] = el[1];
+  });
+  return obj;
+}
 
 exports.index = function(req, res) {
-  console.log('serving index');
-  console.log('getting all assets');
   assets.getUserAssets({}, function (assets) {
-    console.log(assets);
-    res.render('index', {
-    	title: title,
-    	user: (req.session.email) ? req.session.email : null,
-      id: (req.session.userid) ? req.session.userid : null,
-      identity: (req.session.identity) ? req.session.identity: null,
-      registered: (req.session.registered) ? req.session.registered : null,
-      publicKey: (req.session.publicKey) ? req.session.publicKey : null,
-      assets: assets.slice(0,4)
-    });
+    res.render('index', options(req, ['assets', assets]));
   });
 
 };
 
 exports.login = function (req, res) {
-  res.render('login', {
-    title: title + ' - login'
-  })
+  res.render('login', options(req));
 }
 
 exports.newasset = function(req, res) {
-  console.log('new asset', req.session.username);
-  res.render('newasset', {
-  	title: 'Create an asset',
-  	user : (req.session.email) ? req.session.email : null,
-    identity: (req.session.identity) ? req.session.identity: null,
-    id : (req.session.userid) ? req.session.userid : null,
-    username: (req.session.username) ? req.session.username : null,
-    registered: (req.session.registered) ? req.session.registered : null,
-    publicKey: (req.session.publicKey) ? req.session.publicKey : null
-  });
+  res.render('newasset', options(req));
 };
