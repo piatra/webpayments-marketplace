@@ -2,51 +2,80 @@ extends layout
 
 block content
 	.container
-		h1 Create a new asset
-		p make an asset and listing for a new good to sell
-		form.half.pull-left.js-handler--create-asset(action='/newasset/process/', method='POST')
-			table.table-form
-				tr
-					td: input(type='hidden', value=user, name='email')
-				tr
-					td: label Title
-					td: input(class='topcoat-text-input', type='text', name='title', placeholder='Asset title', value='HTML5', required)
-				tr
-					td: label Author
-					td: input(class='topcoat-text-input', type='text', name='author', placeholder='Asset creator', value='Joe', required)
-				tr
-					td: label Link to content
-					td: input(class='topcoat-text-input', type='file', name='assetContent',required)
-				tr
-					td: label Price
-					td
-						input.topcoat-text-input(type='number', step=0.01, name='payeeRate', value=2)
-						select.docNav(name='currency')
-							<option selected="selected" value="USD United States Dollars">
-							USD United States Dollars
-							</option>
-				tr
-					td Comments
-					td: textarea(class='topcoat-textarea', placeholder='Comments', name='comment')
-				tr
-					td: label Validity
-					td
-						- var today = new Date().toISOString().slice(0,10);
-						input(type='date', class='topcoat-text-input', name='validFrom', value=today, required)
-						input(type='date', class='topcoat-text-input', name='validUntil', required)
-				tr
-					td: label License
-					td
-						select.docNav(name='license')
-							option(selected='selected', value='https://w3id.org/payswarm/licenses/personal-use') Personal use
-			p
-				button(type='submit', class='topcoat-button--large--cta pull-right') Create asset
-		.half.pull-right
-			h2 About assets and listings
-			p An asset is a description of a product or service. Examples of assets include web pages, ebooks, groceries, concert tickets, dog walking services, donations, rights to transmit on a particular radio frequency band, and invoices for work performed. In general, anything of value can be modeled as an asset.
-			p A listing is a description of the specific terms under which an asset is offered for sale. These terms include: the exact asset being sold, the license that will be associated with the purchase, the list of people or organizations to be paid for the asset, and the validity period for the listing. Like an asset, a listing may include other application-specific properties.
-			p Source 
-				a(href='https://hacks.mozilla.org/2013/04/payswarm-part-2/') Web Payments with PaySwarm: Assets and Listings (part 2 of 3)
+		.well.padding5
+			- if (!username)
+				h4 Choose a username
+				p: small: em This is used to show who is selling the asset without showing your real email address.
+			- else
+				h4 Complete the asset description
+				p: small: em You need to complete all of the fields below to create the asset and listing
+			- if (registered=='false')
+				h4 You are not registered yet
+				p: small: em You need to register with the payswarm authority
+				p.hidden(class='js-handler--show-payswarm-verify')= publicKey
+	.container
+		- if (!username)
+			form.half.pull-left.js-handler--change-username(action='/user/set/username', method='POST')
+				table.table-form
+					tr
+						td: label Username
+						td: input.topcoat-text-input(type='text', name='username', required)
+					tr
+						td: input(type='hidden', name='email', value=user)
+						td: button(type='submit', class='topcoat-button--large--cta') Set username
+		- if (username && registered != 'false')
+			form.half.pull-left(class='js-handler--create-asset', action='/newasset/process/', method='POST', enctype='multipart/form-data')
+				table.table-form
+					tr
+						td: input(type='hidden', value=user, name='email')
+					tr
+						td: label Title
+						td: input(class='topcoat-text-input', type='text', name='title', placeholder='Asset title', value='HTML5', required)
+					tr
+						td: label Author
+						td: input(class='topcoat-text-input', type='text', name='author', placeholder='Asset creator', value='Joe', required)
+					tr
+						td Description
+						td: textarea(class='topcoat-textarea full-width', placeholder='Comments', name='description')
+					tr
+						td
+						td
+							p: em: small Select images and add them as content
+							p: em: small Add the assets you want to sell
+							input(class='topcoat-text-input', type='file', name='files', required, multiple)
+							p: em: small.js-handler--filesAttached
+					tr
+						td: label Price
+						td
+							input.topcoat-text-input(type='number', step=0.01, name='price', value=2)
+							select.docNav(name='currency')
+								<option selected="selected" value="USD">
+								USD United States Dollars
+								</option>
+					tr
+						td Comments
+						td: textarea(class='topcoat-textarea', placeholder='Comments', name='comment')
+					tr
+						td: label Validity
+						td
+							- var today = new Date().toISOString().slice(0,10);
+							input(type='date', class='topcoat-text-input', name='validFrom', value=today, required)
+							input(type='date', class='topcoat-text-input', name='validUntil', required)
+					tr
+						td: label License
+						td
+							select.docNav(name='license')
+								option(selected='selected', value='https://w3id.org/payswarm/licenses/personal-use') Personal use
+				p
+					input(type='hidden', name='userId', value=id)
+					input(type='hidden', name='owner', value=identity)
+					input.buy--cta(type='submit', class='topcoat-button--large--cta') Create asset
+			.half.pull-right.padding5#preview
+				h2 About assets and listings
+				p An asset is a description of a product or service. Examples of assets include web pages, ebooks, groceries, concert tickets, dog walking services, donations, rights to transmit on a particular radio frequency band, and invoices for work performed. In general, anything of value can be modeled as an asset.
+				p A listing is a description of the specific terms under which an asset is offered for sale. These terms include: the exact asset being sold, the license that will be associated with the purchase, the list of people or organizations to be paid for the asset, and the validity period for the listing. Like an asset, a listing may include other application-specific properties.
+				p Source 
+					a(href='https://hacks.mozilla.org/2013/04/payswarm-part-2/') Web Payments with PaySwarm: Assets and Listings (part 2 of 3)
 
 
 

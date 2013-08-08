@@ -2,32 +2,28 @@ extends layout
 
 block content
 	.container
-		h1 Welcome to the WebPayments Marketplace
-		p
-			| This application is implemented using
-			ul
-				li Mozilla Persona
-				li WebPayments
-				li PaySwarm
-		p You should <a href="/login">sign up</a> for an account and give it a try
+		.well.padding5
+			h4 Welcome to the WebPayments Marketplace
+			p: small: em This application is implemented using: Mozilla Persona, Payswarm.js
+			- if (!user)
+				p You should <a href="/login">sign up</a> for an account and give it a try
+			- else
+				p.bubble--info: small: em Unless you have an account set up with us all purchases will be made through the payswarm authority
+	.container
+		hr
 		.category
-			h4.category__title
-				| Newest
-				button.topcoat-button.pull-right See all
+			ul.tab-bar
+				li.topcoat-button Newest
+				li.topcoat-button Popular
 			ul.item-container.container--newest
-				li
-					h4 Item name
-					p Item description
-					button.topcoat-button--cta Buy
-				li
-					h4 Item name
-					p Item description
-					button.topcoat-button--cta Buy
-				li
-					h4 Item name
-					p Item description
-					button.topcoat-button--cta Buy
-				li
-					h4 Item name
-					p Item description
-					button.topcoat-button--cta Buy
+				- assets.forEach(function (asset, i) {
+					- url = '/assets/asset/' + asset.asset.listingId + '/purchase';
+					li
+						h4= asset.asset.title
+						- asset.asset.assetPreview.forEach(function (f) {
+							img(src='/uploads/' + asset.asset.listingId + '_' + f)
+						- })
+						p= asset.listing.payee[0].comment
+						p= asset.listing.payee[0].payeeRate + ' ' + asset.listing.payee[0].currency
+						a.topcoat-button--cta.buy--cta(href=url) Buy
+				- })

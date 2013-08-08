@@ -1,0 +1,114 @@
+{
+  "@context": "https://w3id.org/payswarm/v1",
+  "@graph": [
+    {
+      "@context": "https://w3id.org/payswarm/v1",
+      "id": "https://webpayments.fwd.wf/assets/asset/14011124869",
+      "listingId": "14011124869",
+      "type": [
+        "Asset",
+        "pto:WebPage"
+      ],
+      "creator": {
+        "fullName": "andrei.br92@gmail.com",
+        "userId": ""
+      },
+      "title": "macbook",
+      "assetContent": "https://webpayments.fwd.wf/assets/asset/14011124869/content",
+      "assetProvider": "https://dev.payswarm.com/i/webpayments",
+      "listingRestrictions": {
+        "validFrom": "2013-07-24T00:00:00Z",
+        "validUntil": "2013-07-31T00:00:00Z",
+        "payee": [
+          {
+            "id": "https://webpayments.fwd.wf/assets/asset/14011124869/payee",
+            "type": "Payee",
+            "destination": "https://dev.payswarm.com/i/webpayments/accounts/incoming-payments",
+            "currency": "USD",
+            "payeeGroup": [
+              "assetProvider"
+            ],
+            "payeeRate": "80",
+            "payeeRateType": "Percentage",
+            "payeeApplyType": "ApplyInclusively",
+            "payeeApplyGroup": [
+              "vendor"
+            ],
+            "minimumAmount": "0.01",
+            "comment": "Asset Provider Royalty"
+          }
+        ],
+        "payeeRule": [
+          {
+            "type": "PayeeRule",
+            "payeeGroupPrefix": [
+              "authority"
+            ]
+          },
+          {
+            "type": "PayeeRule",
+            "payeeGroup": [
+              "vendor"
+            ],
+            "payeeRateType": "FlatAmount",
+            "payeeApplyType": "ApplyExclusively"
+          }
+        ]
+      },
+      "signature": {
+        "type": "GraphSignature2012",
+        "creator": "https://dev.payswarm.com/i/webpayments/keys/3",
+        "created": "2013-07-24T14:25:45Z",
+        "signatureValue": "Cv0W0IdRWjSW46Jt+XHqxW9pJ1LcgpbyRALf3VgVNgeIV4x++L0yX4vSzDf+9CXDAyf31IBgWBU6ITZgKDAK+OwT9ujQfK4RSpuMPGNvwqpeCTncDCV5KPjA3d2/7bKktvPniMrdJI+lWkbq7VlvgBUfAj87tNkFeyso5vvdsHROmpNNRkYOXwbDCqDWYJyp/ubxs09ifcxpOYFH7D7HpxbUNm+WeGoAORzWLUUWvMaVCRhfJCjJkv8jAKyCD85ZQp6ak9Uj++rIadEaIuVKgM0wlGwPyU/OODXa9VQxxn6LUBvZADP3RZSvzaRjg/ZwUDAiFjgRCt51RHZnaOyR3w=="
+      }
+    },
+    {
+      "@context": "https://w3id.org/payswarm/v1",
+      "id": "https://webpayments.fwd.wf/listings/listing/14011124869",
+      "assetId": "14011124869",
+      "type": [
+        "Listing",
+        "gr:Offering"
+      ],
+      "vendor": "https://dev.payswarm.com/i/webpayments",
+      "payee": [
+        {
+          "id": "https://webpayments.fwd.wf/listings/listing/14011124869/payee",
+          "type": "Payee",
+          "destination": "https://dev.payswarm.com/i/webpayments/accounts/incoming-payments",
+          "currency": "USD",
+          "payeeGroup": [
+            "vendor"
+          ],
+          "payeeRate": "2",
+          "payeeRateType": "FlatAmount",
+          "payeeApplyType": "ApplyExclusively",
+          "comment": "macbook [14011124869]."
+        }
+      ],
+      "payeeRule": [
+        {
+          "type": "PayeeRule",
+          "payeeGroupPrefix": [
+            "authority"
+          ],
+          "maximumPayeeRate": "10",
+          "payeeRateType": "Percentage",
+          "payeeApplyType": "ApplyInclusively"
+        }
+      ],
+      "asset": "https://webpayments.fwd.wf/assets/asset/14011124869",
+      "assetHash": "urn:sha256:97691080a7f2d1c4f699ce5f8878046a0ba8c6e0febd6a69e1939082522dcd81",
+      "license": "https://w3id.org/payswarm/licenses/blogging",
+      "licenseHash": "urn:sha256:d9dcfb7b3ba057df52b99f777747e8fe0fc598a3bb364e3d3eb529f90d58e1b9",
+      "validFrom": "2013-07-24T00:00:00Z",
+      "validUntil": "2013-07-31T00:00:00Z",
+      "signature": {
+        "type": "GraphSignature2012",
+        "creator": "https://dev.payswarm.com/i/webpayments/keys/3",
+        "created": "2013-07-24T14:25:45Z",
+        "signatureValue": "jSyQsyt6wgWJ4ErAtRBLgHbXYOaT8Cd/73mSSFt2TkdIVfRHrowsDpzYF82KeK4VwesJSrBgr7tpybaLbtS+AIGQgmi1oyS1vvWaGzYV83rXUf4P/nJNlHYVUXecazcQyZyd7QkbVvnfNLn3hzXvBbiSc+nvL+QBuSw2TZOvLt6wlKy7LEUQIY8NpU2/VTBXByXYBJEnCe+qOwVe3itcC8opNfrbPCiH7+0RVvvKEMwtMdIR2guJ2JdrMuPgFY8zadPihuQpMDKzpxZEtMidtGVEk6bZZeWtLkvR5/j1NsbGLBAEiHAco3ODMOsmvVfXNwrLsYk79KBQISR9fMVgJw=="
+      }
+    }
+  ]
+}

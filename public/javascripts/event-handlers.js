@@ -1,15 +1,19 @@
 define([
 	'message',
 	'event-login',
-	'event-assets'
-	], function (message, loginEv, assetsEv) {
+	'event-assets',
+	'modal',
+	'upload'
+	], function (message, loginEv, assetsEv, modal, upload) {
 
 	var verify = {
 		assertion : function (assertion) {
 			$.post("/auth/verify", { assertion: assertion })
-			.success(loginEv.handleLogin).fail(function (data) {
-				console.log('fail', data);
-			});
+				.success(loginEv.handleLogin)
+				.fail(function (data) {
+					console.log('fail', data);
+				})
+			;
 		}
 	};
 
@@ -17,11 +21,9 @@ define([
 		init : function () {
 
 			var email = ($('img', $('.js-handler--login')).length)
-							? null
-							: $('.js-handler--login').text().trim()
+					? null
+					: $('.js-handler--login').text().trim()
 			;
-
-			console.log(email);
 
 			navigator.id.watch({
 				onlogin: function(assertion) {
@@ -40,7 +42,18 @@ define([
 				navigator.id.request();
 			});
 
-			$('.js-handler--create-asset').on('submit', assetsEv.create);
+			// $('.js-handler--create-asset').on('submit', assetsEv.create(assetsEv.assetCreated));
+
+			$('.js-handler--change-username').on('submit', assetsEv.create(assetsEv.usernameChanged));
+
+			// FIXME
+			if ($('.js-handler--show-payswarm-verify').length) {
+				$.post('/payswarm/register/', {
+					publicKey: $('.js-handler--show-payswarm-verify').text()
+				}).success(loginEv.displayPayswarmMsg);
+			}
+
+			//$('input[type=file]').on('change', upload.sendFile);
 
 			assetsEv.loadLatest($('.container--newest'));
 

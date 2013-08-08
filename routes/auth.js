@@ -36,7 +36,10 @@ var auth = {
 					body = JSON.parse(body);
 					if (body.status == 'okay') {
 						user.checkUser(body, function (user) {
-							body.registered = user.registered;
+
+							if (!user) body.registered = false;
+							else body.registered = user.registered;
+
 							keys.getKeyPair(function (err, keyPair) {
 								if (err) {
 									console.log(err);
@@ -58,14 +61,36 @@ var auth = {
 
 	},
 
+	payswarmVerify: function (req, res) {
+		user.checkUser(req.body, function (user) {
+			res.json({
+				registered: user.registered
+			})
+		})
+	},
+
 	returnKeys: function (req, res, body, keyPair) {
 		keyPair = JSON.parse(keyPair);
 		body.publicKey = keyPair.publicKey.publicKeyPem;
 		req.session.email = body.email;
-		res.json(body);
+		user.get({owner: 1, username: 1, registered:1}, {email: body.email}, function (err, doc) {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('auth doc', doc);
+				// a lot of functionality depends on those names
+				req.session.identity = doc.owner;
+				req.session.username = doc.username;
+				req.session.registered = doc.registered;
+				req.session.publicKey = body.publicKey;
+				req.session.email = body.email;
+				res.json(body);
+			}
+		})
 	},
 
 	registerKey : function (req, res) {
+		console.log('req.body', req.body);
 		async.waterfall([
 			function(callback) {
 				payswarm.getWebKeysConfig('dev.payswarm.com', callback);
@@ -74,7 +99,9 @@ var auth = {
 				registrationUrl.query['public-key'] = req.body.publicKey;
 				registrationUrl.query['response-nonce'] = new Date().getTime().toString(16);
 				delete registrationUrl.search;
+				console.log('registrationUrl', registrationUrl);
 				registrationUrl = URL.format(registrationUrl);
+				console.log('registrationUrl', registrationUrl);
 				callback(null, registrationUrl)
 			},
 			function(registrationUrl, callback) {
@@ -92,6 +119,7 @@ var auth = {
 		} catch (e) {
 			console.log(e);
 		}
+		console.log('got payswarm resp', paysw);
 		keys.decode(paysw, function (err, message) {
 			if (err) {
 				showError(err, res);
@@ -102,7 +130,9 @@ var auth = {
 					destination : message.destination,
 					registered : true
 				}
-				user.updateFields(fields, {email : req.body.email}, function () {
+				user.updateFields(fields, {email : req.body.email}, function (err, docs) {
+					console.log(err, docs);
+					console.log('updated', {email : req.body.email});
 					status(err, res);
 				})
 			}

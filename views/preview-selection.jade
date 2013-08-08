@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	.container
+		.well.padding5
+			p.bubble--info: small: em Your asset has been successfully created
+			p: small: em Please choose a preview for your product
+	.container
+		form(method='POST', action='/assets/asset/' + id + '/preview')
+			- files.forEach(function (f) {
+				p.inline-block
+					label= f.name
+						input(type='checkbox', name='preview', value=f.name)
+						img.max-width--200(src='/uploads/' + id + '_' + f.name)
+			- })
+			p: input.topcoat-button--cta(type='submit', value='Done')
