@@ -624,14 +624,21 @@ limitations under the License.
   list-style-type: none;
   border-top: 1px solid #bcbfbf;
   color: #454545;
+  font-size: .8rem;
 }
 .topcoat-list__item {
   margin: 0;
   padding: 0;
-  padding: 1.16rem;
+  padding: 0.16rem;
   border-top: 1px solid #eff1f1;
   border-bottom: 1px solid #bcbfbf;
+  text-align: left;
 }
+  
+  .topcoat-list__item p {
+    margin:0;
+  }
+
 .topcoat-list__item:first-child {
   border-top: 1px solid rgba(0,0,0,0.05);
 }
@@ -835,7 +842,6 @@ limitations under the License.
   color: #454545;
   font-size: 1rem;
   border-radius: 15px;
-  margin-top: 1.5rem;
   height: 2rem;
 }
 .topcoat-search-input:focus,

@@ -7,6 +7,11 @@ block content
 			p: small: em This application is implemented using: Mozilla Persona, Payswarm.js
 			- if (!user)
 				p You should <a href="/login">sign up</a> for an account and give it a try
+				- if (registered=='false')
+					form(action='/payswarm/register', method='POST')
+					h4 You are not registered yet
+					input(type='hidden', value=publicKey, name='publicKey')
+					button.topcoat-button(type='submit', value='submit', name='submit') Click here to register with Payswarm
 			- else
 				p.bubble--info: small: em Unless you have an account set up with us all purchases will be made through the payswarm authority
 	.container
@@ -14,7 +19,7 @@ block content
 		.category
 			ul.tab-bar
 				li.topcoat-button Newest
-				li.topcoat-button Popular
+				//- li.topcoat-button Popular
 			ul.item-container.container--newest
 				- assets.forEach(function (asset, i) {
 					- url = '/assets/asset/' + asset.asset.listingId + '/purchase';
@@ -23,7 +28,12 @@ block content
 						- asset.asset.assetPreview.forEach(function (f) {
 							img(src='/uploads/' + asset.asset.listingId + '_' + f)
 						- })
-						p= asset.listing.payee[0].comment
-						p= asset.listing.payee[0].payeeRate + ' ' + asset.listing.payee[0].currency
-						a.topcoat-button--cta.buy--cta(href=url) Buy
+						- if (!asset.asset.assetPreview.length)
+							img(src='http://placehold.it/290x216')
+						p: em= asset.listing.payee[0].comment
+						p: span.price= asset.listing.payee[0].payeeRate + ' ' + asset.listing.payee[0].currency
+							- var buyUrl = user ? url : '/login'
+							a.pull-right.topcoat-button--cta.buy--cta(href=buyUrl) Buy
 				- })
+				- if (!assets.length)
+					h4 No one posted anything for sale yet.

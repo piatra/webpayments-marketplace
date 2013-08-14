@@ -9,7 +9,9 @@ var express = require('express')
 	, auth = require('./routes/auth')
 	, http = require('http')
 	, user = require('./routes/user')
-	, path = require('path');
+	, path = require('path')
+	, fs = require('fs')
+	, _ = require('underscore');
 
 var app = express();
 
@@ -44,6 +46,32 @@ function requireLogin(req, res, next) {
 
 app.get('/', routes.index);
 
+var prepareFiles = function(res, files) {
+	if (files && files.length) {
+		fs.readFile(__dirname + '/public/uploads/' + files[0], function (err, data) {
+			if (err) {
+				console.log(err);
+				res.end();
+			} else {
+				console.log(data);
+				prepareFiles(res, _.rest(files));
+			}
+		})
+	} else {
+		res.end('send!');
+	}
+}
+
+app.get('/test', function (req, res) {
+
+var zipper = require('zipper').Zipper;
+var name = Date.now() + '.zip';
+var zipfile = new zipper(name);
+
+prepareFiles(res, ['test.js']);
+
+});
+
 app.get('/login', routes.login);
 
 app.post('/user/set/username', user.setUsername);
@@ -52,8 +80,10 @@ app.post('/auth/verify', auth.verify);
 app.post('/user/payswarm', auth.payswarmVerify);
 
 app.get('/auth/createKeyPair', auth.createKeyPair);
-app.post('/payswarm/register', auth.registerKey);
-app.post('/payswarm/complete', auth.complatePayswarmRegistration);
+app.post('/payswarm/register', requireLogin, auth.registerKey);
+
+app.post('/payswarm/complete/:email', auth.completePayswarmRegistration);
+app.get('/payswarm/complete/:email', auth.completePayswarmRegistration);
 
 
 /*
@@ -74,6 +104,7 @@ app.get('/assets/asset/:id/purchase', assets.purchase);
 app.post('/assets/asset/:id/purchased', assets.purchased);
 app.post('/assets/asset/:id/preview', assets.preview);
 app.get('/assets/asset/:id/preview', assets.preview);
+app.get('/assets/asset/:id/edit', assets.edit);
 
 app.get('/listings/listing/:id', assets.getListing);
 

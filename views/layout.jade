@@ -11,19 +11,19 @@ html
 					li: a(class='topcoat-icon-button--quiet', href='/') Home
 					li: a(class='topcoat-icon-button--quiet', href='/newasset') Sell
 					li: a(class='topcoat-icon-button--quiet', href='/about') About
-					li: input.topcoat-search-input(type='search', placeholder='search')
+					//- li: input.topcoat-search-input(type='search', placeholder='search')
 				.topcoat-navigation-bar__item.center.half
 					h1.topcoat-navigation-bar__title= title || 'WebPayments Marketplace'
 				.topcoat-navigation-bar__item.right.quarter
 					a.topcoat-icon-button--quiet
-						- if (user)
-							button.right(class='topcoat-icon-button', data-id=id)
-								.js-handler--email.inline= user
-								.topcoat-notification
-								.topcoat-list__container.list--medium
-									ul.topcoat-list.js-handler--asset-list
-						- else
-							a.right(class='js-handler--email js-handler--login', href='#'): img(src='/images/signin.png', title='Login')
+						- var toggle = user ? 'visible': 'hidden'
+						button.right(class='topcoat-icon-button ' + toggle, data-id=id)
+							.js-handler--email.inline= user
+							.topcoat-notification
+							.topcoat-list__container.list--medium
+								ul.topcoat-list.js-handler--asset-list
+						- var toggle = user ? 'hidden': 'visible'
+						a.right(class='js-handler--email js-handler--login ' + toggle, href='#'): img(src='/images/signin.png', title='Login')
 		.messages
 		block content
 	script(src='https://login.persona.org/include.js')

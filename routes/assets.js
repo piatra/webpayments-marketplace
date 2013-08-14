@@ -236,6 +236,41 @@ var assets = {
 		});
 	},
 
+	prepareFiles: function(zipfile, res, name) {
+		return function (files, cb) {
+			if (files && files.length) {
+				zipfile.addFile(__dirname + '/../public/uploads/' + files[0], files[0], function (err) {
+					if (err) {
+						console.log(err);
+						res.end();
+					} else {
+						cb(_.rest(files), cb);
+					}
+				})
+			} else {
+				fs.createReadStream(name).pipe(res);
+			}
+		}
+	},
+
+	getAssetContent: function (id, req, res) {
+		var query = {'listingId': id};
+		asset.getAsset(query, function (doc) {
+			var zipper = require('zipper').Zipper;
+			var name = Date.now() + '.zip';
+			var zipfile = new zipper(name);
+			var files = [];
+
+			doc.assetFiles.forEach(function (file) {
+				files.push(doc.listingId + '_' + file);
+			});
+
+			var fn = assets.prepareFiles(zipfile, res, name);
+			fn(files, fn);
+
+		});
+	},
+
 	purchase: function (req, res) {
 		// this is a big FIXME
 		var id = req.params.id;
@@ -248,10 +283,8 @@ var assets = {
 				res.end('Error!');
 			} else {
 				// show the asset page
-				if (~docs.purchases.indexOf(id)) {
-					res.render('asset-purchase', {
-						message: 'You have purchased this asset before'
-					})
+				if (docs.purchases && ~docs.purchases.indexOf(id)) {
+					assets.getAssetContent(id, req, res);
 				// else redirect
 				} else {
 					if (docs.preferences.hasBudget) {
@@ -285,6 +318,10 @@ var assets = {
 		})
 	},
 
+	/*
+		purchase via purchase URL
+		like recipes.payswarm.com
+	*/
 	_purchaseRedirect: function (req, cb) {
 		var id = req.params.id;
 		var href = (process.env.NODE_ENV) ? 'http://webpayments.jit.su' : 'https://webpayments.fwd.wf';
@@ -293,7 +330,7 @@ var assets = {
 				var url = 'https://dev.payswarm.com/profile/login?ref=/transactions?form=pay';
 				url += encodeURIComponent('&listing=' + href + '/listings/listing/' + id);
 				url += encodeURIComponent('&listing-hash=' + hash);
-				url += encodeURIComponent('&callback=' + href + '/assets/asset/' + id + '/purchased?id=' + req.session.id);
+				url += encodeURIComponent('&callback=' + href + '/assets/asset/' + id + '/purchased?id=' + req.session.userid);
 				url += encodeURIComponent('&response-nonce=12345678');
 				cb(url);
 			})
@@ -381,6 +418,7 @@ var assets = {
 		req.body = JSON.stringify(req.body, null, 2);
 		body = JSON.parse(req.body);
 		body = JSON.parse(body['encrypted-message']);
+		var url = require('url');
 		var url_parts = url.parse(req.url, true);
 		var query = url_parts.query;
 
@@ -390,37 +428,60 @@ var assets = {
 				res.end('Error!');
 			} else {
 				if (~resp.preferences.indexOf('PreAuthorization')) {
-					user.get({preferences:1}, {_id: query.id }, function (err, doc) {
-						console.log(doc);
-						if (err) {
-							console.log(err);
-							res.end('Error!');
-						} else {
-							// res.json(resp);
-							doc.preferences.hasBudget = true;
-							doc.save(function(err){
+					async.waterfall([
+						function (callback) {
+							user.get({preferences:1}, {_id: query.id }, function (err, doc) {
+								console.log(doc);
 								if (err) {
-									console.log(err);
-									res.end();
+									callback(err);
 								} else {
-									res.json(resp);
+									// res.json(resp);
+									doc.preferences.hasBudget = true;
+									doc.save(function(err){
+										if (err) callback(err);
+										else callback(null);
+									})
 								}
-							})
-						}
-					});
+							});
+						},
+						function (callback) {
+							user.addPurchase(
+								arr[arr.length-1],
+								{ _id: query.id },
+								function (err) {
+									if (err) callback(err);
+									else callback(null);
+								}
+							);
+						}], assets._cb(function(){
+							res.json(resp);
+						})
+						);
 				} else {
 					var arr = resp.contract.asset.split('/');
-					user.addPurchase(arr[arr.length-1], {'owner':'https://dev.payswarm.com/i/piatra'}, function (err) {
-						if (err) {
-							console.log('an error occured', err);
-							res.end('Error');
-						} else {
+					user.addPurchase(
+						arr[arr.length-1],
+						{ _id: query.id },
+						assets._cb(function(){
 							res.json(resp);
-						}
-					});
+						})
+					);
 				}
 			}
 		})
+	},
+
+	_cb: function (cb) {
+		return function (err) {
+			if (err) {
+				// FIXME
+				// actual error handling
+				console.log('an error has occured', err);
+				res.end('Error');
+			} else {
+				cb();
+			}
+		}
 	},
 
 	getUserAssets: function (req, res) {

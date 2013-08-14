@@ -10,9 +10,10 @@ block content
 				h4 Complete the asset description
 				p: small: em You need to complete all of the fields below to create the asset and listing
 			- if (registered=='false')
-				h4 You are not registered yet
-				p: small: em You need to register with the payswarm authority
-				p.hidden(class='js-handler--show-payswarm-verify')= publicKey
+				form(action='/payswarm/register', method='POST')
+					h4 You are not registered yet
+					input(type='hidden', value=publicKey, name='publicKey')
+					button.topcoat-button(type='submit', value='submit', name='submit') Click here to register with Payswarm
 	.container
 		- if (!username)
 			form.half.pull-left.js-handler--change-username(action='/user/set/username', method='POST')

@@ -30,6 +30,7 @@ define(['modal', 'message'], function (modal, message) {
 	}
 
 	function setAssetCount (count) {
+		console.log('called');
 		$('.topcoat-notification').text(count);
 	}
 
@@ -50,7 +51,7 @@ define(['modal', 'message'], function (modal, message) {
 	function setListAssets (docs) {
 		docs.forEach(function (d) {
 			if (!d.listing.payee[0]) return;
-			var title = d.asset.title + '<br><em><small>' + d.listing.payee[0].comment + '</small></em>';
+			var title = d.asset.title + '<p><em><small>' + d.listing.payee[0].comment + '</small></em> | <a href="/assets/asset/'+ d.listing.assetId +'/edit">edit</a></p>';
 			$('<li></li>').addClass('topcoat-list__item')
 				.html(title).appendTo('.js-handler--asset-list');
 		});
@@ -91,7 +92,6 @@ define(['modal', 'message'], function (modal, message) {
 		loadLatest: function () {
 			$.get(location.origin + '/assets/5')
 				.done(function (resp) {
-					setAssetCount(resp.length);
 					setListAssets(resp);
 				})
 				.fail(errorHandler)

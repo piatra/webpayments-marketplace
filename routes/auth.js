@@ -11,6 +11,7 @@ var payswarm = require('payswarm');
 var async = require('async');
 var URL = require('url');
 var keys = require('../lib/keys')();
+var HOST = 'https://webpayments.fwd.wf';
 
 
 var auth = {
@@ -80,6 +81,7 @@ var auth = {
 				console.log('auth doc', doc);
 				// a lot of functionality depends on those names
 				req.session.identity = doc.owner;
+				req.session.userid = doc._id;
 				req.session.username = doc.username;
 				req.session.registered = doc.registered;
 				req.session.publicKey = body.publicKey;
@@ -90,7 +92,6 @@ var auth = {
 	},
 
 	registerKey : function (req, res) {
-		console.log('req.body', req.body);
 		async.waterfall([
 			function(callback) {
 				payswarm.getWebKeysConfig('dev.payswarm.com', callback);
@@ -102,25 +103,25 @@ var auth = {
 				console.log('registrationUrl', registrationUrl);
 				registrationUrl = URL.format(registrationUrl);
 				console.log('registrationUrl', registrationUrl);
-				callback(null, registrationUrl)
+				// FIXME
+				var callbackUrl = '&registration-callback=' 
+						+ encodeURIComponent(HOST + '/payswarm/complete/' + req.session.email);
+				callback(null, registrationUrl += (callbackUrl));
 			},
 			function(registrationUrl, callback) {
-				res.end(registrationUrl);
+				res.redirect(registrationUrl);
 			}
 		], function (err, result) {
 			console.log(err);
-			res.end();
+			res.end('Registration process failed, sorry!');
 		});
 	},
 
-	complatePayswarmRegistration : function (req, res) {
-		try {
-			var paysw = JSON.parse(req.body.payswarm_response);
-		} catch (e) {
-			console.log(e);
-		}
-		console.log('got payswarm resp', paysw);
-		keys.decode(paysw, function (err, message) {
+	completePayswarmRegistration : function (req, res) {
+		req.body = JSON.stringify(req.body, null, 2);
+		body = JSON.parse(req.body);
+		body = JSON.parse(body['encrypted-message']);
+		keys.decode(body, function (err, message) {
 			if (err) {
 				showError(err, res);
 			} else {
@@ -130,10 +131,20 @@ var auth = {
 					destination : message.destination,
 					registered : true
 				}
-				user.updateFields(fields, {email : req.body.email}, function (err, docs) {
+				user.updateFields(fields, { email : req.params.email}, function (err, docs) {
 					console.log(err, docs);
-					console.log('updated', {email : req.body.email});
-					status(err, res);
+					console.log('updated', { email : req.params.email});
+					if (err) {
+						res.end('Registration failed');
+						console.log(err);
+					} else {
+						req.session.email = req.params.email;
+						res.render('status', {
+							'title': 'WebPayments Marketplace',
+							'message': 'Account registered. Please log in again',
+							'email': req.params.email
+						})
+					}
 				})
 			}
 		});

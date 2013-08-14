@@ -32,6 +32,15 @@ exports.index = function(req, res) {
 
 };
 
+exports.edit = function (req, res) {
+  asset.getAsset({listingId: req.params.id}, function (doc) {
+    if (doc.error)
+      res.end('Asset not found');
+    else
+      res.render('edit-asset', options(req));
+  });
+}
+
 exports.login = function (req, res) {
   res.render('login', options(req));
 }

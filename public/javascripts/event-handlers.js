@@ -2,8 +2,7 @@ define([
 	'message',
 	'event-login',
 	'event-assets',
-	'modal',
-	'upload'
+	'modal'
 	], function (message, loginEv, assetsEv, modal, upload) {
 
 	var verify = {
@@ -29,8 +28,10 @@ define([
 				onlogin: function(assertion) {
 					if ($('img', $('.js-handler--login')).length)
 						verify.assertion(assertion);
-					else
-						assetsEv.count(email);
+					else {
+						// console.log('count');
+						// assetsEv.count(email);
+					}
 				},
 				onlogout: function() {
 					console.log('logout');
@@ -42,20 +43,18 @@ define([
 				navigator.id.request();
 			});
 
-			// $('.js-handler--create-asset').on('submit', assetsEv.create(assetsEv.assetCreated));
-
 			$('.js-handler--change-username').on('submit', assetsEv.create(assetsEv.usernameChanged));
 
 			// FIXME
-			if ($('.js-handler--show-payswarm-verify').length) {
-				$.post('/payswarm/register/', {
-					publicKey: $('.js-handler--show-payswarm-verify').text()
-				}).success(loginEv.displayPayswarmMsg);
-			}
+			// if ($('.js-handler--show-payswarm-verify').length) {
+			// 	$.post('/payswarm/register/', {
+			// 		publicKey: $('.js-handler--show-payswarm-verify').text()
+			// 	}).success(loginEv.displayPayswarmMsg);
+			// }
 
-			//$('input[type=file]').on('change', upload.sendFile);
-
-			assetsEv.loadLatest($('.container--newest'));
+			// assetsEv.loadLatest($('.container--newest'));
+			// console.log('count');
+			// assetsEv.count(email);
 
 		}
 	};
