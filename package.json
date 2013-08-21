@@ -1,6 +1,6 @@
 {
   "name": "webpayments-marketplace",
-  "version": "0.0.1-12",
+  "version": "0.3.1",
   "author": "@ndreio Andrei Oprea",
   "description": "An implementation using the payswarm module",
   "private": true,
