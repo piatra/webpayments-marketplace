@@ -7,9 +7,11 @@
   "scripts": {
     "start": "node app.js"
   },
+  "host": "http://21497a22.ngrok.com",
   "keywords": [
     "webpayments",
-    "persona"
+    "persona",
+    "payswarm"
   ],
   "dependencies": {
     "express": "3.0.0",

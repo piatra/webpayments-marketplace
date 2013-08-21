@@ -46,32 +46,6 @@ function requireLogin(req, res, next) {
 
 app.get('/', routes.index);
 
-var prepareFiles = function(res, files) {
-	if (files && files.length) {
-		fs.readFile(__dirname + '/public/uploads/' + files[0], function (err, data) {
-			if (err) {
-				console.log(err);
-				res.end();
-			} else {
-				console.log(data);
-				prepareFiles(res, _.rest(files));
-			}
-		})
-	} else {
-		res.end('send!');
-	}
-}
-
-app.get('/test', function (req, res) {
-
-var zipper = require('zipper').Zipper;
-var name = Date.now() + '.zip';
-var zipfile = new zipper(name);
-
-prepareFiles(res, ['test.js']);
-
-});
-
 app.get('/login', routes.login);
 
 app.post('/user/set/username', user.setUsername);
@@ -114,15 +88,11 @@ app.get('/assets/asset/:id/content', function (req, res){
 
 app.get('/decrypt/:type/:id', assets.decrypt);
 
-app.get('/test', function (req, res){
-	res.render('test');
-});
-
-app.post('/upload', function (req, res) {
-	console.log(req.files);
-	res.json(req.files);
-});
-
 http.createServer(app).listen(app.get('port'), function(){
 	console.log("Express server listening on port " + app.get('port'));
+	fs.readFile('package.json', 'utf8', function (err, pkg) {
+		pkg = JSON.parse(pkg);
+		process.env.HOST = pkg.host;
+		console.log(process.env.HOST);
+	})
 });

@@ -11,7 +11,10 @@ var payswarm = require('payswarm');
 var async = require('async');
 var URL = require('url');
 var keys = require('../lib/keys')();
-var HOST = 'https://webpayments.fwd.wf';
+require('fs').readFile('package.json', 'utf8', function (err, pkg) {
+	pkg = JSON.parse(pkg);
+	HOST = pkg.host;
+})
 
 
 var auth = {

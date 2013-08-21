@@ -43,7 +43,7 @@ define([
 				navigator.id.request();
 			});
 
-			$('.js-handler--change-username').on('submit', assetsEv.create(assetsEv.usernameChanged));
+			// $('.js-handler--change-username').on('submit', assetsEv.create(assetsEv.usernameChanged));
 
 			// FIXME
 			// if ($('.js-handler--show-payswarm-verify').length) {

@@ -14,6 +14,7 @@ module.exports = {
 				console.log('error while updateing user',err);
 			} else {
 				res.end('Profile username updated!');
+				res.redirect('/newasset');
 			}
 		});
 	}

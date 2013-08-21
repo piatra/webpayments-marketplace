@@ -6,7 +6,10 @@ var fs = require('fs');
 var async = require('async');
 var _ = require('underscore');
 var user = require('../lib/user')();
-var HOST = 'https://webpayments.fwd.wf';
+fs.readFile('package.json', 'utf8', function (err, pkg) {
+	pkg = JSON.parse(pkg);
+	HOST = pkg.host;
+})
 
 var assets = {
 
@@ -292,7 +295,8 @@ var assets = {
 						request.get({url : HOST + '/listings/listing/' + id, json: true}, function (err, resp, listing) {
 							keys.getKeyPair(function (err, data) {
 								if (err) {
-									cb(err);
+									res.end('error reading keys');
+									console.log(err);
 								} else {
 									data = JSON.parse(data);
 									payswarm.purchase(listing, {
@@ -302,7 +306,12 @@ var assets = {
 										privateKeyPem: data.publicKey.privateKeyPem,
 										verbose: true
 									}, function (err, receipt){
-										console.log(err, receipt);
+										if (err) {
+											console.log('Error making purchase ', err);
+											res.json(err);
+										} else {
+											assets.inAppPurchased(req, res, receipt);
+										}
 									});
 								}
 							});
@@ -428,6 +437,7 @@ var assets = {
 				res.end('Error!');
 			} else {
 				if (~resp.preferences.indexOf('PreAuthorization')) {
+					var arr = resp.contract.asset.split('/');
 					async.waterfall([
 						function (callback) {
 							user.get({preferences:1}, {_id: query.id }, function (err, doc) {
@@ -454,21 +464,34 @@ var assets = {
 								}
 							);
 						}], assets._cb(function(){
-							res.json(resp);
+							assets.getAssetContent(arr[arr.length-1], req, res);
 						})
 						);
 				} else {
-					var arr = resp.contract.asset.split('/');
 					user.addPurchase(
 						arr[arr.length-1],
 						{ _id: query.id },
 						assets._cb(function(){
-							res.json(resp);
+							assets.getAssetContent(arr[arr.length-1], req, res);
 						})
 					);
 				}
 			}
 		})
+	},
+
+	inAppPurchased: function (req, res, receipt) {
+		if (!receipt || !Object.keys(receipt).length)
+			throw new Error('no receipt received');
+
+		var arr = receipt.contract.asset.split('/');
+		user.addPurchase(
+			arr[arr.length-1],
+			{ _id: query.id },
+			assets._cb(function(){
+				assets.getAssetContent(arr[arr.length-1], req, res);
+			})
+		);
 	},
 
 	_cb: function (cb) {
