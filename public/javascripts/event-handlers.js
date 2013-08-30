@@ -52,9 +52,9 @@ define([
 			// 	}).success(loginEv.displayPayswarmMsg);
 			// }
 
-			// assetsEv.loadLatest($('.container--newest'));
-			// console.log('count');
-			// assetsEv.count(email);
+//			assetsEv.loadLatest($('.container--newest'));
+			console.log('count');
+			assetsEv.count(email);
 
 		}
 	};

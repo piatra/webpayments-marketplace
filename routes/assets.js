@@ -6,10 +6,7 @@ var fs = require('fs');
 var async = require('async');
 var _ = require('underscore');
 var user = require('../lib/user')();
-fs.readFile('package.json', 'utf8', function (err, pkg) {
-	pkg = JSON.parse(pkg);
-	HOST = pkg.host;
-})
+var HOST = process.env.HOST;
 
 var assets = {
 
@@ -279,6 +276,7 @@ var assets = {
 		var id = req.params.id;
 		var authority = 'https://dev.payswarm.com/';
 		// if user purchased asset
+		console.log('getting user');
 		user.get({purchases:1,preferences:1}, {owner:req.session.identity || 'https://dev.payswarm.com/i/piatra'}, function (err, docs) {
 			console.log(docs, 'for', {owner:req.session.identity});
 			if (err) {
@@ -318,8 +316,13 @@ var assets = {
 						})
 					} else {
 						// take him to the payswarm website
-						assets._purchaseRedirect (req, function (url) {
-							res.redirect(url);
+						assets._purchaseRedirect (req, res, function (err, url) {
+							if (err) {
+								res.end();
+							} else {
+								console.log('redirect', url);
+								res.redirect(url);
+							}
 						});
 					}
 				}
@@ -331,17 +334,28 @@ var assets = {
 		purchase via purchase URL
 		like recipes.payswarm.com
 	*/
-	_purchaseRedirect: function (req, cb) {
+	_purchaseRedirect: function (req, res, cb) {
 		var id = req.params.id;
-		var href = (process.env.NODE_ENV) ? 'http://webpayments.jit.su' : 'https://webpayments.fwd.wf';
-		request.get({url: href+'/listings/listing/' + id, json: true}, function (err, response, body){
+		console.log('req', HOST, HOST +'/listings/listing/' + id);
+		request.get({url: HOST +'/listings/listing/' + id, json: true}, function (err, response, body){
+
+			res.cookie('purchasedAsset', id);
+			res.cookie('userId', req.session.userid);
+
 			payswarm.hash(body, function (err, hash) {
-				var url = 'https://dev.payswarm.com/profile/login?ref=/transactions?form=pay';
-				url += encodeURIComponent('&listing=' + href + '/listings/listing/' + id);
-				url += encodeURIComponent('&listing-hash=' + hash);
-				url += encodeURIComponent('&callback=' + href + '/assets/asset/' + id + '/purchased?id=' + req.session.userid);
-				url += encodeURIComponent('&response-nonce=12345678');
-				cb(url);
+				if (err) {
+					console.log(JSON.stringify(err, null, 2));
+					cb (err);
+					console.log(body);
+				} else {
+					console.log('no error making purchase');
+					var url = 'https://dev.payswarm.com/profile/login?ref=/transactions?form=pay';
+					url += encodeURIComponent('&listing=' + HOST + '/listings/listing/' + id);
+					url += encodeURIComponent('&listing-hash=' + hash);
+					url += encodeURIComponent('&callback=' + HOST + '/assets/asset/purchased');
+					url += encodeURIComponent('&response-nonce=12345678');
+					cb(null, url);
+				}
 			})
 		});
 	},
@@ -427,9 +441,6 @@ var assets = {
 		req.body = JSON.stringify(req.body, null, 2);
 		body = JSON.parse(req.body);
 		body = JSON.parse(body['encrypted-message']);
-		var url = require('url');
-		var url_parts = url.parse(req.url, true);
-		var query = url_parts.query;
 
 		keys.decode(body, function (err, resp){
 			if (err) {
@@ -437,10 +448,9 @@ var assets = {
 				res.end('Error!');
 			} else {
 				if (~resp.preferences.indexOf('PreAuthorization')) {
-					var arr = resp.contract.asset.split('/');
 					async.waterfall([
 						function (callback) {
-							user.get({preferences:1}, {_id: query.id }, function (err, doc) {
+							user.get({preferences:1}, {_id: req.cookies.userId }, function (err, doc) {
 								console.log(doc);
 								if (err) {
 									callback(err);
@@ -456,23 +466,23 @@ var assets = {
 						},
 						function (callback) {
 							user.addPurchase(
-								arr[arr.length-1],
-								{ _id: query.id },
+								req.cookies.purchasedAsset,
+								{ _id: req.cookies.userId },
 								function (err) {
 									if (err) callback(err);
 									else callback(null);
 								}
 							);
 						}], assets._cb(function(){
-							assets.getAssetContent(arr[arr.length-1], req, res);
+							assets.getAssetContent(req.cookies.purchasedAsset, req, res);
 						})
 						);
 				} else {
 					user.addPurchase(
-						arr[arr.length-1],
-						{ _id: query.id },
+						req.cookies.purchasedAsset,
+						{ _id: req.cookies.userId },
 						assets._cb(function(){
-							assets.getAssetContent(arr[arr.length-1], req, res);
+							assets.getAssetContent(req.cookies.purchasedAsset, req, res);
 						})
 					);
 				}
@@ -530,6 +540,102 @@ var assets = {
 				})
 			}
 		})
+	},
+
+	myAssets: function (req, res) {
+		var query = { 'creator.userId': req.cookies.userID };
+		asset.getUserAssets(query, function (assets) {
+			res.render('account-assets', {
+				assets: assets
+			})
+		});
+	},
+
+	edit: function (req, res) {
+		asset.getAsset({listingId: req.body.id}, function (doc) {
+			if (doc.error)
+				res.end('Asset not found');
+			else {
+				asset.getListing({ assetId: doc.listingId }, function (listing) {
+					if (listing.error)
+						res.end('Asset not found');
+					else {
+						console.log(listing);
+						res.render('asset-edit', {
+							asset: doc,
+							listing: listing
+						});
+					}
+				})
+			}
+		})
+	},
+
+	update: function (req, res) {
+
+		var keysPair;
+
+		async.waterfall([
+				function (callback) {
+					keys.getKeyPair(function (err, k) {
+						if (err) callback(err);
+						else {
+							keysPair = JSON.parse(k);
+							callback();
+						}
+					})
+				},
+				function (callback) {
+					asset.updateAsset({
+						_id: req.body.assetId
+					}, {
+						title: req.body.title
+					}, callback);
+				},
+				function (nonSignedAsset, callback) {
+					nonSignedAsset = JSON.stringify(nonSignedAsset);
+					payswarm.sign(JSON.parse(nonSignedAsset), {
+						publicKeyId: keysPair.publicKey.id,
+						privateKeyPem: keysPair.publicKey.privateKeyPem
+					}, function (err, signedAsset) {
+						callback(err, signedAsset);
+					});
+				},
+				function (signedAsset, callback) {
+					asset.updateListing({
+						_id: req.body.listingId
+					},{
+						'$set': {
+							'payee.0.comment': req.body.comment,
+							'payee.0.payeeRate': req.body.price
+						}
+					}, function (err, listing) {
+						callback(err, signedAsset, listing);
+					});
+				},
+				function (signedAsset, nonSignedListing, callback) {
+					nonSignedListing = JSON.stringify(nonSignedListing);
+					payswarm.sign(JSON.parse(nonSignedListing), {
+						publicKeyId: keysPair.publicKey.id,
+						privateKeyPem: keysPair.publicKey.privateKeyPem
+					}, function (err, signedListing) {
+						callback(err, signedAsset, signedListing)
+					});
+				},
+				function (signedAsset, signedListing, callback) {
+					console.log('got asset', signedListing);
+					console.log('listing', signedAsset);
+					callback();
+				}
+			], function (err, result) {
+				if (err) {
+					console.log('waterfall err', JSON.stringify(err, null, 2));
+				} else {
+					console.log(result);
+					res.redirect('/account/assets');
+				}
+			})
+
 	},
 
 	getLatestAssets: function (req, res) {

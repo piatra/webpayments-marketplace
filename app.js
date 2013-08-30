@@ -59,6 +59,9 @@ app.post('/payswarm/register', requireLogin, auth.registerKey);
 app.post('/payswarm/complete/:email', auth.completePayswarmRegistration);
 app.get('/payswarm/complete/:email', auth.completePayswarmRegistration);
 
+app.get('/account/assets', assets.myAssets);
+app.post('/asset/edit', assets.edit);
+app.post('/assets/asset/edit', assets.update);
 
 /*
 	New asset
@@ -75,7 +78,7 @@ app.get('/resign/listing/:id', assets.resignListing);
 app.get('/assets/asset/:id', assets.getAsset);
 
 app.get('/assets/asset/:id/purchase', assets.purchase);
-app.post('/assets/asset/:id/purchased', assets.purchased);
+app.post('/assets/asset/purchased', assets.purchased);
 app.post('/assets/asset/:id/preview', assets.preview);
 app.get('/assets/asset/:id/preview', assets.preview);
 app.get('/assets/asset/:id/edit', assets.edit);
@@ -90,9 +93,5 @@ app.get('/decrypt/:type/:id', assets.decrypt);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log("Express server listening on port " + app.get('port'));
-	fs.readFile('package.json', 'utf8', function (err, pkg) {
-		pkg = JSON.parse(pkg);
-		process.env.HOST = pkg.host;
-		console.log(process.env.HOST);
-	})
+	if (!process.env.HOST) throw new Error('No HOST env var set');
 });

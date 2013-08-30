@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node app.js"
   },
-  "host": "http://21497a22.ngrok.com",
+  "host": "http://localhost:3000/",
   "keywords": [
     "webpayments",
     "persona",

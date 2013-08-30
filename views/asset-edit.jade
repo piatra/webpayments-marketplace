@@ -1,0 +1,28 @@
+extends layout
+
+block content
+	.container
+		.well.padding5
+			h4 Edit your asset
+	.container
+		form(action='/assets/asset/edit', method='POST')
+			.well.padding5
+				table
+					tr
+						td Title
+						td: input.topcoat-text-input(type='text', name='title', value=asset.title)
+					tr
+						td Price
+						td: input.topcoat-text-input(type='text', name='price', value=listing.payee[0].payeeRate)
+					tr
+						td Comment
+						td: textarea.topcoat-textarea(name='comment')= listing.payee[0].comment
+				input(type='hidden', name='assetId', value=asset._id)
+				input(type='hidden', name='listingId', value=listing._id)
+				input(type='hidden', name='prevPrice', value=listing.payee[0].payeeRate)
+				button(type='submit').topcoat-button--cta Modify Asset
+		hr
+		form(action='/assets/asset/id/', method='DELETE')
+			.well.padding5
+				h4 This cannot be undone
+				p: button(type='submit').topcoat-button Delete asset

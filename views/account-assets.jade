@@ -1,0 +1,24 @@
+extends layout
+
+block content
+	.container
+		hr
+		.category
+			ul.item-container.container--newest
+				- assets.forEach(function (asset, i) {
+					- url = '/assets/asset/' + asset.asset.listingId + '/purchase';
+					li
+						form(action='/asset/edit', method='POST')
+							h4= asset.asset.title
+							- asset.asset.assetPreview.forEach(function (f) {
+								img(src='/uploads/' + asset.asset.listingId + '_' + f)
+							- })
+							- if (!asset.asset.assetPreview.length)
+								img(src='http://placehold.it/290x216')
+							p: em= asset.listing.payee[0].comment
+							p: span.price= asset.listing.payee[0].payeeRate + ' ' + asset.listing.payee[0].currency
+								input(type='hidden', name='id', value=asset.asset.listingId)
+								button.pull-right.topcoat-button--cta(type='submit') Edit
+				- })
+				- if (!assets.length)
+					h4 You have no assets yet.

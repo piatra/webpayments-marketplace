@@ -85,6 +85,8 @@ var auth = {
 				// a lot of functionality depends on those names
 				req.session.identity = doc.owner;
 				req.session.userid = doc._id;
+				res.cookie('userID', doc._id);
+				res.cookie('email', body.email);
 				req.session.username = doc.username;
 				req.session.registered = doc.registered;
 				req.session.publicKey = body.publicKey;
