@@ -6,10 +6,7 @@ var fs = require('fs');
 var async = require('async');
 var _ = require('underscore');
 var user = require('../lib/user')();
-fs.readFile('package.json', 'utf8', function (err, pkg) {
-	pkg = JSON.parse(pkg);
-	HOST = pkg.host;
-})
+var HOST = require('../package.json').host;
 
 var assets = {
 
@@ -333,7 +330,7 @@ var assets = {
 	*/
 	_purchaseRedirect: function (req, cb) {
 		var id = req.params.id;
-		var href = (process.env.NODE_ENV) ? 'http://webpayments.jit.su' : 'https://webpayments.fwd.wf';
+		var href = HOST;
 		request.get({url: href+'/listings/listing/' + id, json: true}, function (err, response, body){
 			payswarm.hash(body, function (err, hash) {
 				var url = 'https://dev.payswarm.com/profile/login?ref=/transactions?form=pay';

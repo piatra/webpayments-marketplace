@@ -90,9 +90,4 @@ app.get('/decrypt/:type/:id', assets.decrypt);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log("Express server listening on port " + app.get('port'));
-	fs.readFile('package.json', 'utf8', function (err, pkg) {
-		pkg = JSON.parse(pkg);
-		process.env.HOST = pkg.host;
-		console.log(process.env.HOST);
-	})
 });

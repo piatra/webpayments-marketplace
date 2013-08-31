@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node app.js"
   },
-  "host": "http://21497a22.ngrok.com",
+  "host": "http://35c7daab.ngrok.com",
   "keywords": [
     "webpayments",
     "persona",
@@ -34,6 +34,7 @@
     "url": "https://github.com/piatra/webpayments-marketplace"
   },
   "devDependencies": {
-    "requirejs": "~2.1.6"
+    "requirejs": "~2.1.6",
+    "zipper": "~0.3.0"
   }
 }
