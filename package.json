@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node app.js"
   },
-  "host": "http://appstoredemo.payswarm.com/",
+  "host": "http://appstoredemo.payswarm.com",
   "keywords": [
     "webpayments",
     "persona",
