@@ -22,7 +22,7 @@ block content
 				input(type='hidden', name='prevPrice', value=listing.payee[0].payeeRate)
 				button(type='submit').topcoat-button--cta Modify Asset
 		hr
-		form(action='/assets/asset/id/', method='DELETE')
+		form(action='/assets/asset/' + listing.assetId + '/remove', method='POST')
 			.well.padding5
 				h4 This cannot be undone
 				p: button(type='submit').topcoat-button Delete asset

@@ -91,7 +91,12 @@ app.get('/assets/asset/:id/content', function (req, res){
 
 app.get('/decrypt/:type/:id', assets.decrypt);
 
+/*
+	Remove
+*/
+
+app.post('/assets/asset/:id/remove', assets.delete);
+
 http.createServer(app).listen(app.get('port'), function(){
 	console.log("Express server listening on port " + app.get('port'));
-	if (!process.env.HOST) throw new Error('No HOST env var set');
 });

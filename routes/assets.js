@@ -6,7 +6,7 @@ var fs = require('fs');
 var async = require('async');
 var _ = require('underscore');
 var user = require('../lib/user')();
-var HOST = process.env.HOST;
+var HOST = require('../package.json').host;
 
 var assets = {
 
@@ -336,7 +336,7 @@ var assets = {
 	*/
 	_purchaseRedirect: function (req, res, cb) {
 		var id = req.params.id;
-		console.log('req', HOST, HOST +'/listings/listing/' + id);
+		
 		request.get({url: HOST +'/listings/listing/' + id, json: true}, function (err, response, body){
 
 			res.cookie('purchasedAsset', id);
@@ -549,6 +549,19 @@ var assets = {
 				assets: assets
 			})
 		});
+	},
+
+	delete: function (req, res) {
+		var id = req.params.id;
+		asset.removeAll({
+			id: id
+		}, function (err) {
+			if (err) {
+				res.json(err);
+			} else {
+				res.redirect('/account/assets');
+			}
+		})
 	},
 
 	edit: function (req, res) {

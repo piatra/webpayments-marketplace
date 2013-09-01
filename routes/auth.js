@@ -11,18 +11,14 @@ var payswarm = require('payswarm');
 var async = require('async');
 var URL = require('url');
 var keys = require('../lib/keys')();
-require('fs').readFile('package.json', 'utf8', function (err, pkg) {
-	pkg = JSON.parse(pkg);
-	HOST = pkg.host;
-})
-
+var HOST = require('../package.json').host;
 
 var auth = {
 
 	verify : function (req, res) {
 
 		var audience = 'audience=';
-		audience += process.env.NODE_ENV ? 'http://webpayments.jit.su' : 'http://localhost:3000';
+		audience += HOST;
 		audience += '&assertion=' + req.body.assertion;
 
 		var headers = {
