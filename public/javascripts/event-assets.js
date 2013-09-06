@@ -30,8 +30,9 @@ define(['modal', 'message'], function (modal, message) {
 	}
 
 	function setAssetCount (count) {
-		console.log('called');
-		$('.topcoat-notification').text(count);
+		if (parseInt(count, 10)) {
+			$('.topcoat-notification').text(count).removeClass('hidden');
+		}
 	}
 
 	function errorHandler (err) {

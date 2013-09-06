@@ -2,13 +2,15 @@ define(['message', 'modal'], function (message, modal) {
 	var loginEv = {
 		handleLogin : function (response) {
 			if (response.status == 'okay') {
-				$('.js-handler--login')
-					.remove();
-				$('.js-handler--email').text(response.email)
-					.parent().removeClass('hidden');
+				location.href = location.href;
+				// $('.js-handler--login')
+				// 	.remove();
+				// $('.js-handler--email').text(response.email)
+				// 	.parent().removeClass('hidden');
 				// if (response.registered == 'false') {
 				// 	loginEv.showPayswarmRegistration(response);
 				// }
+
 			} else {
 				alert('Login failed!');
 				console.log(response);

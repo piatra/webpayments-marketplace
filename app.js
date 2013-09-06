@@ -59,7 +59,10 @@ app.post('/payswarm/register', requireLogin, auth.registerKey);
 app.post('/payswarm/complete/:email', auth.completePayswarmRegistration);
 app.get('/payswarm/complete/:email', auth.completePayswarmRegistration);
 
-app.get('/account/assets', assets.myAssets);
+/*
+	Editing assets
+*/
+app.get('/account/assets', requireLogin, assets.myAssets);
 app.post('/asset/edit', assets.edit);
 app.post('/assets/asset/edit', assets.update);
 

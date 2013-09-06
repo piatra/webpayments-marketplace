@@ -546,7 +546,8 @@ var assets = {
 		var query = { 'creator.userId': req.cookies.userID };
 		asset.getUserAssets(query, function (assets) {
 			res.render('account-assets', {
-				assets: assets
+				assets: assets,
+				user: req.session.email
 			})
 		});
 	},
@@ -607,6 +608,8 @@ var assets = {
 				},
 				function (nonSignedAsset, callback) {
 					nonSignedAsset = JSON.stringify(nonSignedAsset);
+					nonSignedAsset.id = HOST + '/assets/asset/' + nonSignedAsset.listingId;
+					nonSignedAsset.assetContent = nonSignedAsset.id + '/content';
 					payswarm.sign(JSON.parse(nonSignedAsset), {
 						publicKeyId: keysPair.publicKey.id,
 						privateKeyPem: keysPair.publicKey.privateKeyPem
@@ -614,37 +617,70 @@ var assets = {
 						callback(err, signedAsset);
 					});
 				},
-				function (signedAsset, callback) {
+				function(signedAsset, callback) {
+					// generate a hash for the signed asset
+					console.log("Signing asset...");
+					payswarm.hash(signedAsset, function(err, assetHash) {
+						callback(err, signedAsset, assetHash);
+					});
+				},
+				function (signedAsset, assetHash, callback) {
+					console.log('set asset hash to ', assetHash);
 					asset.updateListing({
 						_id: req.body.listingId
 					},{
 						'$set': {
 							'payee.0.comment': req.body.comment,
 							'payee.0.payeeRate': req.body.price
-						}
+						},
+						assetHash: assetHash
 					}, function (err, listing) {
+						console.log('finished');
 						callback(err, signedAsset, listing);
 					});
 				},
 				function (signedAsset, nonSignedListing, callback) {
 					nonSignedListing = JSON.stringify(nonSignedListing);
+					nonSignedListing.id = HOST + '/assets/asset/' + nonSignedListing.assetId;
 					payswarm.sign(JSON.parse(nonSignedListing), {
 						publicKeyId: keysPair.publicKey.id,
 						privateKeyPem: keysPair.publicKey.privateKeyPem
 					}, function (err, signedListing) {
+						console.log('finished');
 						callback(err, signedAsset, signedListing)
 					});
 				},
 				function (signedAsset, signedListing, callback) {
-					console.log('got asset', signedListing);
-					console.log('listing', signedAsset);
-					callback();
+					asset.updateAsset({
+						_id: req.body.assetId,
+					}, {
+						id: HOST + '/assets/asset/' + signedAsset.listingId,
+						assetContent: HOST + '/assets/asset/' + signedAsset.listingId + '/content',
+						signature: signedAsset.signature
+					}, function (err, signedAsset) {
+						console.log(signedAsset.id);
+						assert(signedAsset, 'Should have updated the asset');
+						callback(err, signedAsset, signedListing);
+					});
+				},
+				function (signedAsset, signedListing, callback) {
+					asset.updateListing({
+						_id: req.body.listingId
+					}, {
+						id: HOST + '/listings/listing/' + signedAsset.listingId,
+						asset: signedAsset.id,
+						signature: signedListing.signature
+					}, function (err, listing) {
+						console.log('asset url',listing.asset);
+						assert(listing, 'Should have updated the listing');
+						callback(err);
+					});
 				}
 			], function (err, result) {
 				if (err) {
 					console.log('waterfall err', JSON.stringify(err, null, 2));
 				} else {
-					console.log(result);
+					console.log('result', result);
 					res.redirect('/account/assets');
 				}
 			})
@@ -657,5 +693,9 @@ var assets = {
 		});
 	}
 };
+
+function assert (value, msg) {
+	if (!value) throw new Error(msg);
+}
 
 module.exports = assets;

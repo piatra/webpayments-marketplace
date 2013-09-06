@@ -7,6 +7,9 @@ define([
 
 	var verify = {
 		assertion : function (assertion) {
+
+			$('.js-handler--login').html('Logging in...');
+
 			$.post("/auth/verify", { assertion: assertion })
 				.success(loginEv.handleLogin)
 				.fail(function (data) {
@@ -26,12 +29,8 @@ define([
 
 			navigator.id.watch({
 				onlogin: function(assertion) {
-					if ($('img', $('.js-handler--login')).length)
+					if ($('img', $('.js-handler--login:not(.hidden)')).length)
 						verify.assertion(assertion);
-					else {
-						// console.log('count');
-						// assetsEv.count(email);
-					}
 				},
 				onlogout: function() {
 					console.log('logout');
