@@ -577,7 +577,8 @@ var assets = {
 						console.log(listing);
 						res.render('asset-edit', {
 							asset: doc,
-							listing: listing
+							listing: listing,
+							user: req.session.email
 						});
 					}
 				})
@@ -587,103 +588,187 @@ var assets = {
 
 	update: function (req, res) {
 
-		var keysPair;
+		var k;
 
 		async.waterfall([
-				function (callback) {
-					keys.getKeyPair(function (err, k) {
-						if (err) callback(err);
-						else {
-							keysPair = JSON.parse(k);
-							callback();
-						}
-					})
-				},
-				function (callback) {
-					asset.updateAsset({
-						_id: req.body.assetId
-					}, {
-						title: req.body.title
-					}, callback);
-				},
-				function (nonSignedAsset, callback) {
-					nonSignedAsset = JSON.stringify(nonSignedAsset);
-					nonSignedAsset.id = HOST + '/assets/asset/' + nonSignedAsset.listingId;
-					nonSignedAsset.assetContent = nonSignedAsset.id + '/content';
-					payswarm.sign(JSON.parse(nonSignedAsset), {
-						publicKeyId: keysPair.publicKey.id,
-						privateKeyPem: keysPair.publicKey.privateKeyPem
-					}, function (err, signedAsset) {
-						callback(err, signedAsset);
+			function (callback) {
+				asset.get({
+					asset: true
+				}, {
+					_id: req.body.assetId
+				}, callback);
+			},
+			function (_asset, callback) {
+				asset.get({
+					listing: true
+				}, {
+					_id: req.body.listingId
+				}, function (err, doc) {
+					callback(err, _asset, doc);
+				});
+			},
+		    function (_asset, _listing, callback) {
+		      // read the config file from disk
+		      keys.getKeyPair(function(err, keysPair) {
+		        if(err) {
+		          console.log('Error: Failed to find a PaySwarm configuration file.');
+		          return callback(err);
+		        }
+		        k = JSON.parse(keysPair);
+		        callback(null, _asset, _listing, k);
+		      });
+		    },
+		    function(_asset, _listing, keysPair, callback) {
+		      // Step #1: Create the asset and digitally sign it
+		      console.log("Generating asset...");
+		      var assetUrl = HOST + '/assets/asset/' + _asset.listingId;
+		      var asset = {
+		        '@context': payswarm.CONTEXT_URL,
+		        id: assetUrl,
+		        listingId: _asset.listingId,
+		        type: ['Asset', 'pto:WebPage'],
+		        creator: _asset.creator,
+		        title: req.body.title,
+		        assetContent: assetUrl + '/content',
+		        assetFiles: _asset.assetFiles,
+		        assetProvider: 'https://dev.payswarm.com/i/webpay',
+		        listingRestrictions: {
+		          validFrom: _asset.listingRestrictions.validFrom,
+		          validUntil: _asset.listingRestrictions.validUntil,
+		          payee: [{
+		            id: assetUrl + '/payee',
+		            type: 'Payee',
+		            destination: _asset.listingRestrictions.payee[0].destination,
+		            currency: 'USD',
+		            payeeGroup: ['assetProvider'],
+		            destination: 'https://dev.payswarm.com/i/webpay/accounts/primary',
+		            payeeRate: '80',
+		            payeeRateType: 'Percentage',
+		            payeeApplyType: 'ApplyInclusively',
+		            payeeApplyGroup: ['vendor'],
+		            minimumAmount: '0.01',
+		            comment: 'Asset Provider Royalty'
+		          }],
+		          payeeRule: [{
+		            type: 'PayeeRule',
+		            payeeGroupPrefix: ['authority']
+		          }, {
+		            type: 'PayeeRule',
+		            payeeGroup: ['vendor'],
+		            payeeRateType: 'FlatAmount',
+		            payeeApplyType: 'ApplyExclusively'
+		          }]
+		        }
+		      };
+
+		      // sign the asset
+		      asset = JSON.parse(JSON.stringify(asset));
+		      console.log(asset);
+		      payswarm.sign(asset, {
+		        publicKeyId: keysPair.publicKey.id,
+		        privateKeyPem: keysPair.publicKey.privateKeyPem
+		      }, function (err, signedAsset) {
+		      	console.log('signed asset');
+		      	callback(err, signedAsset, _listing);
+		      });
+		    },
+		    function(signedAsset, _listing, callback) {
+		      // generate a hash for the signed asset
+		      console.log("Signing asset...");
+		      payswarm.hash(signedAsset, function(err, assetHash) {
+		        callback(err, signedAsset, assetHash, _listing);
+		      });
+		    },
+		    function(signedAsset, assetHash, _listing, callback) {
+		      // Step #2: Create and digitally sign the listing
+		      console.log('generating listing');
+		      console.log('Generating and signing listing...');
+		      var listingUrl = HOST + '/listings/listing/' + _listing.assetId;
+		      var assetUrl = HOST + '/assets/asset/' + _listing.assetId;
+
+		      var listing = {
+		        '@context': payswarm.CONTEXT_URL,
+		        id: listingUrl,
+		        assetId: _listing.assetId,
+		        type: ['Listing', 'gr:Offering'],
+		        vendor: 'https://dev.payswarm.com/i/webpay',
+		        payee: [{
+		          id: listingUrl + '/payee',
+		          type: 'Payee',
+		          destination: 'https://dev.payswarm.com/i/webpay/accounts/primary',
+		          currency: 'USD',
+		          payeeGroup: ['vendor'],
+		          payeeRate: req.body.price,
+		          payeeRateType: 'FlatAmount',
+		          payeeApplyType: 'ApplyExclusively',
+		          comment: req.body.comment
+		        }],
+		        payeeRule : [{
+		          type: 'PayeeRule',
+		          payeeGroupPrefix: ['authority'],
+		          maximumPayeeRate: '10',
+		          payeeRateType: 'Percentage',
+		          payeeApplyType: 'ApplyInclusively'
+		        }],
+		        asset: assetUrl,
+		        assetHash: assetHash,
+		        license: 'https://w3id.org/payswarm/licenses/blogging',
+		        licenseHash: 'urn:sha256:' +
+		          'd9dcfb7b3ba057df52b99f777747e8fe0fc598a3bb364e3d3eb529f90d58e1b9',
+		        validFrom: _listing.validFrom,
+		        validUntil: _listing.validUntil
+		      };
+
+		      // sign the listing
+		      payswarm.sign(listing, {
+		        publicKeyId: k.publicKey.id,
+		        privateKeyPem: k.publicKey.privateKeyPem
+		      }, function(err, signedListing) {
+		        callback(err, signedAsset, signedListing);
+		      });
+		    },
+		    function(signedAsset, signedListing, callback) {
+		      // Step #3: Register the signed asset and listing
+		      console.log("Register signed asset and listing...");
+		      var assetAndListing = {
+		        '@context': payswarm.CONTEXT_URL,
+		        '@graph': [signedAsset, signedListing]
+		      };
+
+		      asset.removeAll({id: signedAsset.listingId}, function (err) {
+		      	if (err) {
+		      		console.log(err);
+		      		throw new Error('could not remove docs');
+		      	} else {
+					asset.save(assetAndListing, function(err, result) {
+						callback(err, assetAndListing);
 					});
-				},
-				function(signedAsset, callback) {
-					// generate a hash for the signed asset
-					console.log("Signing asset...");
-					payswarm.hash(signedAsset, function(err, assetHash) {
-						callback(err, signedAsset, assetHash);
-					});
-				},
-				function (signedAsset, assetHash, callback) {
-					console.log('set asset hash to ', assetHash);
-					asset.updateListing({
-						_id: req.body.listingId
-					},{
-						'$set': {
-							'payee.0.comment': req.body.comment,
-							'payee.0.payeeRate': req.body.price
-						},
-						assetHash: assetHash
-					}, function (err, listing) {
-						console.log('finished');
-						callback(err, signedAsset, listing);
-					});
-				},
-				function (signedAsset, nonSignedListing, callback) {
-					nonSignedListing = JSON.stringify(nonSignedListing);
-					nonSignedListing.id = HOST + '/assets/asset/' + nonSignedListing.assetId;
-					payswarm.sign(JSON.parse(nonSignedListing), {
-						publicKeyId: keysPair.publicKey.id,
-						privateKeyPem: keysPair.publicKey.privateKeyPem
-					}, function (err, signedListing) {
-						console.log('finished');
-						callback(err, signedAsset, signedListing)
-					});
-				},
-				function (signedAsset, signedListing, callback) {
-					asset.updateAsset({
-						_id: req.body.assetId,
-					}, {
-						id: HOST + '/assets/asset/' + signedAsset.listingId,
-						assetContent: HOST + '/assets/asset/' + signedAsset.listingId + '/content',
-						signature: signedAsset.signature
-					}, function (err, signedAsset) {
-						console.log(signedAsset.id);
-						assert(signedAsset, 'Should have updated the asset');
-						callback(err, signedAsset, signedListing);
-					});
-				},
-				function (signedAsset, signedListing, callback) {
-					asset.updateListing({
-						_id: req.body.listingId
-					}, {
-						id: HOST + '/listings/listing/' + signedAsset.listingId,
-						asset: signedAsset.id,
-						signature: signedListing.signature
-					}, function (err, listing) {
-						console.log('asset url',listing.asset);
-						assert(listing, 'Should have updated the listing');
-						callback(err);
-					});
-				}
-			], function (err, result) {
-				if (err) {
-					console.log('waterfall err', JSON.stringify(err, null, 2));
-				} else {
-					console.log('result', result);
-					res.redirect('/account/assets');
-				}
-			})
+		      	}
+		      })
+		    },
+		    function(assetAndListing, callback) {
+		      // display registration details
+		      var debug = 0;
+		      if(debug) {
+		        console.log('Registered signed asset and listing: ' +
+		          JSON.stringify(assetAndListing, null, 2));
+		      }
+		      else {
+		        console.log('Registered signed asset:\n   ',
+		          assetAndListing['@graph'][0].id);
+		        console.log('Registered signed listing:\n   ',
+		          assetAndListing['@graph'][1].id);
+		      }
+		      callback(null);
+		    }
+		  ], function(err) {
+		    if(err) {
+		      console.log('Failed to register signed asset and listing:',
+		        err.toString());
+		    } else {
+		    	res.redirect('/account/assets');
+		    }
+		  });
 
 	},
 

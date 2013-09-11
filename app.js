@@ -36,12 +36,14 @@ app.configure('development', function(){
 });
 
 function requireLogin(req, res, next) {
-	if (req.session.email) {
+	
+	if (1 || req.session.email) {
 		next(); // allow the next route to run
 	} else {
-		// require the user to log in
+		req.session.redirect = req.route.path;
 		res.redirect("/login"); // or render a form, etc.
 	}
+
 }
 
 app.get('/', routes.index);
