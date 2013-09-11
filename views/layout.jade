@@ -13,7 +13,6 @@ html
 						li: a(class='topcoat-button--quiet', href='/newasset') Sell
 						li: a(class='topcoat-button--quiet', href='/account/assets') Assets
 					li: a(class='topcoat-button--quiet', href='/about') About
-					//- li: input.topcoat-search-input(type='search', placeholder='search')
 				.topcoat-navigation-bar__item.center.half
 					h1.topcoat-navigation-bar__title= title || 'WebPayments Marketplace'
 				.topcoat-navigation-bar__item.right.quarter
@@ -28,6 +27,7 @@ html
 					a.right.topcoat-button--quiet(class='js-handler--email js-handler--login ' + toggle, href='#'): img(src='/images/signin.png', title='Login')
 		.messages
 		block content
-	script(src='https://login.persona.org/include.js')
 	script(src='http://code.jquery.com/jquery-git2.js')
-	script(data-main='/javascripts/main', src='/javascripts/libs/require.js')
+	if (!user)
+		script(src='https://login.persona.org/include.js')
+		script(data-main='/javascripts/main', src='/javascripts/libs/require.js')

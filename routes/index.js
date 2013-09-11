@@ -42,7 +42,10 @@ exports.edit = function (req, res) {
 }
 
 exports.login = function (req, res) {
-    res.render('login', options(req));
+    if (req.session.email)
+      res.redirect('/');
+    else
+      res.render('login', options(req));
 }
 
 exports.newasset = function(req, res) {

@@ -37,7 +37,7 @@ app.configure('development', function(){
 
 function requireLogin(req, res, next) {
 	
-	if (1 || req.session.email) {
+	if (req.session.email) {
 		next(); // allow the next route to run
 	} else {
 		req.session.redirect = req.route.path;

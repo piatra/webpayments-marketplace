@@ -1,16 +1,9 @@
 define(['message', 'modal'], function (message, modal) {
 	var loginEv = {
 		handleLogin : function (response) {
+			console.log(response.status);
 			if (response.status == 'okay') {
-				location.href = location.href;
-				// $('.js-handler--login')
-				// 	.remove();
-				// $('.js-handler--email').text(response.email)
-				// 	.parent().removeClass('hidden');
-				// if (response.registered == 'false') {
-				// 	loginEv.showPayswarmRegistration(response);
-				// }
-
+				window.location.reload();
 			} else {
 				alert('Login failed!');
 				console.log(response);

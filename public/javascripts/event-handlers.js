@@ -8,12 +8,15 @@ define([
 	var verify = {
 		assertion : function (assertion) {
 
-			$('.js-handler--login').html('Logging in...');
+			$('.js-handler--login').html('Logging in').addClass('loading');
 
 			$.post("/auth/verify", { assertion: assertion })
 				.success(loginEv.handleLogin)
 				.fail(function (data) {
 					console.log('fail', data);
+				})
+				.done(function (data) {
+					console.log('done');
 				})
 			;
 		}
