@@ -6,6 +6,7 @@ define([], function () {
 
 			var msg = $('<p></p>').addClass('message');
 
+			console.log(msgData);
 			if (typeof msgData == 'string')
 				msg.html(msgData).append(close)
 					.appendTo(msgData.appendTo);
@@ -14,6 +15,20 @@ define([], function () {
 					.append(close).appendTo(msgData.appendTo);
 
 			return msg.length ? $(msg[0]) : $(msg);
+		},
+		success: function (status) {
+			message.show(status.responseText).appendTo('.messages');
+		},
+		failure: function (status) {
+			message.show('An error has occured: ' + status.err).appendTo('.messages');
+		},
+		display: function (status) {
+			console.log('display', status);
+			if (status.err) {
+				message.failure(status);
+			} else {
+				message.success(status);
+			}
 		},
 		create: function (msgData) {
 			var a = $('<a/>').attr('href', msgData.href)

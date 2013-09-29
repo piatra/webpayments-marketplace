@@ -2,20 +2,36 @@ var user = require('../lib/user')();
 
 module.exports = {
 	setUsername: function (req, res) {
-		console.log(user);
-		req.session.username = req.body.username;
-		user.updateFields({
-			username: req.body.username
-		},
-		{
-			email: req.body.email
-		}, function (err) {
-			if (err) {
-				console.log('error while updateing user',err);
-			} else {
-				res.end('Profile username updated!');
-				res.redirect('/newasset');
-			}
-		});
+		if (!req.body.username) {
+			res.json({
+				err: 'Missing username'
+			});
+		} else {
+			req.session.username = req.body.username;
+				user.isUnique({
+					username: req.session.username
+				},
+          	function updateUsername () {
+					user.updateFields({
+						username: req.body.username
+					},
+					{ email: req.body.email },
+					function updateFieldsError (err) {
+							if (err) {
+								res.json({ err: err });
+							} else {
+								res.cookie('username', req.body.username);
+								res.json({ 
+									responseText: 'Congrats, your username has been updated'
+								})
+                			}
+					})
+			},
+        	function duplicateUsername () {
+				res.json({
+					err: 'Sorry that username is already taken'
+				})
+			});
+		}
 	}
 };

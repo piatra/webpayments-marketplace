@@ -271,13 +271,22 @@ var assets = {
 		});
 	},
 
+	download: function (req, res) {
+		assets.getAssetContent(req.params.id, req, res);
+  },
+
 	purchase: function (req, res) {
 		// this is a big FIXME
 		var id = req.params.id;
 		var authority = 'https://dev.payswarm.com/';
 		// if user purchased asset
 		console.log('getting user');
-		user.get({purchases:1,preferences:1}, {owner:req.session.identity || 'https://dev.payswarm.com/i/piatra'}, function (err, docs) {
+		user.get({
+		  purchases:1,
+		  preferences:1
+		}, {
+		   email: req.session.email || req.cookies.email
+		}, function (err, docs) {
 			console.log(docs, 'for', {owner:req.session.identity});
 			if (err) {
 				console.log(err);
@@ -285,7 +294,12 @@ var assets = {
 			} else {
 				// show the asset page
 				if (docs.purchases && ~docs.purchases.indexOf(id)) {
-					assets.getAssetContent(id, req, res);
+					//assets.getAssetContent(id, req, res);
+            res.render('asset-purchase-complete', {
+               asset: id,
+               purchases: docs.purchases,
+               user: req.session.email || req.cookies.email
+            });
 				// else redirect
 				} else {
 					if (docs.preferences.hasBudget) {

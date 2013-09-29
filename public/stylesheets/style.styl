@@ -1,308 +1,318 @@
 @import mixins
 
 body
-	font: 16px "Lucida Grande", Helvetica, Arial, sans-serif
-	color #333
-	background url(../images/bg-gradient-sand.png) repeat-x 0 0,url(../images/bg-sand.png) repeat 0 0,#f5f1e8
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif
+  color #333
+  background url(../images/bg-gradient-sand.png) repeat-x 0 0,url(../images/bg-sand.png) repeat 0 0,#f5f1e8
 
 a
-	color #00B7FF
-	text-decoration none
+  color #00B7FF
+  text-decoration none
 
 .container
-	width 80%
-	margin 0 auto
+  width 80%
+  margin 0 auto
 
 .item-container
-	padding 0;
-	li
-		-webkit-box-sizing border-box
-		-moz-box-sizing border-box
-		box-sizing border-box
-		padding 0
-		margin 0 5% 0 0
-		width 270px
-		height 350px
-		list-style none
-		display inline-block
-		overflow hidden
-		img
-			height 200px
-		h4
-			font-size 1.5rem
-			margin 0
-			margin-bottom .5rem
-			color var-item__title-color
-			text-shadow 0 1px 0 rgba(255,255,255,0.75)
+  padding 0;
+  li
+    -webkit-box-sizing border-box
+    -moz-box-sizing border-box
+    box-sizing border-box
+    padding 0
+    margin 0 5% 0 0
+    width 270px
+    height 350px
+    list-style none
+    display inline-block
+    overflow hidden
+    img
+      height 200px
+    h4
+      font-size 1.5rem
+      margin 0
+      margin-bottom .5rem
+      color var-item__title-color
+      text-shadow 0 1px 0 rgba(255,255,255,0.75)
 
 .category__title
-	padding 1rem
-	margin 0
+  padding 1rem
+  margin 0
 
 .messages
-	position absolute
-	top 5px
-	left 50%
-	width 600px
-	margin-left -300px
+  position absolute
+  top 5px
+  left 50%
+  width 600px
+  margin-left -300px
 
 .message
-	background #2ECC71
-	border 1px solid #27AE60
-	border-bottom 3px solid #27AE60
-	border-radius 10px
-	color #fff
-	font-size 1.1rem
-	padding 1rem
-	a
-		color white
+  background #2ECC71
+  border 1px solid #27AE60
+  border-bottom 3px solid #27AE60
+  border-radius 10px
+  color #fff
+  font-size 1.1rem
+  padding 1rem
+  a
+    color white
 
 .close-handler
-	float right
-	display inline-block
-	width 1rem
-	height 1rem
-	padding .2rem
-	background #27AE60
-	line-height 1rem
-	text-align center
-	cursor pointer
+  float right
+  display inline-block
+  width 1rem
+  height 1rem
+  padding .2rem
+  background #27AE60
+  line-height 1rem
+  text-align center
+  cursor pointer
 
 .modal-overlay
-	position absolute
-	top 0
-	left 0
-	width 100%
-	height 100%
-	background rgba(0,0,0,.5)
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+  background rgba(0,0,0,.5)
 
 .modal
-	background #fff
-	min-width 500px
-	position absolute
-	top 2%
-	left 50%
-	min-height 300px
-	padding 1rem
-	border-radius 5px
+  background #fff
+  min-width 500px
+  position absolute
+  top 2%
+  left 50%
+  min-height 300px
+  padding 1rem
+  border-radius 5px
 
 .modal h2
-	border-bottom 1px solid #ddd
-	margin 0 .5rem .5rem 0
-	padding .5rem
+  border-bottom 1px solid #ddd
+  margin 0 .5rem .5rem 0
+  padding .5rem
 
 .modal textarea
-	-moz-box-sizing border-box
-	-webkit-box-sizing: border-box
-	box-sizing: border-box
-	width 100%
-	min-height 250px;
-	padding .5rem
-	border 3px solid #ddd
-	border-radius 5px
-	&:focus
-		outline none
+  -moz-box-sizing border-box
+  -webkit-box-sizing: border-box
+  box-sizing: border-box
+  width 100%
+  min-height 250px;
+  padding .5rem
+  border 3px solid #ddd
+  border-radius 5px
+  &:focus
+    outline none
 
 .pull-right
-	float right
+  float right
 
 .pull-left
-	float left
+  float left
 
 .padding5
-	padding .5rem
-	box-sizing border-box
+  padding .5rem
+  box-sizing border-box
 
 .buy--cta
-	background #288edf url(../images/payswarm.png) no-repeat
-	background-position 80% center
-	width 30%
-	cursor pointer
+  background #288edf url(../images/payswarm.png) no-repeat
+  background-position 80% center
+  width 30%
+  cursor pointer
 
 .small
-	height auto
-	line-height .6rem
-	font-size .8rem
-	padding .4rem
+  height auto
+  line-height .6rem
+  font-size .8rem
+  padding .4rem
 
 label
-	line-height 2.5rem
+  line-height 2.5rem
 
 .hidden
-	display none !important
+  display none
+
+.toggle:hover .hidden
+	display: block
 
 input[type=checkbox]:checked + .hidden
-	display block
+   display block
 
 table
-	max-width: 100%;
-	background-color: transparent;
-	border-collapse: collapse;
-	border-spacing: 0;
-	margin-bottom: 0;
+  max-width: 100%;
+  background-color: transparent;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 0;
 
 table th, table td
-	padding: 8px 0;
-	line-height: 20px;
-	text-align: left;
-	vertical-align: top;
+  padding: 8px 0;
+  line-height: 20px;
+  text-align: left;
+  vertical-align: top;
 
 .table-form
-	width 100%
-	td:first-child
-		text-align right
-	td:nth-child(2)
-		text-align left
-	tr:nth-child(even)
-		background rgba(0,0,0,.02)
-		border-top 1px solid rgba(0,0,0,.04)
-		border-bottom 1px solid rgba(0,0,0,.04)
+  width 100%
+  td:first-child
+    text-align right
+  td:nth-child(2)
+    text-align left
+  tr:nth-child(even)
+    background rgba(0,0,0,.02)
+    border-top 1px solid rgba(0,0,0,.04)
+    border-bottom 1px solid rgba(0,0,0,.04)
 
 .see-more
-	opacity .5
-	font-size .9rem
+  opacity .5
+  font-size .9rem
 
 .warning
-	background warningBg
+  background warningBg
 
 .full-width
-	width 100%
+  width 100%
 
 .inline
-	display inline-block
+  display inline-block
 
 .well
-	background rgba(0,0,0,.02)
-	box-shadow inset 0 0 5px rgba(0,0,0,.2)
-	border-bottom 1px solid rgba(255,255,255,.7)
-	border-radius 3px
+  background rgba(0,0,0,.02)
+  box-shadow inset 0 0 5px rgba(0,0,0,.2)
+  border-bottom 1px solid rgba(255,255,255,.7)
+  border-radius 3px
 
 .margin-top
-	margin-top 1rem
+  margin-top 1rem
 
 .description
-	background white
-	padding 1rem
-	border-bottom 1px solid rgba(0,0,0,.2)
-	-webkit-box-sizing border-box
-	-moz-box-sizing border-box
-	box-sizing border-box
+  background white
+  padding 1rem
+  border-bottom 1px solid rgba(0,0,0,.2)
+  -webkit-box-sizing border-box
+  -moz-box-sizing border-box
+  box-sizing border-box
 
 .docNav
-	font-size 1rem
-	height 3rem
-	margin 5px
-	color #454545
-	font-weight: 200;
-	box-sizing border-box
-	border-radius: 6px;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	padding: 20px;
-	-webkit-appearance: none;
-	-moz-appearance: button;
-	background: #e5e9e8;
-	box-shadow: inset 0 1px rgba(0,0,0,0.12)
-	border: 1px solid #a5a8a8;
-	padding: 0 1.25rem
-	-webkit-appearance: none;
+  font-size 1rem
+  height 2rem
+  color #454545
+  font-weight: 200;
+  box-sizing border-box
+  border-radius: 6px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 20px;
+  -webkit-appearance: none;
+  -moz-appearance: button;
+  background: #e5e9e8;
+  box-shadow: inset 0 1px rgba(0,0,0,0.12)
+  border: 1px solid #a5a8a8;
+  padding: 0 1.25rem
+  -webkit-appearance: none;
 
 .container--json
-	max-height 500px
-	overflow scroll
-	box-shadow inset 0 0 20px rgba(0,0,0,.2)
-	padding .5rem
-	margin .5rem
+  max-height 500px
+  overflow scroll
+  box-shadow inset 0 0 20px rgba(0,0,0,.2)
+  padding .5rem
+  margin .5rem
 
 .topcoat-notification
-	display: inline-block;
-	text-align: center;
-	padding: 0.15em 0.5em 0.2em;
-	margin-left: 6px;
-	border-radius: 2px;
-	background-color: #ec514e;
-	color: #fff;
-	font: 0.875em "Source Sans", helvetica, arial, sans-serif;
+  display: inline-block;
+  text-align: center;
+  padding: 0.15em 0.5em 0.2em;
+  margin-left: 6px;
+  border-radius: 2px;
+  background-color: #ec514e;
+  color: #fff;
+  font: 0.875em "Source Sans", helvetica, arial, sans-serif;
 
 .topcoat-icon-button
-	margin-left 5px
+  margin-left 5px
 
 .topcoat-list__container
-	display: none
+  display: none
 
 .topcoat-icon-button:hover
-	.topcoat-list__container
-		display: block
+  .topcoat-list__container
+    display: block
 
 .list--medium
-	max-height 200px
-	overflow scroll
+  max-height 200px
+  overflow scroll
 
 .tab-bar
-	metrics-reset()
-	display inline-block
+  metrics-reset()
+  display inline-block
 
 .max-width--200
-	max-width 200px
+  max-width 200px
 
 .inline-block
-	display inline-block
-	width 30%
+  display inline-block
+  width 30%
+
+.topcoat-text-input--short
+  max-width 80px;
 
 .price 
-	line-height 2rem
+  line-height 2rem
 
 .no-margin
-	margin 0
+  margin 0
+
+.avatar--small
+  max-width 20px
+  float left
+  margin 5px 5px 0 0
 
 hr
-	margin 2rem 0
-	background none
-	border none
-	border-top 1px solid rgba(0,0,0,.1)
-	border-bottom 1px solid rgba(255,255,255,.3)
+  margin 2rem 0
+  background none
+  border none
+  border-top 1px solid rgba(0,0,0,.1)
+  border-bottom 1px solid rgba(255,255,255,.3)
 
 .bubble:before
-	content ''
-	display inline-block
-	min-width 1rem
-	min-height 1rem
-	border-radius 50%
-	text-align center
-	font-weight 200
-	line-height 1rem
-	color white
-	margin 0 .1rem
+  content ''
+  display inline-block
+  min-width 1rem
+  min-height 1rem
+  border-radius 50%
+  text-align center
+  font-weight 200
+  line-height 1rem
+  color white
+  margin 0 .1rem
 
 .bubble--info:before
-	@extends .bubble:before;
-	content '!';
-	background #2B9ED0;
+  @extends .bubble:before;
+  content '!';
+  background #2B9ED0;
 
 .tab-bar li
-	display inline-block
+  display inline-block
 
 .loading:after {
-	content: '';
-	width: 20px;
-	height: 20px;
-	background: url("../images/spinner.png") no-repeat;
-	-webkit-animation: spinner 1s infinite linear;
-	display: inline-block;
-	background-size: 20px;
-	margin: 5px 0 -5px 5px;
+  content: '';
+  width: 20px;
+  height: 20px;
+  background: url("../images/spinner.png") no-repeat;
+  -webkit-animation: spinner 1s infinite linear;
+  display: inline-block;
+  background-size: 20px;
+  margin: 5px 0 -5px 5px;
 }
 
 @-webkit-keyframes spinner {
-	0% {
-		-webkit-transform: rotate(0deg);
-	}
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
 
-	50% {
-		-webkit-transform: rotate(180deg);
-	}
+  50% {
+    -webkit-transform: rotate(180deg);
+  }
 
-	100% {
-		-webkit-transform: rotate(360deg);
-	}
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }

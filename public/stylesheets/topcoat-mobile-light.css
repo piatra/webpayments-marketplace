@@ -854,9 +854,10 @@ input[type="checkbox"]:focus + .topcoat-checkbox:before,
 .topcoat-list__item {
   margin: 0;
   padding: 0;
-  padding: 1.16rem;
+  padding: 0 1.16rem;
   border-top: 1px solid #eff1f1;
   border-bottom: 1px solid #bcbfbf;
+  list-style-type: none;
 }
 .topcoat-list__item:first-child {
   border-top: 1px solid rgba(0,0,0,0.05);
@@ -1020,7 +1021,6 @@ Navigation Bar
   -moz-background-clip: padding;
   background-clip: padding-box;
   white-space: nowrap;
-  overflow: hidden;
   word-spacing: 0;
   padding: 0;
   margin: 0;
@@ -1039,8 +1039,7 @@ Navigation Bar
   padding-right: 1rem;
   background: #e5e9e8;
   color: #000;
-  box-shadow: inset 0 -1px #b9bcbc, 0 1px rgba(0,0,0,0.15);
-  box-shadow: inset 0 -1px #b9bcbc, 0 1px rgba(0,0,0,0.15);
+  box-shadow: 0px -1px rgba(185, 188, 188,.1) inset, 0px 1px rgba(0, 0, 0, 0.15);
 }
 .topcoat-navigation-bar__item {
   -webkit-box-sizing: border-box;
@@ -1541,7 +1540,8 @@ input[type="radio"]:focus + .topcoat-radio-button:before,
 
 */
 .topcoat-text-input,
-.topcoat-text-input--large {
+.topcoat-text-input--large,
+.topcoat-text-input--short {
   padding: 0;
   margin: 0;
   font: inherit;
@@ -1576,6 +1576,7 @@ input[type="radio"]:focus + .topcoat-radio-button:before,
   cursor: default;
   pointer-events: none;
 }
+
 /*
  Large Text Input
  ----------------

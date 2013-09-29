@@ -1,21 +1,26 @@
+/* global define, $, console */
+
+'use strict';
+
 define([
 	'message',
 	'event-login',
 	'event-assets',
-	'modal'
-	], function (message, loginEv, assetsEv, modal, upload) {
+	'user',
+	'formHandler'
+], function (message, loginEv, assetsEv, user, formHandler) {
 
 	var verify = {
 		assertion : function (assertion) {
 
 			$('.js-handler--login').html('Logging in').addClass('loading');
 
-			$.post("/auth/verify", { assertion: assertion })
+			$.post('/auth/verify', { assertion: assertion })
 				.success(loginEv.handleLogin)
 				.fail(function (data) {
 					console.log('fail', data);
 				})
-				.done(function (data) {
+				.done(function () {
 					console.log('done');
 				})
 			;
@@ -25,15 +30,22 @@ define([
 	var evHandler = {
 		init : function () {
 
-			var email = ($('img', $('.js-handler--login')).length)
-					? null
-					: $('.js-handler--login').text().trim()
-			;
+			var email = $('.js-handler--email').text().trim();
+
+			user = user({
+				email: email
+			});
+			
+			if (typeof logout != 'undefined' && logout)
+				email = null;
+			else
+				var logout = false;
 
 			navigator.id.watch({
 				onlogin: function(assertion) {
-					if ($('img', $('.js-handler--login:not(.hidden)')).length)
+					if (!logout && $('img', $('.js-handler--login:not(.hidden)')).length) {
 						verify.assertion(assertion);
+					}
 				},
 				onlogout: function() {
 					console.log('logout');
@@ -45,18 +57,11 @@ define([
 				navigator.id.request();
 			});
 
-			// $('.js-handler--change-username').on('submit', assetsEv.create(assetsEv.usernameChanged));
+			$('.js-handler--change-username').on('submit', user.setUsername);
 
-			// FIXME
-			// if ($('.js-handler--show-payswarm-verify').length) {
-			// 	$.post('/payswarm/register/', {
-			// 		publicKey: $('.js-handler--show-payswarm-verify').text()
-			// 	}).success(loginEv.displayPayswarmMsg);
-			// }
+			if (email) assetsEv.count(email);
 
-//			assetsEv.loadLatest($('.container--newest'));
-			console.log('count');
-			assetsEv.count(email);
+			$('.js-handler--add-more-payee').on('click', formHandler.duplicateRow)
 
 		}
 	};

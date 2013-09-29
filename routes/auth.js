@@ -12,6 +12,13 @@ var async = require('async');
 var URL = require('url');
 var keys = require('../lib/keys')();
 var HOST = require('../package.json').host;
+var _ = require('underscore');
+
+var crypto = require('crypto');
+
+function md5 (string) {
+  return crypto.createHash('md5').update(string).digest('hex');
+}
 
 var auth = {
 
@@ -35,22 +42,28 @@ var auth = {
 				if (!err && response.statusCode == 200 ) {
 					body = JSON.parse(body);
 					if (body.status == 'okay') {
-						user.checkUser(body, function (user) {
+						user.checkUser(body, function (err, user) {
 
-							if (!user) body.registered = false;
-							else body.registered = user.registered;
+							if (err) {
+								res.end('Error creating user');
+							} else {
+								console.log('found ', user);
+								if (!user) body.registered = false;
+								else body.registered = user.registered;
 
-							keys.getKeyPair(function (err, keyPair) {
-								if (err) {
-									console.log(err);
-									res.json({
-										message: 'An error has occured ' + err,
-										error: true
-									});
-								} else {
-									auth.returnKeys(req, res, body, keyPair);
-								}
-							});
+								keys.getKeyPair(function (err, keyPair) {
+									if (err) {
+										console.log(err);
+										res.json({
+											message: 'An error has occured ' + err,
+											error: true
+										});
+									} else {
+										auth.returnKeys(req, res, body, keyPair);
+									}
+								});
+							}
+
 						});
 					} else {
 						res.json(body);
@@ -101,12 +114,9 @@ var auth = {
 				registrationUrl.query['public-key'] = req.body.publicKey;
 				registrationUrl.query['response-nonce'] = new Date().getTime().toString(16);
 				delete registrationUrl.search;
-				console.log('registrationUrl', registrationUrl);
 				registrationUrl = URL.format(registrationUrl);
-				console.log('registrationUrl', registrationUrl);
-				// FIXME
 				var callbackUrl = '&registration-callback=' 
-						+ encodeURIComponent(HOST + '/payswarm/complete/' + req.session.email);
+						+ encodeURIComponent(HOST + '/payswarm/complete');
 				callback(null, registrationUrl += (callbackUrl));
 			},
 			function(registrationUrl, callback) {
@@ -119,6 +129,9 @@ var auth = {
 	},
 
 	completePayswarmRegistration : function (req, res) {
+		
+		var email = req.cookies.email;
+
 		req.body = JSON.stringify(req.body, null, 2);
 		body = JSON.parse(req.body);
 		body = JSON.parse(body['encrypted-message']);
@@ -132,19 +145,14 @@ var auth = {
 					destination : message.destination,
 					registered : true
 				}
-				user.updateFields(fields, { email : req.params.email}, function (err, docs) {
-					console.log(err, docs);
-					console.log('updated', { email : req.params.email});
+				user.updateFields(fields, { email : email}, function (err, docs) {
 					if (err) {
 						res.end('Registration failed');
 						console.log(err);
 					} else {
-						req.session.email = req.params.email;
-						res.render('status', {
-							'title': 'WebPayments Marketplace',
-							'message': 'Account registered. Please log in again',
-							'email': req.params.email
-						})
+						req.session.email = email;
+						req.session.registered = true;
+						res.redirect('/payswarm/complete');
 					}
 				})
 			}

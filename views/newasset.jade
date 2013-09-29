@@ -2,21 +2,15 @@ extends layout
 
 block content
 	.container
-		.well.padding5
-			- if (!username)
-				h4 Choose a username
-				p: small: em This is used to show who is selling the asset without showing your real email address.
-			- else
+		- if (username && registered)
+			.well.padding5
 				h4 Complete the asset description
 				p: small: em You need to complete all of the fields below to create the asset and listing
-			- if (registered=='false')
-				form(action='/payswarm/register', method='POST')
-					h4 You are not registered yet
-					input(type='hidden', value=publicKey, name='publicKey')
-					button.topcoat-button(type='submit', value='submit', name='submit') Click here to register with Payswarm
 	.container
 		- if (!username)
-			form.half.pull-left.js-handler--change-username(action='/user/set/username', method='POST')
+			h4 Choose a username
+			p: small: em This is used to show who is selling the asset without showing your real email address.
+			form.half.js-handler--change-username(action='/user/set/username', method='POST')
 				table.table-form
 					tr
 						td: label Username
@@ -24,6 +18,13 @@ block content
 					tr
 						td: input(type='hidden', name='email', value=user)
 						td: button(type='submit', class='topcoat-button--large--cta') Set username
+		- if (registered=='false')
+			h4 You are not registered yet
+			p: small: em You need to authorize the marketplace with your Payswarm account
+			form.half(action='/payswarm/register', method='POST')
+				table.table-form
+					input(type='hidden', value=publicKey, name='publicKey')
+					button.topcoat-button(type='submit', value='submit', name='submit') Click here to register with Payswarm
 		- if (username && registered != 'false')
 			form.half.pull-left(class='js-handler--create-asset', action='/newasset/process/', method='POST', enctype='multipart/form-data')
 				table.table-form
@@ -41,18 +42,20 @@ block content
 					tr
 						td
 						td
-							p: em: small Select images and add them as content
+							p: em: small Select images and add them as previews
 							p: em: small Add the assets you want to sell
 							input(class='topcoat-text-input', type='file', name='files', required, multiple)
 							p: em: small.js-handler--filesAttached
 					tr
-						td: label Price
 						td
-							input.topcoat-text-input(type='number', step=0.01, name='price', value=2)
+							label Price
+						td
+							input.topcoat-text-input--short(type='number', step=0.01, name='price', value=2)
 							select.docNav(name='currency')
-								<option selected="selected" value="USD">
-								USD United States Dollars
-								</option>
+								option(selected="selected" value="USD") USD
+							input.topcoat-text-input(name='destination', value=payswarmIdentity.owner)
+						td
+							p.bubble--info: small: em: a.js-handler--add-more-payee more
 					tr
 						td Comments
 						td: textarea(class='topcoat-textarea', placeholder='Comments', name='comment')
@@ -77,14 +80,3 @@ block content
 				p A listing is a description of the specific terms under which an asset is offered for sale. These terms include: the exact asset being sold, the license that will be associated with the purchase, the list of people or organizations to be paid for the asset, and the validity period for the listing. Like an asset, a listing may include other application-specific properties.
 				p Source 
 					a(href='https://hacks.mozilla.org/2013/04/payswarm-part-2/') Web Payments with PaySwarm: Assets and Listings (part 2 of 3)
-
-
-
-
-
-
-
-
-
-
-

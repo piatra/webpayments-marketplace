@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node app.js"
   },
-  "host": "http://appstoredemo.payswarm.com",
+  "host": "http://12e29bb4.ngrok.com",
   "keywords": [
     "webpayments",
     "persona",
@@ -34,7 +34,11 @@
     "url": "https://github.com/piatra/webpayments-marketplace"
   },
   "devDependencies": {
-    "requirejs": "~2.1.6",
-    "zipper": "~0.3.0"
+    "requirejs": "~2.1.8",
+    "zipper": "~0.3.0",
+    "grunt": "~0.4.1",
+    "grunt-mocha-phantomjs": "~0.3.0",
+    "chai": "~1.7.2",
+    "mocha": "~1.13.0"
   }
 }

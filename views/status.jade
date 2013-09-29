@@ -2,8 +2,13 @@ extends layout
 
 block content
 	.container
-		h1= title
+		h1 Thank you, your purchase is complete
 		p
-			blockquote= message
-		p Please go back and try again
-		p Or <a href="#">add an issue on Github</a>
+			| Please
+			a(href='#') click here
+			| to clain your purchase if the download does not start automatically
+	 input(type='hidden', name='asset', value=asset)
+
+block scripts
+   script
+      console.log('begin download')

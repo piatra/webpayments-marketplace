@@ -36,8 +36,8 @@ app.configure('development', function(){
 });
 
 function requireLogin(req, res, next) {
-	
-	if (req.session.email) {
+	console.log(req.session, req.cookies);
+	if (req.session.email || req.cookies.email) {
 		next(); // allow the next route to run
 	} else {
 		req.session.redirect = req.route.path;
@@ -50,6 +50,8 @@ app.get('/', routes.index);
 
 app.get('/login', routes.login);
 
+app.get('/logout', routes.logout);
+
 app.post('/user/set/username', user.setUsername);
 
 app.post('/auth/verify', auth.verify);
@@ -58,8 +60,7 @@ app.post('/user/payswarm', auth.payswarmVerify);
 app.get('/auth/createKeyPair', auth.createKeyPair);
 app.post('/payswarm/register', requireLogin, auth.registerKey);
 
-app.post('/payswarm/complete/:email', auth.completePayswarmRegistration);
-app.get('/payswarm/complete/:email', auth.completePayswarmRegistration);
+app.post('/payswarm/complete', auth.completePayswarmRegistration);
 
 /*
 	Editing assets
@@ -71,7 +72,7 @@ app.post('/assets/asset/edit', assets.update);
 /*
 	New asset
 */
-app.get('/newasset', requireLogin, routes.newasset);
+app.get('/newasset', routes.newasset); // should require login
 app.post('/newasset/process/', assets.createAssetAndListing);
 app.post('/newasset/save', assets.saveAsset);
 
@@ -91,8 +92,10 @@ app.get('/assets/asset/:id/edit', assets.edit);
 app.get('/listings/listing/:id', assets.getListing);
 
 app.get('/assets/asset/:id/content', function (req, res){
-	res.end('The content!');
+   res.end('The content!');
 });
+
+app.post('/assets/asset/:id/download', assets.download);
 
 app.get('/decrypt/:type/:id', assets.decrypt);
 

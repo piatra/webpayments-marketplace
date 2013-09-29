@@ -18,16 +18,19 @@ html
 				.topcoat-navigation-bar__item.right.quarter
 					a.topcoat-icon-button--quiet
 						- var toggle = user ? 'visible': 'hidden'
-						button.right(class='topcoat-button ' + toggle, data-id=id)
-							.js-handler--email.inline= user
+						ul.toggle.right(class='topcoat-button ' + toggle, data-id=id)
+							img.avatar--small(src='http://www.gravatar.com/avatar/'+hash+'.jpg')
+							.js-handler--email.inline= username || user
 							.topcoat-notification.hidden
 							.topcoat-list__container.list--medium
 								ul.topcoat-list.js-handler--asset-list
+							li.topcoat-list__item.hidden: a(href='/logout') Logout	
 					- var toggle = user ? 'hidden': 'visible'
-					a.right.topcoat-button--quiet(class='js-handler--email js-handler--login ' + toggle, href='#'): img(src='/images/signin.png', title='Login')
+					a.right.topcoat-button--quiet(class='js-handler--email js-handler--login ' + toggle, href='#')
+						img(src='/images/signin.png', title='Login')
 		.messages
 		block content
-	script(src='http://code.jquery.com/jquery-git2.js')
-	if (!user)
-		script(src='https://login.persona.org/include.js')
-		script(data-main='/javascripts/main', src='/javascripts/libs/require.js')
+	script(src='/javascripts/libs/jquery.min.js')
+	script(src='https://login.persona.org/include.js')
+	script(data-main='/javascripts/main', src='/javascripts/libs/require.js')
+	block scripts
