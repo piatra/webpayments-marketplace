@@ -4,7 +4,8 @@ block content
 	.container
 		.well.padding5
 			h4 Welcome to the WebPayments Marketplace
-			p: small: em This application is implemented using: Mozilla Persona, Payswarm.js
+			p: small: em This is a demo application showcasing <a href="https://payswarm.com/">Payswarm</a>, the worlds first open, Universal Payment Standard for the Web
+			p: small: em The application is implemented using <a href="https://github.com/digitalbazaar/payswarm.js/">payswarm.js</a>
 			- if (!user)
 				p You should <a href="/login">sign up</a> for an account and give it a try
 				- if (registered=='false')
@@ -19,21 +20,21 @@ block content
 		.category
 			ul.tab-bar
 				li.topcoat-button Newest
-				//- li.topcoat-button Popular
 			ul.item-container.container--newest
 				- assets.forEach(function (asset, i) {
-					- url = '/assets/asset/' + asset.asset.listingId + '/purchase';
+					- url = '/assets/asset/' + asset.asset.listingId; // '/purchase';
 					li
-						h4= asset.asset.title
+						h4: a(href='/assets/asset/' + asset.asset.listingId + '/view')= asset.asset.title
 						- asset.asset.assetPreview.forEach(function (f) {
-							img(src='/uploads/' + asset.asset.listingId + '_' + f)
+							a(href='/assets/asset/' + asset.asset.listingId + '/view'): img(src='/uploads/' + asset.asset.listingId + '_' + f)
 						- })
 						- if (!asset.asset.assetPreview.length)
 							img(src='http://placehold.it/290x216')
 						p: em= asset.listing.payee[0].comment
 						p: span.price= asset.listing.payee[0].payeeRate + ' ' + asset.listing.payee[0].currency
-							- var buyUrl = user ? url : '/login'
-							a.pull-right.topcoat-button--cta.buy--cta(href=buyUrl) Buy
+							- if (user)
+								a.pull-right.topcoat-button--cta.buy--cta(href=url + '/purchase') Buy
+								a.pull-right.topcoat-button.shopping-cart(href=url + '/addtocart')
 				- })
 				- if (!assets.length)
 					h4 No one posted anything for sale yet.

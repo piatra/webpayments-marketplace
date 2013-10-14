@@ -31,7 +31,7 @@ define(['modal', 'message'], function (modal, message) {
 
 	function setAssetCount (count) {
 		if (parseInt(count, 10)) {
-			$('.topcoat-notification').text(count).removeClass('hidden');
+			$('.js-handler--my-assets').show().text(count).removeClass('hidden');
 		}
 	}
 
@@ -50,12 +50,13 @@ define(['modal', 'message'], function (modal, message) {
 	}
 
 	function setListAssets (docs) {
-		docs.forEach(function (d) {
-			if (!d.listing.payee[0]) return;
-			var title = d.asset.title + '<p><em><small>' + d.listing.payee[0].comment + '</small></em> | <a href="/assets/asset/'+ d.listing.assetId +'/edit">edit</a></p>';
-			$('<li></li>').addClass('topcoat-list__item')
+	  if (Array.isArray(docs)) {
+		  docs.forEach(function (d) {
+			  var title = d.asset.title + '<p><em><small>' + d.listing.payee[0].comment + '</small></em> | <a href="/assets/asset/'+ d.listing.assetId +'/edit">edit</a></p>';
+			  $('<li></li>').addClass('topcoat-list__item')
 				.html(title).appendTo('.js-handler--asset-list');
-		});
+		  });
+		}
 	}
 
 	var assets = {

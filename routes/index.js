@@ -23,7 +23,8 @@ function options (req) {
     publicKey: (req.session.publicKey) ? req.session.publicKey : null,
     email: req.session.email || req.cookies.email,
     username: req.session.username || req.cookies.username,
-    env: process.env.NODE_ENV
+    env: process.env.NODE_ENV,
+    cart: req.session.cart ? req.session.cart.length : 0
   };
   _.forEach(_.rest(_.toArray(arguments)), function (el) {
     obj[el[0]] = el[1];
@@ -36,7 +37,7 @@ function options (req) {
 
 exports.index = function(req, res) {
 	console.log(req.session);
-  assets.getUserAssets({}, function (assets) {
+  assets.getUserAssets({}, function (err, assets) {
     res.render('index', options(req, ['assets', assets]));
   });
 
@@ -53,8 +54,8 @@ exports.edit = function (req, res) {
 
 exports.logout = function (req, res) {
 	res.session = null;
-	res.clearCookie('userID');
 	res.clearCookie('email');
+	res.clearCookie('username');
 	res.render('logout');
 }
 
@@ -77,3 +78,7 @@ exports.newasset = function(req, res) {
     }
   })
 };
+
+exports.myCart = function (req, res) {
+  res.render('mycart', options(req, ['cartItems', req.session.cart]));
+}

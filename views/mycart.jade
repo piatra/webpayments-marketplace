@@ -1,0 +1,22 @@
+extends layout
+
+block content
+	.container
+		- cartItems = cartItems || [];
+		ul(id="cartItems")
+			- cartItems.forEach(function (item) {
+				li(id=item)= item
+			-})
+		- if (!cartItems.length)
+			h2 Your shopping cart is empty. Go make some purchases.
+		- else
+			a.topcoat-button--large--cta(href='./buy') Purchase
+
+block scripts
+	script
+		$cartItems = $('#cartItems li');
+		$cartItems.each(function (idx, el) {
+			$.get('../assets/asset/' + el.id, function (json) {
+				el.innerHTML = json.title;
+			});
+		});

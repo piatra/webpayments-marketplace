@@ -11,7 +11,8 @@ define(['assert', 'message'], function (assert, message) {
 			assert(user.options.email, 'Email required for user');
 
 			submit.addClass('loading');
-			$.ajax({
+
+      $.ajax({
 				type: "POST",
 				url: "/user/set/username",
 				data: {username: username}
@@ -19,6 +20,7 @@ define(['assert', 'message'], function (assert, message) {
 			  .fail(message.failure)
 			  .done(function () {
 			  	submit.removeClass('loading');
+			  	location.reload();
 			  });
 		}
 	}

@@ -49,8 +49,8 @@ function requireLogin(req, res, next) {
 app.get('/', routes.index);
 
 app.get('/login', routes.login);
-
 app.get('/logout', routes.logout);
+app.get('/mycart', requireLogin, routes.myCart);
 
 app.post('/user/set/username', user.setUsername);
 
@@ -72,7 +72,7 @@ app.post('/assets/asset/edit', assets.update);
 /*
 	New asset
 */
-app.get('/newasset', routes.newasset); // should require login
+app.get('/newasset', requireLogin, routes.newasset); // should require login
 app.post('/newasset/process/', assets.createAssetAndListing);
 app.post('/newasset/save', assets.saveAsset);
 
@@ -88,6 +88,8 @@ app.post('/assets/asset/purchased', assets.purchased);
 app.post('/assets/asset/:id/preview', assets.preview);
 app.get('/assets/asset/:id/preview', assets.preview);
 app.get('/assets/asset/:id/edit', assets.edit);
+app.get('/assets/asset/:id/view', assets.view);
+app.get('/assets/asset/:id/addtocart', assets.addToCart);
 
 app.get('/listings/listing/:id', assets.getListing);
 

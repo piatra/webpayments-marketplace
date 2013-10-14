@@ -132,10 +132,19 @@ label {
   line-height: 2.5rem;
 }
 .hidden {
-  display: none;
+  display: none !important;
+}
+.shopping-cart {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  padding: 1rem;
+  margin: 0 0.2rem;
+  background: url("../images/cart.svg") center no-repeat;
 }
 .toggle:hover .hidden {
-  display: block;
+  display: block !important;
 }
 input[type=checkbox]:checked + .hidden {
   display: block;

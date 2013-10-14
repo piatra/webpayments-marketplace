@@ -1,0 +1,24 @@
+extends layout
+
+block content
+	.container
+		.well.padding5
+			h4 WebPayments Marketplace
+	.container
+		hr
+		.category
+			ul.item-container.container--newest
+					- url = '/assets/asset/' + asset.listingId + '/purchase';
+					li
+						h4: a(href='/assets/asset/' + asset.listingId + '/view')= asset.title
+							- asset.assetPreview.forEach(function (f) {
+								img(src='/uploads/' + asset.listingId + '_' + f)
+							- })
+							- if (!asset.assetPreview.length)
+								img(src='http://placehold.it/290x216')
+						p: em= listing.payee[0].comment
+						p Provided by #{parsedAsset.provider}
+						p Valid until #{parsedAsset.validity.to}
+						p: span.price= listing.payee[0].payeeRate + ' ' + listing.payee[0].currency
+						- var buyUrl = user ? url : '/login'
+						a.pull-right.topcoat-button--cta.buy--cta(href=buyUrl) Buy

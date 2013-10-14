@@ -1,36 +1,39 @@
 doctype 5
 html
-	head
-		title= title
-		link(rel='stylesheet', href='/stylesheets/topcoat-mobile-light.css')
-		link(rel='stylesheet', href='/stylesheets/style.css')
-	body
-		.topcoat-navigation-bar
-			.container
-				.topcoat-navigation-bar__item.left.quarter.tab-bar
-					li: a(class='topcoat-button--quiet', href='/') Home
-					- if (user)
-						li: a(class='topcoat-button--quiet', href='/newasset') Sell
-						li: a(class='topcoat-button--quiet', href='/account/assets') Assets
-					li: a(class='topcoat-button--quiet', href='/about') About
-				.topcoat-navigation-bar__item.center.half
-					h1.topcoat-navigation-bar__title= title || 'WebPayments Marketplace'
-				.topcoat-navigation-bar__item.right.quarter
-					a.topcoat-icon-button--quiet
-						- var toggle = user ? 'visible': 'hidden'
-						ul.toggle.right(class='topcoat-button ' + toggle, data-id=id)
-							img.avatar--small(src='http://www.gravatar.com/avatar/'+hash+'.jpg')
-							.js-handler--email.inline= username || user
-							.topcoat-notification.hidden
-							.topcoat-list__container.list--medium
-								ul.topcoat-list.js-handler--asset-list
-							li.topcoat-list__item.hidden: a(href='/logout') Logout	
-					- var toggle = user ? 'hidden': 'visible'
-					a.right.topcoat-button--quiet(class='js-handler--email js-handler--login ' + toggle, href='#')
-						img(src='/images/signin.png', title='Login')
-		.messages
-		block content
-	script(src='/javascripts/libs/jquery.min.js')
-	script(src='https://login.persona.org/include.js')
-	script(data-main='/javascripts/main', src='/javascripts/libs/require.js')
-	block scripts
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/topcoat-mobile-light.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    .topcoat-navigation-bar
+      .container
+        .topcoat-navigation-bar__item.left.quarter.tab-bar
+          li: a(class='topcoat-button--quiet', href='/') Home
+          - if (user)
+            li: a(class='topcoat-button--quiet', href='/newasset') Sell
+            li: a(class='topcoat-button--quiet', href='/account/assets') Assets
+          li: a(class='topcoat-button--quiet', href='/about') About
+        .topcoat-navigation-bar__item.center.half
+          h1.topcoat-navigation-bar__title= title || 'WebPayments Marketplace'
+        .topcoat-navigation-bar__item.right.quarter
+          - if (user)
+            a.topcoat-button--quiet(href='/mycart') Your cart
+              .topcoat-notification= cart
+          a.topcoat-icon-button--quiet
+            - var toggle = user ? 'visible': 'hidden'
+            ul.toggle.right(class='topcoat-button ' + toggle, data-id=id)
+              img.avatar--small(src='http://www.gravatar.com/avatar/'+hash+'.jpg')
+              .js-handler--email.inline= username || user
+              .topcoat-notification.js-handler--my-assets.hidden
+              .topcoat-list__container.list--medium
+                ul.topcoat-list.js-handler--asset-list
+              li.topcoat-list__item.hidden: a(href='/logout') Logout  
+          - var toggle = user ? 'hidden': 'visible'
+          a.right.topcoat-button--quiet(class='js-handler--email js-handler--login ' + toggle, href='#')
+            img(src='/images/signin.png', title='Login')
+    .messages
+    block content
+  script(src='/javascripts/libs/jquery.min.js')
+  script(src='https://login.persona.org/include.js')
+  script(data-main='/javascripts/main', src='/javascripts/libs/require.js')
+  block scripts
